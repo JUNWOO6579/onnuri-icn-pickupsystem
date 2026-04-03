@@ -24,79 +24,88 @@
             margin: 0; padding: 0;
             height: 100dvh; width: 100vw;
             overflow: hidden; /* 바디 스크롤 차단 */
-            position: fixed; /* iOS 바운스 방지 */
+            position: fixed; 
         }
 
         .font-jua { font-family: 'Jua', sans-serif; }
         .font-gaegu { font-family: 'Gaegu', cursive; }
 
-        /* [iPad 10.2인치 4:3 대응 최적화] */
+        /* [iPad 10.2인치 고정 프레임 최적화] */
         #app {
             width: 100%; 
-            max-width: 700px; /* iPad 가로폭 최적화 */
+            max-width: 720px; /* 10.2인치 비율에 맞춘 슬림한 가로폭 */
             height: 100dvh;
             background: #fff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important;
             position: relative; 
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 40px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-rows: 100px 1fr 90px; /* 헤더(고정) - 메인(스크롤) - 네비바(고정) */
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
             margin: 0 auto; 
             z-index: 10;
+            overflow: hidden;
         }
 
-        /* 헤더 여백 */
-        .app-header { padding: 25px 0 10px 0; text-align: center; flex: none; }
+        /* 헤더 고정 높이 */
+        .app-header { 
+            height: 100px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+        }
 
-        /* [스크롤 엔진 개선] */
+        /* [핵심] 스크롤 컨테이너 - 들쭉날쭉 방지 */
         .main-scroll-view {
-            flex: 1;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             min-height: 0;
         }
 
-        /* [iPad 전용 터치 스크롤 강화] */
+        /* [iPad 스크롤 엔진] */
         .glass-stage {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             border-radius: 2.5rem;
-            margin: 0 20px 15px 20px;
-            padding: 20px 25px; 
+            margin: 10px 20px 20px 20px;
+            padding: 30px; 
             box-shadow: 0 15px 30px rgba(0,0,0,0.06);
             flex: 1;
-            overflow-y: auto !important; /* 스크롤 강제 활성화 */
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto !important; 
             overflow-x: hidden;
             border: 4px solid #fff;
             backdrop-filter: blur(10px);
-            -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
             min-height: 0;
+            -webkit-overflow-scrolling: touch; /* iOS 필수 */
         }
 
         .glass-stage::-webkit-scrollbar { width: 6px; }
         .glass-stage::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
-        /* 하단 네비바 고정 */
+        /* 하단 네비바 - 그리드 하단에 딱 붙음 */
         .bottom-nav {
-            height: 85px;
+            height: 90px;
             background: rgba(255, 255, 255, 0.98); border-top: 1px solid #e2e8f0;
             display: flex; justify-content: space-around; align-items: center;
             padding-bottom: env(safe-area-inset-bottom); border-radius: 35px 35px 0 0;
-            flex: none;
             z-index: 1000;
         }
 
-        /* 버튼 디자인 */
+        /* 버튼 디자인 - 가독성 및 터치 범위 최적화 */
         .class-btn {
             aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
-            font-size: 1.1rem; font-family: 'Jua', sans-serif; line-height: 1.1;
-            padding: 8px; text-align: center; word-break: keep-all; border-radius: 1.8rem;
-            background: white; border: 2px solid #f1f5f9; box-shadow: 0 4px 0 #e2e8f0;
+            font-size: 1.2rem; font-family: 'Jua', sans-serif; line-height: 1.1;
+            padding: 10px; text-align: center; word-break: keep-all; border-radius: 2rem;
+            background: white; border: 2px solid #f1f5f9; box-shadow: 0 5px 0 #e2e8f0;
             transition: all 0.1s ease; color: #334155; width: 100%;
         }
         @media (min-width: 640px) {
-            .class-btn { font-size: 1.8rem; border-radius: 2.2rem; box-shadow: 0 6px 0 #e2e8f0; }
+            .class-btn { font-size: 1.7rem; border-radius: 2.5rem; box-shadow: 0 7px 0 #e2e8f0; }
         }
-        .class-btn:active { transform: scale(0.94) translateY(3px); box-shadow: none; }
+        .class-btn:active { transform: scale(0.95) translateY(3px); box-shadow: none; }
 
         /* 모달 시스템 */
         .modal-overlay {
@@ -107,17 +116,12 @@
         .modal-active { display: flex !important; }
 
         .notice-modal-content {
-            background: white; border-radius: 3rem; width: 95%; max-width: 500px;
-            padding: 40px 30px; text-align: center; position: relative;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3); border: 8px solid #f0f9ff;
-        }
-        .close-x-btn {
-            position: absolute; top: 25px; right: 30px; width: 45px; height: 45px;
-            background: #f1f5f9; border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; color: #64748b; font-size: 28px; cursor: pointer;
+            background: white; border-radius: 4rem; width: 95%; max-width: 550px;
+            padding: 50px 40px; text-align: center; position: relative;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.3); border: 12px solid #f0f9ff;
         }
 
-        .step-container { transition: all 0.4s ease-in-out; will-change: max-height, opacity; overflow: hidden; }
+        .step-container { transition: all 0.3s ease-in-out; will-change: max-height, opacity; overflow: hidden; }
         .roll-up { max-height: 0 !important; opacity: 0 !important; margin: 0 !important; padding: 0 !important; border: 0 !important; pointer-events: none; }
 
         #loading-overlay {
@@ -127,18 +131,15 @@
         }
 
         .copyright {
-            font-size: 0.75rem; color: #94a3b8; text-align: center; 
-            padding: 20px 0 5px 0; font-weight: bold; opacity: 0.7;
-            margin-top: 15px; border-top: 1px solid #f1f5f9;
+            font-size: 0.8rem; color: #94a3b8; text-align: center; 
+            padding: 20px 0 10px 0; font-weight: bold; opacity: 0.7;
+            margin-top: auto; border-top: 1px solid #f1f5f9;
         }
 
+        /* 전광판 (기존 유지) */
         #view-display { position: fixed; inset: 0; z-index: 9000; background: #f0f9ff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important; display: none; flex-direction: column; }
         .display-overlay { flex: 1; background: rgba(255, 255, 255, 0.2); display: flex; flex-direction: column; padding: 1rem 1.5rem 1rem 3rem; overflow: hidden; }
         .ticker-move { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; width: 100%; }
-        .call-card { border-radius: 1.5rem; border: 5px solid #fff; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 12px; height: 160px; position: relative; }
-        .student-name { font-family: 'Jua', sans-serif; font-size: 3.1rem; white-space: nowrap; color: white; }
-        .class-label { font-family: 'Gaegu', cursive; font-size: 1.3rem; font-weight: 700; background: rgba(255,255,255,0.25); padding: 1px 15px; border-radius: 99px; color: white; }
-        @keyframes tickerScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
     </style>
 </head>
 <body>
@@ -146,53 +147,54 @@
     <div id="loading-overlay">
         <div class="flex flex-col items-center">
             <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mb-6"></div>
-            <p class="font-jua text-3xl text-slate-400 text-center px-6">시스템 연결 중...</p>
+            <p class="font-jua text-3xl text-slate-400 text-center px-6">연결 확인 중...</p>
         </div>
     </div>
 
+    <!-- 앱 전체 -->
     <div id="app" style="display: none; opacity: 0; transition: opacity 0.4s ease;">
         <header class="app-header">
-            <h1 class="font-gaegu text-4xl sm:text-5xl text-blue-600 drop-shadow-sm mb-1 font-bold">유치부 아이들 대기 waiting</h1>
+            <h1 class="font-gaegu text-4xl sm:text-5xl text-blue-600 drop-shadow-sm font-bold">유치부 아이들 대기 waiting</h1>
             <p class="text-[11px] sm:text-[13px] font-bold text-slate-400 tracking-[0.4em] uppercase font-black">Onnuri ICN Youth</p>
         </header>
 
         <div class="main-scroll-view">
             <div class="glass-stage" id="main-glass-stage">
                 <div id="container-parent">
-                    <!-- 1단계: 예배 선택 (높이 대폭 축소: py-4 sm:py-5) -->
+                    <!-- 1단계: 예배 선택 (높이 컴팩트화) -->
                     <div class="step-container" id="section-worship">
                         <h2 class="font-jua text-xl sm:text-2xl text-slate-700 mb-3 flex items-center gap-3 font-bold text-left">
-                            <i class="fa-solid fa-heart text-pink-400"></i> 1. 예배 선택
+                            <i class="fa-solid fa-heart text-pink-400 text-sm"></i> 1. 예배 선택
                         </h2>
                         <div class="grid grid-cols-2 gap-4 mb-8">
-                            <button onclick="selectPartAndRollUp('유치1부')" class="py-4 sm:py-5 border-2 border-blue-50 text-blue-600 font-jua text-3xl sm:text-4xl rounded-[2.5rem] shadow-sm bg-blue-50/20 active:bg-blue-100 transition-all">유치1부</button>
-                            <button onclick="selectPartAndRollUp('유치2부')" class="py-4 sm:py-5 border-2 border-orange-50 text-orange-600 font-jua text-3xl sm:text-4xl rounded-[2.5rem] shadow-sm bg-orange-50/30 active:bg-orange-100 transition-all">유치2부</button>
+                            <button onclick="selectPartAndRollUp('유치1부')" class="py-5 sm:py-6 border-2 border-blue-50 text-blue-600 font-jua text-3xl sm:text-4xl rounded-[2.5rem] shadow-sm bg-blue-50/20 active:bg-blue-100 transition-all">유치1부</button>
+                            <button onclick="selectPartAndRollUp('유치2부')" class="py-5 sm:py-6 border-2 border-orange-50 text-orange-600 font-jua text-3xl sm:text-4xl rounded-[2.5rem] shadow-sm bg-orange-50/30 active:bg-orange-100 transition-all">유치2부</button>
                         </div>
                     </div>
 
-                    <!-- 2단계: 반 선택 -->
+                    <!-- 2단계: 반 선택 (한 줄에 4개) -->
                     <div id="section-class" class="step-container hidden">
                         <div class="flex justify-between items-center mb-4">
                             <h2 class="font-jua text-xl sm:text-2xl text-slate-700 flex items-center gap-3 font-bold text-left">
-                                <i class="fa-solid fa-school text-orange-400"></i> 2. 우리 반 선택
+                                <i class="fa-solid fa-school text-orange-400 text-sm"></i> 2. 우리 반 선택
                             </h2>
                             <button onclick="resetWorshipSelection()" class="text-sm sm:text-base text-slate-400 underline font-bold px-4">다시 선택</button>
                         </div>
                         <div id="grid-classes" class="grid grid-cols-3 sm:grid-cols-4 gap-4 mb-8"></div>
                     </div>
 
-                    <!-- 3단계: 이름 선택 -->
+                    <!-- 3단계: 이름 선택 (한 줄에 3개) -->
                     <div id="section-name" class="step-container hidden">
                         <div class="flex justify-between items-center mb-4">
                             <h2 class="font-jua text-xl sm:text-2xl text-slate-700 flex items-center gap-3 font-bold text-left">
-                                <i class="fa-solid fa-child-reaching text-green-400"></i> 3. 아이 이름 클릭
+                                <i class="fa-solid fa-child-reaching text-green-400 text-sm"></i> 3. 아이 이름 클릭
                             </h2>
                             <button onclick="backToClassSelection()" class="text-sm sm:text-base text-slate-400 underline font-bold px-4">반 다시 선택</button>
                         </div>
-                        <div id="grid-names" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8"></div>
+                        <div id="grid-names" class="grid grid-cols-2 sm:grid-cols-3 gap-5 mb-8"></div>
                     </div>
 
-                    <!-- 수동 호출 영역 -->
+                    <!-- 수동 호출 영역 (버튼 잘림 완벽 방지) -->
                     <div id="section-manual" class="pt-6 border-t border-slate-100 mt-6 mb-2 text-left">
                         <h2 class="font-gaegu text-2xl sm:text-3xl text-pink-500 mb-4 font-bold">방문/새친구 이름</h2>
                         <div class="flex gap-3 items-stretch w-full">
@@ -231,42 +233,9 @@
         </nav>
     </div>
 
-    <!-- 전광판 레이어 -->
-    <div id="view-display">
-        <div class="display-overlay">
-            <header class="flex justify-between items-start mb-1 px-2">
-                <div class="text-left text-blue-900">
-                    <h1 class="font-gaegu text-[5rem] sm:text-[6rem] leading-tight whitespace-nowrap drop-shadow-lg font-bold">친구들! 다음주에 만나요</h1>
-                    <p class="opacity-50 font-jua text-3xl uppercase tracking-[0.5em] ml-2 font-black">Happy Pickup Board</p>
-                </div>
-                <div class="flex flex-col items-end gap-2 pt-1">
-                    <div class="bg-white/90 backdrop-blur px-10 py-6 rounded-[2.5rem] shadow-xl border-4 border-white text-center">
-                        <span id="display-clock" class="font-jua text-6xl sm:text-8xl text-blue-500 tracking-tighter">00:00</span>
-                    </div>
-                </div>
-            </header>
-            <div style="flex:1; overflow:hidden; position:relative; margin-top:20px;">
-                <div id="display-grid" class="ticker-move" style="position:absolute; width:100%; top:0; left:0; will-change:transform;"></div>
-            </div>
-            <button onclick="switchMode('parent')" class="absolute bottom-16 right-16 w-24 h-24 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-blue-600 transition-all shadow-2xl border-2 border-white"><i class="fa-solid fa-house-chimney text-4xl"></i></button>
-        </div>
-    </div>
-
-    <!-- 모달: 호출 완료 -->
-    <div id="notice-modal" class="modal-overlay">
-        <div class="notice-modal-content">
-            <div class="close-x-btn" onclick="closeNoticeModal()"><i class="fa-solid fa-xmark"></i></div>
-            <div class="w-24 h-24 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-8"><i class="fa-solid fa-bell-concierge text-5xl"></i></div>
-            <h3 class="font-jua text-3xl sm:text-4xl text-slate-800 mb-6 font-bold">호출 완료!</h3>
-            <p class="font-gaegu text-2xl sm:text-3xl text-slate-600 leading-relaxed font-bold break-keep text-center">샬롬! 부모님들께서는 오신 순서대로,<br>줄을 서서 기다려주시면, 차례대로<br>아이들이 나올 수 있게 도와드리겠습니다.<br>감사합니다!</p>
-            <button onclick="closeNoticeModal()" class="w-full mt-8 py-6 bg-blue-600 text-white rounded-[3rem] font-jua text-2xl shadow-xl active:scale-95 transition-transform">확인</button>
-        </div>
-    </div>
-
     <!-- 모달: 네트워크 오류 -->
     <div id="network-error-modal" class="modal-overlay">
         <div class="notice-modal-content border-red-100">
-            <div class="close-x-btn" onclick="location.reload()"><i class="fa-solid fa-rotate-right"></i></div>
             <div class="w-24 h-24 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-8"><i class="fa-solid fa-triangle-exclamation text-5xl"></i></div>
             <h3 class="font-jua text-4xl text-slate-800 mb-6 font-bold text-red-500">연결 오류</h3>
             <p class="font-gaegu text-2xl sm:text-3xl text-slate-600 leading-relaxed font-bold break-keep text-center">네트워크 연결이 불안정합니다.<br><span class="text-red-500 font-black">전도사님께 말씀해주세요!</span></p>
@@ -274,13 +243,24 @@
         </div>
     </div>
 
-    <!-- 모달: 관리자 인증 -->
+    <!-- 모달: 호출 완료 -->
+    <div id="notice-modal" class="modal-overlay">
+        <div class="notice-modal-content">
+            <div class="close-x-btn" onclick="closeNoticeModal()"><i class="fa-solid fa-xmark"></i></div>
+            <div class="w-28 h-28 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-8"><i class="fa-solid fa-bell-concierge text-5xl"></i></div>
+            <h3 class="font-jua text-4xl sm:text-5xl text-slate-800 mb-6 font-bold">호출 완료!</h3>
+            <p class="font-gaegu text-2xl sm:text-3xl text-slate-600 leading-relaxed font-bold break-keep text-center">샬롬! 부모님들께서는 오신 순서대로,<br>줄을 서서 기다려주시면, 차례대로<br>아이들이 나올 수 있게 도와드리겠습니다.<br>감사합니다!</p>
+            <button onclick="closeNoticeModal()" class="w-full mt-10 py-6 bg-blue-600 text-white rounded-[3rem] font-jua text-2xl shadow-xl active:scale-95 transition-transform">확인</button>
+        </div>
+    </div>
+
+    <!-- 관리자 인증 모달 -->
     <div id="auth-modal" class="modal-overlay">
         <div class="bg-white rounded-[5rem] w-full max-w-[500px] p-16 shadow-2xl text-center space-y-10">
             <div class="w-24 h-24 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto"><i class="fa-solid fa-lock text-6xl"></i></div>
-            <h3 class="font-jua text-4xl sm:text-5xl text-slate-800 font-bold text-center">관리자 인증</h3>
+            <h3 class="font-jua text-4xl sm:text-5xl text-slate-800 font-bold">관리자 인증</h3>
             <input type="password" id="authPwInput" class="w-full p-8 bg-slate-100 rounded-[3rem] text-center font-bold text-6xl border-none focus:ring-4 focus:ring-blue-200" placeholder="****">
-            <div class="flex gap-4"><button onclick="closeAuthModal()" class="flex-1 py-6 bg-slate-100 text-slate-500 rounded-[3rem] font-bold text-xl text-center">취소</button><button onclick="confirmAdminAuth()" class="flex-1 py-6 bg-blue-600 text-white rounded-[3rem] font-bold shadow-lg text-xl text-center">확인</button></div>
+            <div class="flex gap-4"><button onclick="closeAuthModal()" class="flex-1 py-6 bg-slate-100 text-slate-500 rounded-[3rem] font-bold text-xl">취소</button><button onclick="confirmAdminAuth()" class="flex-1 py-6 bg-blue-600 text-white rounded-[3rem] font-bold shadow-lg text-xl">확인</button></div>
         </div>
     </div>
 
@@ -315,7 +295,6 @@
             worship: document.getElementById('section-worship'),
             class: document.getElementById('section-class'),
             name: document.getElementById('section-name'),
-            tickerGrid: document.getElementById('display-grid'),
             authModal: document.getElementById('auth-modal'),
             noticeModal: document.getElementById('notice-modal'),
             netErrorModal: document.getElementById('network-error-modal'),
@@ -324,8 +303,6 @@
 
         let classStructure = {};
         let isAdminAuthorized = false;
-        let allPickupCalls = [];
-        const cardColors = ['bg-p-blue', 'bg-p-pink', 'bg-p-mint', 'bg-p-orange', 'bg-p-purple'];
 
         window.showNetworkError = () => { nodes.netErrorModal.classList.add('modal-active'); };
         window.hideNetworkError = () => { nodes.netErrorModal.classList.remove('modal-active'); };
@@ -338,7 +315,7 @@
             if (t) { t.innerText = m; t.classList.add('opacity-100'); setTimeout(() => t.classList.remove('opacity-100'), 2000); }
         };
 
-        const safetyTimeout = setTimeout(() => { if (nodes.loading.style.display !== 'none') { window.showNetworkError(); } }, 12000);
+        const safetyTimeout = setTimeout(() => { if (nodes.loading.style.display !== 'none') { window.showNetworkError(); } }, 15000);
 
         async function init() {
             try { 
@@ -352,25 +329,23 @@
                 const snap = await getDoc(doc(db, 'artifacts', appIdStr, 'public', 'data', 'config', 'structure'));
                 if (snap.exists()) classStructure = snap.data().map;
                 else classStructure = { "유치1부": {}, "유치2부": {} };
-                clearTimeout(safetyTimeout); startClock(); subscribeCalls(); hideLoading();
+                clearTimeout(safetyTimeout); hideLoading();
             } catch (e) { window.showNetworkError(); }
         }
 
         function hideLoading() {
             nodes.loading.style.opacity = '0';
             setTimeout(() => {
-                nodes.loading.style.display = 'none'; nodes.app.style.display = 'flex';
+                nodes.loading.style.display = 'none'; nodes.app.style.display = 'grid';
                 setTimeout(() => { nodes.app.style.opacity = '1'; switchMode('parent'); }, 30);
             }, 400);
         }
 
         window.switchMode = (mode) => {
             if (mode === 'settings' && !isAdminAuthorized) return;
-            if (mode === 'display') { nodes.app.style.display = 'none'; nodes.display.style.display = 'flex'; renderTicker(); return; }
-            nodes.app.style.display = 'flex'; nodes.display.style.display = 'none';
             nodes.parentBox.style.display = (mode === 'parent') ? 'block' : 'none';
             nodes.settingsBox.style.display = (mode === 'settings') ? 'block' : 'none';
-            ['parent', 'display', 'settings'].forEach(m => {
+            ['parent', 'settings'].forEach(m => {
                 const n = document.getElementById(`nav-${m}`);
                 if(n) n.classList.replace('text-blue-600', 'text-slate-400');
             });
@@ -416,7 +391,7 @@
         window.resetWorshipSelection = () => { nodes.worship.classList.remove('roll-up'); nodes.class.classList.add('hidden'); nodes.class.classList.remove('roll-up'); nodes.name.classList.add('hidden'); nodes.scrollArea.scrollTo({ top: 0, behavior: 'smooth' }); };
 
         async function sendCallToFirebase(cName, sName) { 
-            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 6000));
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 8000));
             try { 
                 await Promise.race([
                     addDoc(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'), { className: cName, studentName: sName, timestamp: serverTimestamp() }),
@@ -429,28 +404,6 @@
         window.openNoticeModal = () => { nodes.noticeModal.classList.add('modal-active'); };
         window.closeNoticeModal = () => { nodes.noticeModal.classList.remove('modal-active'); resetWorshipSelection(); };
         window.sendManualCall = async () => { const name = document.getElementById('manual-input').value.trim(); if (!name) return window.showToast("이름 입력"); await sendCallToFirebase("방문/새친구", name); document.getElementById('manual-input').value = ''; };
-
-        function subscribeCalls() {
-            onSnapshot(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'), (snap) => {
-                const raw = []; snap.forEach(d => raw.push({ id: d.id, ...d.data() }));
-                const unique = new Map(); raw.forEach(call => { const key = `${call.className}-${call.studentName}`; if (!unique.has(key)) unique.set(key, call); });
-                allPickupCalls = Array.from(unique.values()).sort((a, b) => (a.timestamp?.seconds || 0) - (b.timestamp?.seconds || 0));
-                renderTicker();
-            }, (err) => window.showNetworkError());
-        }
-
-        function renderTicker() {
-            const grid = nodes.tickerGrid; if (!grid) return; grid.innerHTML = ''; if (allPickupCalls.length === 0) return;
-            const isShort = allPickupCalls.length <= 15;
-            const listToDraw = isShort ? allPickupCalls : [...allPickupCalls, ...allPickupCalls];
-            const fragment = document.createDocumentFragment();
-            listToDraw.forEach((call, index) => {
-                const card = document.createElement('div'); card.className = `call-card ${cardColors[index % cardColors.length]}`;
-                card.innerHTML = `<p class="class-label">${call.className}</p><p class="student-name">${call.studentName}</p>`; fragment.appendChild(card);
-            });
-            grid.appendChild(fragment);
-            if (!isShort) grid.style.animation = `tickerScroll ${Math.max(25, Math.ceil(allPickupCalls.length / 5) * 10)}s linear infinite`; else grid.style.animation = "none";
-        }
 
         document.getElementById('importBtn').addEventListener('click', async () => {
             const file = document.getElementById('excelInput').files[0]; if (!file) return window.showToast("파일 선택");
@@ -493,8 +446,6 @@
             }; reader.readAsArrayBuffer(file);
         });
 
-        function startClock() { setInterval(() => { const now = new Date(); const clock = document.getElementById('display-clock'); if (clock) clock.innerText = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0'); }, 1000); }
-        
         init();
     </script>
 </body>
