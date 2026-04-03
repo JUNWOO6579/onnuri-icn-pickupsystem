@@ -22,9 +22,9 @@
             font-family: 'Nanum Gothic', sans-serif;
             background-color: #f1f5f9;
             margin: 0; padding: 0;
-            height: 100dvh; width: 100vw;
+            height: 100%; width: 100vw;
             overflow: hidden; 
-            position: fixed; /* iOS 바운스 스크롤 방지 */
+            position: fixed; /* iOS 바운스 방지 */
         }
 
         .font-jua { font-family: 'Jua', sans-serif; }
@@ -32,13 +32,13 @@
 
         /* [iPad 10.2인치 고정 프레임 - 절대 변동 없음] */
         #app {
-            width: 100%; 
-            max-width: 680px; /* 가로폭을 더 슬림하게 조정하여 한눈에 들어오게 함 */
+            position: fixed; /* 화면에 박아넣음 */
+            inset: 0;
+            max-width: 680px; 
             height: 100dvh;
             background: #fff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important;
-            position: relative; 
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-rows: 90px 1fr 85px; /* 헤더-컨텐츠-네비바 높이 완전 고정 */
             box-shadow: 0 0 60px rgba(0,0,0,0.15);
             margin: 0 auto; 
             z-index: 10;
@@ -51,18 +51,16 @@
             flex-direction: column; 
             justify-content: center; 
             align-items: center; 
-            flex-shrink: 0;
             background: rgba(255,255,255,0.05);
             backdrop-filter: blur(5px);
         }
 
         /* [핵심] 중앙 가변 스크롤 영역 */
         .main-scroll-view {
-            flex: 1;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            min-height: 0;
+            height: 100%;
         }
 
         /* [스크롤 엔진] 중앙 흰색 상자 */
@@ -79,12 +77,9 @@
             overflow-x: hidden;
             border: 4px solid #fff;
             backdrop-filter: blur(10px);
-            -webkit-overflow-scrolling: touch; /* iOS 스크롤 복구 */
+            -webkit-overflow-scrolling: touch; /* iOS 스크롤 복원 */
             min-height: 0;
         }
-
-        .glass-stage::-webkit-scrollbar { width: 6px; }
-        .glass-stage::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
         /* 하단 네비바 고정 */
         .bottom-nav {
@@ -93,10 +88,8 @@
             display: flex; justify-content: space-around; align-items: center;
             padding-bottom: env(safe-area-inset-bottom); border-radius: 35px 35px 0 0;
             z-index: 1000;
-            flex-shrink: 0;
         }
 
-        /* 버튼 기본 디자인 */
         .class-btn {
             aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
             font-size: 1.1rem; font-family: 'Jua', sans-serif; line-height: 1.1;
@@ -109,7 +102,7 @@
         }
         .class-btn:active { transform: scale(0.95) translateY(3px); box-shadow: none; }
 
-        /* [복구] 전광판 컬러 시스템 - 우선순위 강화 */
+        /* 전광판 컬러 시스템 */
         .bg-p-blue { background-color: var(--p-blue) !important; }
         .bg-p-pink { background-color: var(--p-pink) !important; }
         .bg-p-mint { background-color: var(--p-mint) !important; }
@@ -134,18 +127,37 @@
             justify-content: center; color: #64748b; font-size: 30px; cursor: pointer; z-index: 10;
         }
 
-        /* 전광판 레이아웃 */
-        #view-display { position: fixed; inset: 0; z-index: 9000; background: #f0f9ff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important; display: none; flex-direction: column; }
-        .display-overlay { flex: 1; background: rgba(255, 255, 255, 0.2); display: flex; flex-direction: column; padding: 1rem 1.5rem 1rem 3.5rem; overflow: hidden; }
-        .ticker-move { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; width: 100%; }
+        /* [꿈아이홀 16:9 전광판 전용 스타일] */
+        #view-display { 
+            position: fixed; inset: 0; z-index: 9000; 
+            background: #000; /* 배경을 검게 처리하여 시네마틱 효과 */
+            display: none; justify-content: center; align-items: center;
+        }
+        .display-container {
+            width: 100%;
+            height: 100%;
+            max-width: 177.78vh; /* 16:9 비율 유지 */
+            max-height: 56.25vw; /* 16:9 비율 유지 */
+            background: #f0f9ff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important; 
+            display: flex; flex-direction: column; overflow: hidden;
+            position: relative;
+        }
+        .display-overlay { 
+            flex: 1; background: rgba(255, 255, 255, 0.15); 
+            display: flex; flex-direction: column; padding: 3vh 4vw; 
+            overflow: hidden;
+        }
+        .display-header { height: 18vh; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .ticker-container { flex: 1; position: relative; overflow: hidden; margin-top: 2vh; }
+        .ticker-move { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5vw; width: 100%; position: absolute; top: 0; left: 0; }
         
         .call-card {
-            border-radius: 1.5rem; border: 5px solid #fff; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 1.5rem; border: 0.5vw solid #fff; box-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.15);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 10px; height: 160px; position: relative;
+            padding: 1.5vh; height: 18vh; position: relative;
         }
-        .display-student-name { font-family: 'Jua', sans-serif; font-size: 3.2rem; white-space: nowrap; color: white; text-shadow: 1px 1px 4px rgba(0,0,0,0.25); }
-        .display-class-label { font-family: 'Gaegu', cursive; font-size: 1.4rem; font-weight: 700; background: rgba(255,255,255,0.35); padding: 2px 15px; border-radius: 99px; color: white; margin-bottom: 5px; }
+        .display-student-name { font-family: 'Jua', sans-serif; font-size: 5.5vh; white-space: nowrap; color: white; text-shadow: 2px 2px 5px rgba(0,0,0,0.2); }
+        .display-class-label { font-family: 'Gaegu', cursive; font-size: 2.2vh; font-weight: 700; background: rgba(255,255,255,0.35); padding: 0.3vh 1.5vw; border-radius: 99px; color: white; margin-bottom: 0.5vh; }
 
         @keyframes tickerScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
 
@@ -184,7 +196,7 @@
         <div class="main-scroll-view">
             <div class="glass-stage" id="main-glass-stage">
                 <div id="container-parent">
-                    <!-- 1단계: 예배 선택 (높이 대폭 축소) -->
+                    <!-- 1단계: 예배 선택 -->
                     <div class="step-container" id="section-worship">
                         <h2 class="font-jua text-xl sm:text-2xl text-slate-700 mb-2 flex items-center gap-3 font-bold text-left">
                             <i class="fa-solid fa-heart text-pink-400 text-sm"></i> 1. 예배 선택
@@ -195,7 +207,7 @@
                         </div>
                     </div>
 
-                    <!-- 2단계: 반 선택 (한 줄에 4개) -->
+                    <!-- 2단계: 반 선택 -->
                     <div id="section-class" class="step-container hidden">
                         <div class="flex justify-between items-center mb-4">
                             <h2 class="font-jua text-xl sm:text-2xl text-slate-700 flex items-center gap-3 font-bold text-left">
@@ -206,7 +218,7 @@
                         <div id="grid-classes" class="grid grid-cols-3 sm:grid-cols-4 gap-4 mb-8"></div>
                     </div>
 
-                    <!-- 3단계: 이름 선택 (한 줄에 3개) -->
+                    <!-- 3단계: 이름 선택 -->
                     <div id="section-name" class="step-container hidden">
                         <div class="flex justify-between items-center mb-4">
                             <h2 class="font-jua text-xl sm:text-2xl text-slate-700 flex items-center gap-3 font-bold text-left">
@@ -217,17 +229,16 @@
                         <div id="grid-names" class="grid grid-cols-2 sm:grid-cols-3 gap-5 mb-8"></div>
                     </div>
 
-                    <!-- 수동 호출 영역 (버튼 밖으로 나감 방지) -->
+                    <!-- 수동 호출 영역 (그리드 레이아웃으로 버튼 잘림 방지) -->
                     <div id="section-manual" class="pt-6 border-t border-slate-100 mt-6 mb-2 text-left">
                         <h2 class="font-gaegu text-2xl sm:text-3xl text-pink-500 mb-4 font-bold">방문/새친구 이름</h2>
-                        <div class="flex gap-3 items-stretch w-full">
-                            <input type="text" id="manual-input" class="flex-1 min-w-0 p-4 sm:p-5 bg-slate-50 rounded-[2rem] border-none font-bold text-xl sm:text-2xl shadow-inner focus:ring-4 focus:ring-pink-100" placeholder="이름 입력">
-                            <button onclick="window.sendManualCall()" class="shrink-0 bg-pink-500 text-white font-jua px-6 sm:px-10 rounded-[2rem] shadow-xl active:scale-95 text-xl sm:text-2xl">호출</button>
+                        <div class="grid grid-cols-[1fr_auto] gap-3 w-full">
+                            <input type="text" id="manual-input" class="min-w-0 p-4 sm:p-5 bg-slate-50 rounded-[2rem] border-none font-bold text-xl sm:text-2xl shadow-inner focus:ring-4 focus:ring-pink-100" placeholder="이름 입력">
+                            <button onclick="window.sendManualCall()" class="bg-pink-500 text-white font-jua px-6 sm:px-10 rounded-[2rem] shadow-xl active:scale-95 text-xl sm:text-2xl whitespace-nowrap">호출</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 설정 화면 -->
                 <div id="container-settings" class="hidden text-left">
                     <h2 class="font-jua text-3xl sm:text-4xl text-slate-800 mb-8 font-bold text-center">시스템 관리</h2>
                     <div class="max-w-2xl mx-auto space-y-10">
@@ -257,24 +268,24 @@
         </nav>
     </div>
 
-    <!-- 전광판 레이어 -->
+    <!-- 전광판 레이어 (16:9 강제 유지 로직 적용) -->
     <div id="view-display">
-        <div class="display-overlay">
-            <header class="flex justify-between items-start mb-1 px-2">
-                <div class="text-left text-blue-900">
-                    <h1 class="font-gaegu text-[5rem] sm:text-[6.2rem] leading-tight whitespace-nowrap drop-shadow-lg font-bold">친구들! 다음주에 만나요</h1>
-                    <p class="opacity-50 font-jua text-2xl sm:text-3xl uppercase tracking-[0.5em] ml-2 font-black">Happy Pickup Board</p>
-                </div>
-                <div class="flex flex-col items-end gap-2 pt-1">
-                    <div class="bg-white/90 backdrop-blur px-10 py-6 rounded-[2.5rem] shadow-xl border-4 border-white text-center">
-                        <span id="display-clock" class="font-jua text-6xl sm:text-8xl text-blue-500 tracking-tighter">00:00</span>
+        <div class="display-container">
+            <div class="display-overlay">
+                <header class="display-header">
+                    <div class="text-left text-blue-900">
+                        <h1 class="font-gaegu text-[8vh] leading-tight whitespace-nowrap drop-shadow-lg font-bold">친구들! 다음주에 만나요</h1>
+                        <p class="opacity-50 font-jua text-[3vh] uppercase tracking-[0.5em] ml-2 font-black">Happy Pickup Board</p>
                     </div>
+                    <div class="bg-white/90 backdrop-blur px-[3vw] py-[2vh] rounded-[2rem] shadow-xl border-4 border-white text-center">
+                        <span id="display-clock" class="font-jua text-[8vh] text-blue-500 tracking-tighter">00:00</span>
+                    </div>
+                </header>
+                <div class="ticker-container">
+                    <div id="display-grid" class="ticker-move"></div>
                 </div>
-            </header>
-            <div style="flex:1; overflow:hidden; position:relative; margin-top:20px;">
-                <div id="display-grid" class="ticker-move" style="position:absolute; width:100%; top:0; left:0; will-change:transform;"></div>
+                <button onclick="window.switchMode('parent')" class="absolute bottom-[4vh] right-[4vw] w-[8vh] h-[8vh] bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-blue-600 transition-all shadow-2xl border-2 border-white"><i class="fa-solid fa-house-chimney text-[4vh]"></i></button>
             </div>
-            <button onclick="window.switchMode('parent')" class="absolute bottom-16 right-16 w-24 h-24 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-blue-600 transition-all shadow-2xl border-2 border-white"><i class="fa-solid fa-house-chimney text-4xl"></i></button>
         </div>
     </div>
 
@@ -282,13 +293,13 @@
     <div id="network-error-modal" class="modal-overlay">
         <div class="notice-modal-content border-red-100">
             <div class="w-24 h-24 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-8"><i class="fa-solid fa-triangle-exclamation text-5xl"></i></div>
-            <h3 class="font-jua text-4xl text-slate-800 mb-6 font-bold text-red-500">연결 오류</h3>
+            <h3 class="font-jua text-4xl text-slate-800 mb-6 font-bold text-red-500 text-center">연결 오류</h3>
             <p class="font-gaegu text-2xl sm:text-3xl text-slate-600 leading-relaxed font-bold break-keep text-center">네트워크 연결이 불안정합니다.<br><span class="text-red-500 font-black">전도사님께 말씀해주세요!</span></p>
             <button onclick="location.reload()" class="w-full mt-10 py-8 bg-slate-800 text-white rounded-[3rem] font-jua text-2xl shadow-lg active:scale-95 transition-transform text-center">다시 연결 시도</button>
         </div>
     </div>
 
-    <!-- 모달: 호출 완료 (확인 버튼 복구됨) -->
+    <!-- 모달: 호출 완료 -->
     <div id="notice-modal" class="modal-overlay">
         <div class="notice-modal-content">
             <div class="close-x-btn" onclick="window.closeNoticeModal()"><i class="fa-solid fa-xmark"></i></div>
@@ -312,7 +323,7 @@
         </div>
     </div>
 
-    <div id="toast" class="fixed bottom-32 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white px-10 py-5 rounded-full font-jua text-2xl opacity-0 transition-all z-[999999] whitespace-nowrap">메시지</div>
+    <div id="toast" class="fixed bottom-32 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white px-10 py-5 rounded-full font-jua text-xl opacity-0 transition-all z-[999999] whitespace-nowrap">메시지</div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -355,7 +366,6 @@
         let allPickupCalls = [];
         const cardColors = ['bg-p-blue', 'bg-p-pink', 'bg-p-mint', 'bg-p-orange', 'bg-p-purple'];
 
-        // 모달 제어 함수 (window에 명시적으로 등록하여 버튼 먹통 해결)
         window.showNetworkError = () => { nodes.netErrorModal.style.display = 'flex'; };
         window.hideNetworkError = () => { nodes.netErrorModal.style.display = 'none'; };
         window.openNoticeModal = () => { nodes.noticeModal.style.display = 'flex'; };
@@ -391,24 +401,18 @@
         function hideLoading() {
             nodes.loading.style.opacity = '0';
             setTimeout(() => {
-                nodes.loading.style.display = 'none'; nodes.app.style.display = 'flex';
+                nodes.loading.style.display = 'none'; 
+                nodes.app.style.display = 'grid';
                 setTimeout(() => { nodes.app.style.opacity = '1'; window.switchMode('parent'); }, 30);
             }, 400);
         }
 
         window.switchMode = (mode) => {
             if (mode === 'settings' && !isAdminAuthorized) return;
-            if (mode === 'display') { 
-                nodes.app.style.display = 'none'; 
-                nodes.display.style.display = 'flex'; 
-                renderTicker(); 
-                return; 
-            }
-            nodes.app.style.display = 'flex'; 
-            nodes.display.style.display = 'none';
+            if (mode === 'display') { nodes.app.style.display = 'none'; nodes.display.style.display = 'flex'; renderTicker(); return; }
+            nodes.app.style.display = 'grid'; nodes.display.style.display = 'none';
             nodes.parentBox.style.display = (mode === 'parent') ? 'block' : 'none';
             nodes.settingsBox.style.display = (mode === 'settings') ? 'block' : 'none';
-
             ['parent', 'display', 'settings'].forEach(m => {
                 const n = document.getElementById(`nav-${m}`);
                 if(n) n.classList.replace('text-blue-600', 'text-slate-400');
