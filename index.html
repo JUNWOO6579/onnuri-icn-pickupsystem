@@ -29,7 +29,7 @@
         .font-jua { font-family: 'Jua', sans-serif; }
         .font-gaegu { font-family: 'Gaegu', cursive; }
 
-        /* [iPad 9.7인치 세로 4: 가로 3 최적화] */
+        /* [iPad 9.7인치 가로 3 : 세로 4 최적화] */
         #app {
             width: 100%; 
             /* iPad 세로 해상도(768px)에 맞춰 꽉 채움 */
@@ -44,7 +44,8 @@
             z-index: 10;
         }
 
-        .app-header { padding: 35px 0 15px 0; text-align: center; }
+        /* iPad에서 헤더 여백을 넉넉하게 주어 세로로 길게 느껴지게 함 */
+        .app-header { padding: 50px 0 30px 0; text-align: center; }
 
         .main-scroll-view {
             overflow: hidden;
@@ -58,8 +59,8 @@
             background: rgba(255, 255, 255, 0.95);
             border-radius: 2.5rem;
             margin: 0 25px 25px 25px;
-            padding: 35px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            padding: 40px; /* 내부 여백 확대 */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -76,19 +77,25 @@
 
         /* 하단 네비바 */
         .bottom-nav {
-            height: 90px;
+            height: 100px; /* 네비바 높이 소폭 확대 */
             background: rgba(255, 255, 255, 0.98); border-top: 1px solid #e2e8f0;
             display: flex; justify-content: space-around; align-items: center;
             padding-bottom: env(safe-area-inset-bottom); border-radius: 35px 35px 0 0;
             z-index: 1000;
         }
 
+        /* 버튼 디자인 - 태블릿에서 훨씬 커지도록 설정 */
         .class-btn {
             aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
-            font-size: 1.25rem; font-family: 'Jua', sans-serif; line-height: 1.1;
-            padding: 10px; text-align: center; word-break: keep-all; border-radius: 2rem;
-            background: white; border: 2px solid #f1f5f9; box-shadow: 0 5px 0 #e2e8f0;
+            font-size: 1.3rem; 
+            font-family: 'Jua', sans-serif; line-height: 1.1;
+            padding: 15px; text-align: center; word-break: keep-all; border-radius: 2.5rem;
+            background: white; border: 2px solid #f1f5f9; box-shadow: 0 6px 0 #e2e8f0;
             transition: all 0.1s ease; color: #334155; width: 100%;
+        }
+        /* iPad 해상도(sm)에서 텍스트 크기 추가 확대 */
+        @media (min-width: 640px) {
+            .class-btn { font-size: 2.1rem; border-radius: 3rem; }
         }
         .class-btn:active { transform: scale(0.94) translateY(2px); box-shadow: none; }
 
@@ -121,7 +128,7 @@
         @keyframes tickerScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
 
         .step-container { transition: all 0.4s ease-in-out; will-change: max-height, opacity; overflow: hidden; }
-        .roll-up { max-height: 0 !important; opacity: 0 !important; margin: 0 !important; padding: 0 !important; pointer-events: none; }
+        .roll-up { max-height: 0 !important; opacity: 0 !important; margin: 0 !important; padding: 0 !important; border: 0 !important; pointer-events: none; }
 
         #loading-overlay {
             position: fixed; inset: 0; background: white;
@@ -130,9 +137,9 @@
         }
 
         .copyright {
-            font-size: 0.8rem; color: #94a3b8; text-align: center; 
-            padding: 40px 0 10px 0; font-weight: bold; opacity: 0.7;
-            margin-top: 50px; border-top: 1px solid #f1f5f9;
+            font-size: 0.85rem; color: #94a3b8; text-align: center; 
+            padding: 50px 0 10px 0; font-weight: bold; opacity: 0.7;
+            margin-top: 60px; border-top: 1px solid #f1f5f9;
         }
 
         /* 팝업 모달 */
@@ -142,14 +149,14 @@
             z-index: 200000; backdrop-filter: blur(15px); padding: 20px;
         }
         .notice-modal-content {
-            background: white; border-radius: 4rem; width: 95%; max-width: 550px;
-            padding: 60px 50px; text-align: center; position: relative;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.3); border: 12px solid #f0f9ff;
+            background: white; border-radius: 4rem; width: 95%; max-width: 600px;
+            padding: 70px 50px; text-align: center; position: relative;
+            box-shadow: 0 40px 90px rgba(0,0,0,0.3); border: 12px solid #f0f9ff;
         }
         .close-x-btn {
-            position: absolute; top: 30px; right: 35px; width: 55px; height: 55px;
+            position: absolute; top: 35px; right: 40px; width: 60px; height: 60px;
             background: #f1f5f9; border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; color: #64748b; font-size: 32px; cursor: pointer;
+            justify-content: center; color: #64748b; font-size: 36px; cursor: pointer;
         }
     </style>
 </head>
@@ -166,69 +173,71 @@
     <div id="app" style="display: none; opacity: 0; transition: opacity 0.4s ease;">
         
         <header class="app-header">
-            <h1 class="font-gaegu text-5xl sm:text-6xl text-blue-600 drop-shadow-sm mb-2 font-bold">유치부 아이들 대기 waiting</h1>
-            <p class="text-[11px] sm:text-[13px] font-bold text-slate-400 tracking-[0.4em] uppercase font-black">Onnuri ICN Youth</p>
+            <h1 class="font-gaegu text-5xl sm:text-7xl text-blue-600 drop-shadow-sm mb-3 font-bold">유치부 아이들 대기 waiting</h1>
+            <p class="text-[12px] sm:text-[15px] font-bold text-slate-400 tracking-[0.4em] uppercase font-black">Onnuri ICN Youth</p>
         </header>
 
         <div class="main-scroll-view">
             <div class="glass-stage" id="main-glass-stage">
                 
                 <div id="container-parent">
-                    <!-- 1단계: 예배 선택 -->
+                    <!-- 1단계: 예배 선택 (태블릿에서 버튼 대폭 확대) -->
                     <div class="step-container" id="section-worship">
-                        <h2 class="font-jua text-2xl text-slate-700 mb-6 flex items-center gap-3 font-bold text-left">
+                        <h2 class="font-jua text-2xl sm:text-4xl text-slate-700 mb-8 flex items-center gap-4 font-bold text-left">
                             <i class="fa-solid fa-heart text-pink-400"></i> 1. 예배 선택
                         </h2>
-                        <div class="grid grid-cols-2 gap-6 mb-12">
-                            <button onclick="selectPartAndRollUp('유치1부')" class="py-12 border-2 border-blue-50 text-blue-600 font-jua text-4xl rounded-[3rem] shadow-sm bg-blue-50/20 active:bg-blue-100 transition-all">유치1부</button>
-                            <button onclick="selectPartAndRollUp('유치2부')" class="py-12 border-2 border-orange-50 text-orange-600 font-jua text-4xl rounded-[3rem] shadow-sm bg-orange-50/30 active:bg-orange-100 transition-all">유치2부</button>
+                        <div class="grid grid-cols-2 gap-8 mb-16">
+                            <button onclick="selectPartAndRollUp('유치1부')" class="py-16 border-2 border-blue-50 text-blue-600 font-jua text-5xl sm:text-6xl rounded-[4rem] shadow-sm bg-blue-50/20 active:bg-blue-100 transition-all">유치1부</button>
+                            <button onclick="selectPartAndRollUp('유치2부')" class="py-16 border-2 border-orange-50 text-orange-600 font-jua text-5xl sm:text-6xl rounded-[4rem] shadow-sm bg-orange-50/30 active:bg-orange-100 transition-all">유치2부</button>
                         </div>
                     </div>
 
-                    <!-- 2단계: 반 선택 (iPad 최적화: 한 줄에 6개 고정) -->
+                    <!-- 2단계: 반 선택 (iPad 최적화: 한 줄에 4개로 줄여서 버튼을 크게 만듦) -->
                     <div id="section-class" class="step-container hidden">
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="font-jua text-2xl text-slate-700 flex items-center gap-3 font-bold text-left">
+                        <div class="flex justify-between items-center mb-8">
+                            <h2 class="font-jua text-2xl sm:text-4xl text-slate-700 flex items-center gap-4 font-bold text-left">
                                 <i class="fa-solid fa-school text-orange-400"></i> 2. 우리 반 선택
                             </h2>
-                            <button onclick="resetWorshipSelection()" class="text-base text-slate-400 underline font-bold px-4">다시 선택</button>
+                            <button onclick="resetWorshipSelection()" class="text-lg text-slate-400 underline font-bold px-4">다시 선택</button>
                         </div>
-                        <div id="grid-classes" class="grid grid-cols-4 sm:grid-cols-6 gap-4 mb-12"></div>
+                        <div id="grid-classes" class="grid grid-cols-3 sm:grid-cols-4 gap-6 mb-16"></div>
                     </div>
 
-                    <!-- 3단계: 이름 선택 (iPad 최적화: 한 줄에 5개 고정) -->
+                    <!-- 3단계: 이름 선택 (iPad 최적화: 한 줄에 3개로 구성하여 이름 강조) -->
                     <div id="section-name" class="step-container hidden">
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="font-jua text-2xl text-slate-700 flex items-center gap-3 font-bold text-left">
+                        <div class="flex justify-between items-center mb-8">
+                            <h2 class="font-jua text-2xl sm:text-4xl text-slate-700 flex items-center gap-4 font-bold text-left">
                                 <i class="fa-solid fa-child-reaching text-green-400"></i> 3. 아이 이름 클릭
                             </h2>
-                            <button onclick="backToClassSelection()" class="text-base text-slate-400 underline font-bold px-4">반 다시 선택</button>
+                            <button onclick="backToClassSelection()" class="text-lg text-slate-400 underline font-bold px-4">반 다시 선택</button>
                         </div>
-                        <div id="grid-names" class="grid grid-cols-3 sm:grid-cols-5 gap-4 mb-12"></div>
+                        <div id="grid-names" class="grid grid-cols-2 sm:grid-cols-3 gap-6 mb-16"></div>
                     </div>
 
-                    <div id="section-manual" class="pt-10 border-t border-slate-100 mt-8 mb-4 text-left">
-                        <h2 class="font-gaegu text-3xl text-pink-500 mb-6 font-bold">방문/새친구 이름</h2>
-                        <div class="flex gap-4">
-                            <input type="text" id="manual-input" class="flex-1 p-6 bg-slate-50 rounded-3xl border-none font-bold text-2xl shadow-inner focus:ring-2 focus:ring-pink-200" placeholder="이름 입력">
-                            <button onclick="sendManualCall()" class="bg-pink-500 text-white font-jua px-10 rounded-3xl shadow-lg active:scale-95 text-2xl">호출</button>
+                    <!-- 수동 호출 영역 -->
+                    <div id="section-manual" class="pt-12 border-t border-slate-100 mt-12 mb-6 text-left">
+                        <h2 class="font-gaegu text-4xl text-pink-500 mb-8 font-bold">방문/새친구 이름</h2>
+                        <div class="flex gap-5">
+                            <input type="text" id="manual-input" class="flex-1 p-8 bg-slate-50 rounded-[2.5rem] border-none font-bold text-3xl shadow-inner focus:ring-4 focus:ring-pink-100" placeholder="이름 입력">
+                            <button onclick="sendManualCall()" class="bg-pink-500 text-white font-jua px-12 rounded-[2.5rem] shadow-xl active:scale-95 text-3xl">호출</button>
                         </div>
                     </div>
                 </div>
 
+                <!-- 설정 화면 -->
                 <div id="container-settings" class="hidden text-left">
-                    <h2 class="font-jua text-3xl text-slate-800 mb-10 font-bold text-center">시스템 관리</h2>
-                    <div class="max-w-2xl mx-auto space-y-12">
+                    <h2 class="font-jua text-4xl text-slate-800 mb-12 font-bold text-center">시스템 관리</h2>
+                    <div class="max-w-2xl mx-auto space-y-16">
                         <div>
-                            <h3 class="font-bold text-slate-800 text-xl flex items-center gap-3 mb-4"><i class="fa-solid fa-file-excel text-emerald-500"></i> 명단 업데이트</h3>
-                            <input type="file" id="excelInput" accept=".xlsx, .xls" class="block w-full text-sm text-slate-500 file:mr-6 file:py-4 file:px-10 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-emerald-50 file:text-emerald-700 cursor-pointer"/>
-                            <button id="importBtn" class="w-full py-6 bg-emerald-600 text-white rounded-[2.5rem] font-jua text-2xl shadow-xl mt-6">데이터 서버 업데이트</button>
+                            <h3 class="font-bold text-slate-800 text-2xl flex items-center gap-4 mb-6"><i class="fa-solid fa-file-excel text-emerald-500"></i> 명단 업데이트</h3>
+                            <input type="file" id="excelInput" accept=".xlsx, .xls" class="block w-full text-base text-slate-500 file:mr-6 file:py-5 file:px-12 file:rounded-full file:border-0 file:font-bold file:bg-emerald-50 file:text-emerald-700 cursor-pointer"/>
+                            <button id="importBtn" class="w-full py-8 bg-emerald-600 text-white rounded-[3rem] font-jua text-3xl shadow-xl mt-10">데이터 서버 업데이트</button>
                         </div>
-                        <div class="pt-10 border-t border-red-50">
-                            <h3 class="font-bold text-red-500 text-xl mb-6">기록 초기화</h3>
-                            <button onclick="clearAllServerCalls()" class="w-full py-6 bg-red-500 text-white rounded-[2.5rem] font-jua text-2xl shadow-xl">전광판 명단 비우기</button>
+                        <div class="pt-12 border-t border-red-50">
+                            <h3 class="font-bold text-red-500 text-2xl mb-8">기록 초기화</h3>
+                            <button onclick="clearAllServerCalls()" class="w-full py-8 bg-red-500 text-white rounded-[3rem] font-jua text-3xl shadow-xl">전광판 명단 비우기</button>
                         </div>
-                        <div class="text-center pt-10"><button onclick="logoutAdmin()" class="text-sm text-slate-400 underline">로그아웃</button></div>
+                        <div class="text-center pt-16"><button onclick="logoutAdmin()" class="text-lg text-slate-400 underline">로그아웃</button></div>
                     </div>
                 </div>
 
@@ -239,9 +248,9 @@
         </div>
 
         <nav class="bottom-nav">
-            <button onclick="switchMode('parent')" id="nav-parent" class="flex flex-col items-center gap-2 text-blue-600 transition-all"><i class="fa-solid fa-tablet-screen-button text-3xl"></i><span class="text-xs font-bold uppercase">호출기</span></button>
-            <button onclick="switchMode('display')" id="nav-display" class="flex flex-col items-center gap-2 text-slate-400 transition-all"><i class="fa-solid fa-desktop text-3xl"></i><span class="text-xs font-bold uppercase">전광판</span></button>
-            <button onclick="requestAdminAccess()" id="nav-settings" class="flex flex-col items-center gap-2 text-slate-400 transition-all"><i class="fa-solid fa-user-lock text-3xl"></i><span class="text-xs font-bold uppercase">설정</span></button>
+            <button onclick="switchMode('parent')" id="nav-parent" class="flex flex-col items-center gap-3 text-blue-600 transition-all"><i class="fa-solid fa-tablet-screen-button text-4xl"></i><span class="text-sm font-bold uppercase tracking-widest">호출기</span></button>
+            <button onclick="switchMode('display')" id="nav-display" class="flex flex-col items-center gap-3 text-slate-400 transition-all"><i class="fa-solid fa-desktop text-4xl"></i><span class="text-sm font-bold uppercase tracking-widest">전광판</span></button>
+            <button onclick="requestAdminAccess()" id="nav-settings" class="flex flex-col items-center gap-3 text-slate-400 transition-all"><i class="fa-solid fa-user-lock text-4xl"></i><span class="text-sm font-bold uppercase tracking-widest">설정</span></button>
         </nav>
     </div>
 
@@ -250,32 +259,32 @@
         <div class="display-overlay">
             <header class="flex justify-between items-start mb-1 px-2">
                 <div class="text-left text-blue-900">
-                    <h1 class="font-gaegu text-[4.8rem] leading-tight whitespace-nowrap drop-shadow-lg font-bold">친구들! 다음주에 만나요</h1>
-                    <p class="opacity-50 font-jua text-2xl uppercase tracking-[0.4em] ml-2 font-black">Happy Pickup Board</p>
+                    <h1 class="font-gaegu text-[5.5rem] leading-tight whitespace-nowrap drop-shadow-lg font-bold">친구들! 다음주에 만나요</h1>
+                    <p class="opacity-50 font-jua text-3xl uppercase tracking-[0.5em] ml-2 font-black">Happy Pickup Board</p>
                 </div>
                 <div class="flex flex-col items-end gap-2 pt-1">
-                    <div class="bg-white/90 backdrop-blur px-10 py-5 rounded-3xl shadow-xl border-4 border-white text-center">
-                        <span id="display-clock" class="font-jua text-6xl text-blue-500 tracking-tighter">00:00</span>
+                    <div class="bg-white/90 backdrop-blur px-12 py-6 rounded-[2.5rem] shadow-xl border-4 border-white text-center">
+                        <span id="display-clock" class="font-jua text-7xl text-blue-500 tracking-tighter">00:00</span>
                     </div>
                 </div>
             </header>
-            <div style="flex:1; overflow:hidden; position:relative; margin-top:15px;">
+            <div style="flex:1; overflow:hidden; position:relative; margin-top:20px;">
                 <div id="display-grid" class="ticker-move" style="position:absolute; width:100%; top:0; left:0; will-change:transform;"></div>
             </div>
-            <button onclick="switchMode('parent')" class="absolute bottom-12 right-12 w-24 h-24 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-blue-600 transition-all shadow-2xl border-2 border-white"><i class="fa-solid fa-house-chimney text-4xl"></i></button>
+            <button onclick="switchMode('parent')" class="absolute bottom-16 right-16 w-28 h-28 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-blue-600 transition-all shadow-2xl border-2 border-white"><i class="fa-solid fa-house-chimney text-5xl"></i></button>
         </div>
     </div>
 
-    <!-- 모달: 안내 -->
+    <!-- 모달: 안내 (태블릿 크기에 맞춰 초대형으로 조정) -->
     <div id="notice-modal" class="modal-overlay" style="display: none !important;">
         <div class="notice-modal-content">
             <div class="close-x-btn" onclick="closeNoticeModal()"><i class="fa-solid fa-xmark"></i></div>
-            <div class="w-28 h-28 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-10"><i class="fa-solid fa-bell-concierge text-6xl"></i></div>
-            <h3 class="font-jua text-5xl text-slate-800 mb-8 font-bold text-center">호출 완료!</h3>
-            <p class="font-gaegu text-4xl text-slate-600 leading-relaxed font-bold text-center break-keep">
+            <div class="w-32 h-32 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-12"><i class="fa-solid fa-bell-concierge text-7xl"></i></div>
+            <h3 class="font-jua text-6xl text-slate-800 mb-10 font-bold text-center">호출 완료!</h3>
+            <p class="font-gaegu text-5xl text-slate-600 leading-relaxed font-bold text-center break-keep">
                 샬롬! 부모님들께서는 오신 순서대로,<br>줄을 서서 기다려주시면, 차례대로<br>아이들이 나올 수 있게 도와드리겠습니다.<br>감사합니다!
             </p>
-            <button onclick="closeNoticeModal()" class="w-full mt-12 py-8 bg-blue-600 text-white rounded-[3rem] font-jua text-3xl shadow-lg active:scale-95 transition-transform">확인</button>
+            <button onclick="closeNoticeModal()" class="w-full mt-16 py-10 bg-blue-600 text-white rounded-[4rem] font-jua text-4xl shadow-lg active:scale-95 transition-transform">확인</button>
         </div>
     </div>
 
@@ -286,21 +295,21 @@
             <div class="w-24 h-24 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-8"><i class="fa-solid fa-triangle-exclamation text-5xl"></i></div>
             <h3 class="font-jua text-4xl text-slate-800 mb-6 font-bold text-red-500 text-center">연결 오류</h3>
             <p class="font-gaegu text-3xl text-slate-600 leading-relaxed font-bold break-keep text-center">네트워크 연결이 불안정합니다.<br><span class="text-red-500">전도사님께 문의해주세요!</span></p>
-            <button onclick="location.reload()" class="w-full mt-10 py-6 bg-slate-800 text-white rounded-[2.5rem] font-jua text-2xl shadow-lg active:scale-95 transition-transform text-center">다시 연결 시도</button>
+            <button onclick="location.reload()" class="w-full mt-10 py-8 bg-slate-800 text-white rounded-[3rem] font-jua text-3xl shadow-lg active:scale-95 transition-transform text-center">다시 연결 시도</button>
         </div>
     </div>
 
     <!-- 모달: 관리자 인증 -->
     <div id="auth-modal" class="modal-overlay" style="display: none !important;">
-        <div class="bg-white rounded-[5rem] w-full max-w-[450px] p-16 shadow-2xl text-center space-y-10">
-            <div class="w-24 h-24 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto"><i class="fa-solid fa-lock text-5xl"></i></div>
-            <h3 class="font-jua text-4xl text-slate-800 font-bold text-center">관리자 인증</h3>
-            <input type="password" id="authPwInput" class="w-full p-8 bg-slate-100 rounded-[2.5rem] text-center font-bold text-6xl border-none focus:ring-4 focus:ring-blue-200" placeholder="****">
-            <div class="flex gap-4"><button onclick="closeAuthModal()" class="flex-1 py-6 bg-slate-100 text-slate-500 rounded-[2.5rem] font-bold text-xl text-center">취소</button><button onclick="confirmAdminAuth()" class="flex-1 py-6 bg-blue-600 text-white rounded-[2.5rem] font-bold shadow-lg text-xl text-center">확인</button></div>
+        <div class="bg-white rounded-[5rem] w-full max-w-[500px] p-20 shadow-2xl text-center space-y-12">
+            <div class="w-28 h-28 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto"><i class="fa-solid fa-lock text-6xl"></i></div>
+            <h3 class="font-jua text-5xl text-slate-800 font-bold text-center">관리자 인증</h3>
+            <input type="password" id="authPwInput" class="w-full p-10 bg-slate-100 rounded-[3rem] text-center font-bold text-7xl border-none focus:ring-4 focus:ring-blue-200" placeholder="****">
+            <div class="flex gap-5"><button onclick="closeAuthModal()" class="flex-1 py-8 bg-slate-100 text-slate-500 rounded-[3rem] font-bold text-2xl text-center">취소</button><button onclick="confirmAdminAuth()" class="flex-1 py-8 bg-blue-600 text-white rounded-[3rem] font-bold shadow-lg text-2xl text-center">확인</button></div>
         </div>
     </div>
 
-    <div id="toast" class="fixed bottom-32 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white px-10 py-5 rounded-full font-jua text-lg opacity-0 transition-all z-[999999] whitespace-nowrap">메시지</div>
+    <div id="toast" class="fixed bottom-32 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white px-12 py-6 rounded-full font-jua text-2xl opacity-0 transition-all z-[999999] whitespace-nowrap">메시지</div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -412,7 +421,10 @@
             const fragment = document.createDocumentFragment();
             if (cls.students) {
                 cls.students.forEach(name => {
-                    const btn = document.createElement('button'); btn.className = "py-4 sm:py-6 bg-green-500 text-white font-jua rounded-3xl shadow-md active:translate-y-1 text-center text-xl"; btn.innerText = name; btn.onclick = () => sendCallToFirebase(cls.name, name); fragment.appendChild(btn);
+                    const btn = document.createElement('button'); 
+                    // iPad에서 이름 버튼 크기 확대
+                    btn.className = "py-8 sm:py-12 bg-green-500 text-white font-jua rounded-[2.5rem] shadow-md active:translate-y-1 text-center text-4xl"; 
+                    btn.innerText = name; btn.onclick = () => sendCallToFirebase(cls.name, name); fragment.appendChild(btn);
                 });
             }
             grid.appendChild(fragment); nodes.scrollArea.scrollTo({ top: 0, behavior: 'smooth' });
