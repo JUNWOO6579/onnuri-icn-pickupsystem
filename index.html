@@ -24,51 +24,52 @@
             margin: 0; padding: 0;
             height: 100dvh; width: 100vw;
             overflow: hidden; /* 바디 스크롤 차단 */
+            position: fixed; /* iOS 바운스 방지 */
         }
 
         .font-jua { font-family: 'Jua', sans-serif; }
         .font-gaegu { font-family: 'Gaegu', cursive; }
 
-        /* [iPad 10.2인치 대응 최적화] */
+        /* [iPad 10.2인치 4:3 대응 최적화] */
         #app {
             width: 100%; 
-            max-width: 700px; /* 요청하신 대로 가로 폭을 살짝 줄임 (기존 768px) */
+            max-width: 700px; /* iPad 가로폭 최적화 */
             height: 100dvh;
             background: #fff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important;
             position: relative; 
-            display: grid;
-            grid-template-rows: auto 1fr auto; /* 헤더-메인-네비바 3단 고정 */
+            display: flex;
+            flex-direction: column;
             box-shadow: 0 0 40px rgba(0,0,0,0.1);
             margin: 0 auto; 
             z-index: 10;
         }
 
         /* 헤더 여백 */
-        .app-header { padding: 25px 0 10px 0; text-align: center; }
+        .app-header { padding: 25px 0 10px 0; text-align: center; flex: none; }
 
+        /* [스크롤 엔진 개선] */
         .main-scroll-view {
+            flex: 1;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             min-height: 0;
         }
 
-        /* [스크롤 엔진] 중앙 흰색 상자 */
+        /* [iPad 전용 터치 스크롤 강화] */
         .glass-stage {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 2.5rem;
             margin: 0 20px 15px 20px;
-            padding: 25px 25px; 
+            padding: 20px 25px; 
             box-shadow: 0 15px 30px rgba(0,0,0,0.06);
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto; 
+            overflow-y: auto !important; /* 스크롤 강제 활성화 */
             overflow-x: hidden;
             border: 4px solid #fff;
             backdrop-filter: blur(10px);
+            -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
             min-height: 0;
-            -webkit-overflow-scrolling: touch;
         }
 
         .glass-stage::-webkit-scrollbar { width: 6px; }
@@ -80,6 +81,7 @@
             background: rgba(255, 255, 255, 0.98); border-top: 1px solid #e2e8f0;
             display: flex; justify-content: space-around; align-items: center;
             padding-bottom: env(safe-area-inset-bottom); border-radius: 35px 35px 0 0;
+            flex: none;
             z-index: 1000;
         }
 
@@ -157,17 +159,18 @@
         <div class="main-scroll-view">
             <div class="glass-stage" id="main-glass-stage">
                 <div id="container-parent">
-                    <!-- 1단계: 예배 선택 (요청하신 대로 세로 높이 축소: py-8) -->
+                    <!-- 1단계: 예배 선택 (높이 대폭 축소: py-4 sm:py-5) -->
                     <div class="step-container" id="section-worship">
                         <h2 class="font-jua text-xl sm:text-2xl text-slate-700 mb-3 flex items-center gap-3 font-bold text-left">
                             <i class="fa-solid fa-heart text-pink-400"></i> 1. 예배 선택
                         </h2>
                         <div class="grid grid-cols-2 gap-4 mb-8">
-                            <button onclick="selectPartAndRollUp('유치1부')" class="py-6 sm:py-8 border-2 border-blue-50 text-blue-600 font-jua text-3xl sm:text-4xl rounded-[2.5rem] shadow-sm bg-blue-50/20 active:bg-blue-100 transition-all">유치1부</button>
-                            <button onclick="selectPartAndRollUp('유치2부')" class="py-6 sm:py-8 border-2 border-orange-50 text-orange-600 font-jua text-3xl sm:text-4xl rounded-[2.5rem] shadow-sm bg-orange-50/30 active:bg-orange-100 transition-all">유치2부</button>
+                            <button onclick="selectPartAndRollUp('유치1부')" class="py-4 sm:py-5 border-2 border-blue-50 text-blue-600 font-jua text-3xl sm:text-4xl rounded-[2.5rem] shadow-sm bg-blue-50/20 active:bg-blue-100 transition-all">유치1부</button>
+                            <button onclick="selectPartAndRollUp('유치2부')" class="py-4 sm:py-5 border-2 border-orange-50 text-orange-600 font-jua text-3xl sm:text-4xl rounded-[2.5rem] shadow-sm bg-orange-50/30 active:bg-orange-100 transition-all">유치2부</button>
                         </div>
                     </div>
 
+                    <!-- 2단계: 반 선택 -->
                     <div id="section-class" class="step-container hidden">
                         <div class="flex justify-between items-center mb-4">
                             <h2 class="font-jua text-xl sm:text-2xl text-slate-700 flex items-center gap-3 font-bold text-left">
@@ -178,6 +181,7 @@
                         <div id="grid-classes" class="grid grid-cols-3 sm:grid-cols-4 gap-4 mb-8"></div>
                     </div>
 
+                    <!-- 3단계: 이름 선택 -->
                     <div id="section-name" class="step-container hidden">
                         <div class="flex justify-between items-center mb-4">
                             <h2 class="font-jua text-xl sm:text-2xl text-slate-700 flex items-center gap-3 font-bold text-left">
@@ -188,7 +192,7 @@
                         <div id="grid-names" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8"></div>
                     </div>
 
-                    <!-- 수동 호출 영역 (버튼이 밖으로 나가지 않게 flex-1 + min-w-0 적용) -->
+                    <!-- 수동 호출 영역 -->
                     <div id="section-manual" class="pt-6 border-t border-slate-100 mt-6 mb-2 text-left">
                         <h2 class="font-gaegu text-2xl sm:text-3xl text-pink-500 mb-4 font-bold">방문/새친구 이름</h2>
                         <div class="flex gap-3 items-stretch w-full">
@@ -198,7 +202,6 @@
                     </div>
                 </div>
 
-                <!-- 설정 화면 -->
                 <div id="container-settings" class="hidden text-left">
                     <h2 class="font-jua text-3xl sm:text-4xl text-slate-800 mb-8 font-bold text-center">시스템 관리</h2>
                     <div class="max-w-2xl mx-auto space-y-10">
@@ -266,7 +269,7 @@
             <div class="close-x-btn" onclick="location.reload()"><i class="fa-solid fa-rotate-right"></i></div>
             <div class="w-24 h-24 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-8"><i class="fa-solid fa-triangle-exclamation text-5xl"></i></div>
             <h3 class="font-jua text-4xl text-slate-800 mb-6 font-bold text-red-500">연결 오류</h3>
-            <p class="font-gaegu text-2xl sm:text-4xl text-slate-600 leading-relaxed font-bold break-keep text-center">네트워크 연결이 불안정합니다.<br><span class="text-red-500 font-black">전도사님께 말씀해주세요!</span></p>
+            <p class="font-gaegu text-2xl sm:text-3xl text-slate-600 leading-relaxed font-bold break-keep text-center">네트워크 연결이 불안정합니다.<br><span class="text-red-500 font-black">전도사님께 말씀해주세요!</span></p>
             <button onclick="location.reload()" class="w-full mt-10 py-8 bg-slate-800 text-white rounded-[3rem] font-jua text-2xl shadow-lg active:scale-95 transition-transform text-center">다시 연결 시도</button>
         </div>
     </div>
@@ -324,7 +327,6 @@
         let allPickupCalls = [];
         const cardColors = ['bg-p-blue', 'bg-p-pink', 'bg-p-mint', 'bg-p-orange', 'bg-p-purple'];
 
-        // 네트워크 모달 로직
         window.showNetworkError = () => { nodes.netErrorModal.classList.add('modal-active'); };
         window.hideNetworkError = () => { nodes.netErrorModal.classList.remove('modal-active'); };
 
@@ -357,7 +359,7 @@
         function hideLoading() {
             nodes.loading.style.opacity = '0';
             setTimeout(() => {
-                nodes.loading.style.display = 'none'; nodes.app.style.display = 'grid';
+                nodes.loading.style.display = 'none'; nodes.app.style.display = 'flex';
                 setTimeout(() => { nodes.app.style.opacity = '1'; switchMode('parent'); }, 30);
             }, 400);
         }
@@ -365,7 +367,7 @@
         window.switchMode = (mode) => {
             if (mode === 'settings' && !isAdminAuthorized) return;
             if (mode === 'display') { nodes.app.style.display = 'none'; nodes.display.style.display = 'flex'; renderTicker(); return; }
-            nodes.app.style.display = 'grid'; nodes.display.style.display = 'none';
+            nodes.app.style.display = 'flex'; nodes.display.style.display = 'none';
             nodes.parentBox.style.display = (mode === 'parent') ? 'block' : 'none';
             nodes.settingsBox.style.display = (mode === 'settings') ? 'block' : 'none';
             ['parent', 'display', 'settings'].forEach(m => {
