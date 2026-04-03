@@ -6,10 +6,10 @@
     <title>온누리 유치부 호출 시스템</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Excel Processing Library -->
+    <!-- 엑셀 처리 라이브러리 -->
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
     <style>
-        /* 큐티 프리미엄 폰트 시스템 */
+        /* 폰트 및 컬러 시스템 */
         @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Jua&family=Nanum+Gothic:wght@400;700;800&display=swap');
         
         :root {
@@ -23,28 +23,26 @@
             background-color: #f1f5f9;
             margin: 0; padding: 0;
             height: 100dvh; width: 100vw;
-            overflow: hidden; /* 바디 스크롤 원천 차단 */
+            overflow: hidden; /* 바디 스크롤 차단 */
         }
 
         .font-jua { font-family: 'Jua', sans-serif; }
         .font-gaegu { font-family: 'Gaegu', cursive; }
 
-        /* [스크롤 고정 레이아웃] 앱 전체 컨테이너 */
+        /* [스크롤 고정 레이아웃 - 절대 수정 금지 영역] */
         #app {
             width: 100%; max-width: 450px; height: 100dvh;
             background: #fff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important;
             position: relative; 
             display: grid;
-            grid-template-rows: auto 1fr auto; /* 헤더(자동) - 메인(스크롤) - 네비바(자동) */
+            grid-template-rows: auto 1fr auto; 
             box-shadow: 0 0 50px rgba(0,0,0,0.15);
             margin: 0 auto; z-index: 10;
         }
 
-        /* 고정 헤더 */
-        .app-header { padding: 25px 0 10px 0; text-align: center; flex-shrink: 0; }
+        .app-header { padding: 25px 0 10px 0; text-align: center; }
 
-        /* [절대 수정 금지: 스크롤 엔진] 하얀색 컨테이너 내부 스크롤 방식 */
-        .main-scroll-container {
+        .main-scroll-view {
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -57,20 +55,21 @@
             margin: 0 15px 15px 15px;
             padding: 25px 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto; 
+            overflow-x: hidden;
             border: 4px solid #fff;
             backdrop-filter: blur(8px);
-            
-            flex: 1;
-            overflow-y: auto; /* 직접 스크롤 */
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
             min-height: 0;
+            -webkit-overflow-scrolling: touch;
         }
 
         .glass-stage::-webkit-scrollbar { width: 4px; }
         .glass-stage::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
-        /* 하단 네비바 */
+        /* 네비게이션 및 버튼 스타일 */
         .bottom-nav {
             height: 80px;
             background: rgba(255, 255, 255, 0.98); border-top: 1px solid #e2e8f0;
@@ -79,7 +78,6 @@
             z-index: 1000;
         }
 
-        /* 버튼 디자인 */
         .class-btn {
             aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
             font-size: 1.1rem; font-family: 'Jua', sans-serif; line-height: 1.1;
@@ -89,7 +87,7 @@
         }
         .class-btn:active { transform: scale(0.92) translateY(2px); box-shadow: none; }
 
-        /* 전광판 모드 */
+        /* 전광판 레이아웃 */
         #view-display {
             position: fixed; inset: 0; z-index: 9000;
             background: #f0f9ff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important;
@@ -116,7 +114,7 @@
 
         @keyframes tickerScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
 
-        /* 애니메이션 */
+        /* 애니메이션 효과 */
         .step-container { transition: all 0.4s ease-in-out; will-change: max-height, opacity; overflow: hidden; }
         .roll-up { max-height: 0 !important; opacity: 0 !important; margin: 0 !important; padding: 0 !important; pointer-events: none; }
 
@@ -141,7 +139,7 @@
         .notice-modal-content {
             background: white; border-radius: 3rem; width: 95%; max-width: 380px;
             padding: 40px 30px; text-align: center; position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2); border: 8px solid #f0f9ff;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 8px solid #f0f9ff;
         }
         .close-x-btn {
             position: absolute; top: 20px; right: 25px; width: 40px; height: 40px;
@@ -152,25 +150,25 @@
 </head>
 <body>
 
+    <!-- 로딩 화면 -->
     <div id="loading-overlay">
         <div class="flex flex-col items-center">
-            <div class="animate-bounce mb-4 text-blue-400 text-7xl"><i class="fa-solid fa-face-smile-beam"></i></div>
-            <p class="font-jua text-2xl text-slate-400 text-center px-6">시스템 로딩 중...</p>
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+            <p class="font-jua text-2xl text-slate-400 text-center px-6">시스템 연결 중...</p>
         </div>
     </div>
 
-    <!-- 앱 전체 -->
     <div id="app" style="display: none; opacity: 0; transition: opacity 0.4s ease;">
         
         <header class="app-header">
+            <!-- 요청하신 대로 텍스트 수정 -->
             <h1 class="font-gaegu text-4xl text-blue-600 drop-shadow-sm mb-1 font-bold">유치부 아이들 대기 waiting</h1>
             <p class="text-[9px] font-bold text-slate-400 tracking-[0.3em] uppercase font-black">Onnuri ICN Youth</p>
         </header>
 
-        <div class="main-scroll-container">
+        <div class="main-scroll-view">
             <div class="glass-stage" id="main-glass-stage">
                 
-                <!-- 호출기 화면 -->
                 <div id="container-parent">
                     <div class="step-container" id="section-worship">
                         <h2 class="font-jua text-lg text-slate-700 mb-4 flex items-center gap-2 font-bold text-left">
@@ -211,7 +209,6 @@
                     </div>
                 </div>
 
-                <!-- 설정 화면 -->
                 <div id="container-settings" class="hidden text-left">
                     <h2 class="font-jua text-2xl text-slate-800 mb-6 font-bold text-center">시스템 관리</h2>
                     <div class="space-y-8">
@@ -228,7 +225,6 @@
                     </div>
                 </div>
 
-                <!-- 공통 저작권 -->
                 <div class="copyright">
                     © 2026. 옥준우 All rights reserved.
                 </div>
@@ -263,7 +259,7 @@
         </div>
     </div>
 
-    <!-- 안내 팝업 -->
+    <!-- 모달: 안내 -->
     <div id="notice-modal" class="modal-overlay" style="display: none !important;">
         <div class="notice-modal-content">
             <div class="close-x-btn" onclick="closeNoticeModal()"><i class="fa-solid fa-xmark"></i></div>
@@ -276,18 +272,18 @@
         </div>
     </div>
 
-    <!-- 네트워크 오류 팝업 -->
+    <!-- 모달: 연결 오류 -->
     <div id="network-error-modal" class="modal-overlay" style="display: none !important;">
         <div class="notice-modal-content border-red-100">
             <div class="close-x-btn" onclick="location.reload()"><i class="fa-solid fa-rotate-right"></i></div>
             <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6"><i class="fa-solid fa-triangle-exclamation text-3xl"></i></div>
             <h3 class="font-jua text-2xl text-slate-800 mb-4 font-bold text-red-500 text-center">연결 오류</h3>
             <p class="font-gaegu text-xl text-slate-600 leading-relaxed font-bold break-keep text-center">네트워크 연결이 불안정합니다.<br><span class="text-red-500">전도사님께 문의해주세요!</span></p>
-            <button onclick="location.reload()" class="w-full mt-8 py-4 bg-slate-800 text-white rounded-3xl font-jua text-xl shadow-lg active:scale-95 transition-transform">다시 연결 시도</button>
+            <button onclick="location.reload()" class="w-full mt-8 py-4 bg-slate-800 text-white rounded-3xl font-jua text-xl shadow-lg active:scale-95 transition-transform text-center">다시 연결 시도</button>
         </div>
     </div>
 
-    <!-- 관리자 인증 모달 -->
+    <!-- 모달: 관리자 인증 -->
     <div id="auth-modal" class="modal-overlay" style="display: none !important;">
         <div class="bg-white rounded-[4rem] w-full max-w-[360px] p-12 shadow-2xl text-center space-y-6">
             <div class="w-20 h-20 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto"><i class="fa-solid fa-lock text-4xl"></i></div>
@@ -305,19 +301,19 @@
         import { getFirestore, doc, setDoc, onSnapshot, collection, deleteDoc, addDoc, serverTimestamp, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyB0a28S4lqXIrEc8l0-ik6Z5FUX53kNbC4",
-            authDomain: "onnuri-icn-pickup.firebaseapp.com",
-            projectId: "onnuri-icn-pickup",
-            storageBucket: "onnuri-icn-pickup.firebasestorage.app",
-            messagingSenderId: "227891248834",
-            appId: "1:227891248834:web:e593f212fe7d049e39455b",
-            measurementId: "G-0P55H09XZY"
+            apiKey: "AIzaSyAlp-PpxgxPBXj0Ek1H-b52GjwiU8KyD5A",
+            authDomain: "onnurichurch-icn-youth.firebaseapp.com",
+            projectId: "onnurichurch-icn-youth",
+            storageBucket: "onnurichurch-icn-youth.firebasestorage.app",
+            messagingSenderId: "89074216999",
+            appId: "1:89074216999:web:1798e414726b1e4af75e02",
+            measurementId: "G-L3VMY8M75B"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appIdStr = 'onnuri-pickup-final-v59';
+        const appIdStr = 'onnuri-pickup-vFinal-Seamless-V58-Fix-Reference';
 
         const nodes = {
             app: document.getElementById('app'),
@@ -340,26 +336,16 @@
         let allPickupCalls = [];
         const cardColors = ['bg-p-blue', 'bg-p-pink', 'bg-p-mint', 'bg-p-orange', 'bg-p-purple'];
 
-        // 알림 함수 전역 등록
         window.showToast = (m) => {
             const t = document.getElementById('toast');
             if (t) { t.innerText = m; t.classList.add('opacity-100'); setTimeout(() => t.classList.remove('opacity-100'), 2000); }
         };
 
-        const safetyTimeout = setTimeout(() => { 
-            if (nodes.loading.style.display !== 'none') { 
-                nodes.loading.style.display = 'none';
-                nodes.netErrorModal.style.setProperty('display', 'flex', 'important');
-            } 
-        }, 8000);
+        const safetyTimeout = setTimeout(() => { if (nodes.loading.style.display !== 'none') { nodes.loading.style.display = 'none'; nodes.netErrorModal.style.setProperty('display', 'flex', 'important'); } }, 7500);
 
         async function init() {
-            try {
-                await signInAnonymously(auth);
-                onAuthStateChanged(auth, (user) => { if (user) fetchData(); });
-            } catch (e) { 
-                nodes.netErrorModal.style.setProperty('display', 'flex', 'important');
-            }
+            try { await signInAnonymously(auth); onAuthStateChanged(auth, (user) => { if (user) fetchData(); }); }
+            catch (e) { nodes.netErrorModal.style.setProperty('display', 'flex', 'important'); }
         }
 
         async function fetchData() {
@@ -367,14 +353,8 @@
                 const snap = await getDoc(doc(db, 'artifacts', appIdStr, 'public', 'data', 'config', 'structure'));
                 if (snap.exists()) classStructure = snap.data().map;
                 else classStructure = { "유치1부": {}, "유치2부": {} };
-                
-                clearTimeout(safetyTimeout);
-                startClock();
-                subscribeCalls();
-                hideLoading();
-            } catch (e) { 
-                nodes.netErrorModal.style.setProperty('display', 'flex', 'important');
-            }
+                clearTimeout(safetyTimeout); startClock(); subscribeCalls(); hideLoading();
+            } catch (e) { nodes.netErrorModal.style.setProperty('display', 'flex', 'important'); }
         }
 
         function hideLoading() {
@@ -388,11 +368,9 @@
         window.switchMode = (mode) => {
             if (mode === 'settings' && !isAdminAuthorized) return;
             if (mode === 'display') { nodes.app.style.display = 'none'; nodes.display.style.display = 'flex'; renderTicker(); return; }
-            
             nodes.app.style.display = 'grid'; nodes.display.style.display = 'none';
             nodes.parentBox.style.display = (mode === 'parent') ? 'block' : 'none';
             nodes.settingsBox.style.display = (mode === 'settings') ? 'block' : 'none';
-
             ['parent', 'display', 'settings'].forEach(m => {
                 const n = document.getElementById(`nav-${m}`);
                 if(n) n.classList.replace('text-blue-600', 'text-slate-400');
@@ -415,7 +393,7 @@
             Object.keys(data).forEach(age => {
                 data[age].forEach(cls => {
                     if (!cls.name || cls.name === "반" || cls.name.trim() === "") return;
-                    const btn = document.createElement('button'); btn.className = "class-btn shadow-sm"; btn.innerText = cls.name; btn.onclick = () => renderStudentList(cls); fragment.appendChild(btn);
+                    const btn = document.createElement('button'); btn.className = "class-btn"; btn.innerText = cls.name; btn.onclick = () => renderStudentList(cls); fragment.appendChild(btn);
                 });
             });
             grid.appendChild(fragment); nodes.scrollArea.scrollTo({ top: 0, behavior: 'smooth' });
@@ -447,7 +425,7 @@
                 const unique = new Map(); raw.forEach(call => { const key = `${call.className}-${call.studentName}`; if (!unique.has(key)) unique.set(key, call); });
                 allPickupCalls = Array.from(unique.values()).sort((a, b) => (a.timestamp?.seconds || 0) - (b.timestamp?.seconds || 0));
                 renderTicker();
-            });
+            }, (err) => console.error(err));
         }
 
         function renderTicker() {
@@ -478,19 +456,24 @@
                     let lastC = "", lastA = "공통"; 
                     rows.forEach((row, i) => {
                         if (!row || i <= hIdx) return;
-                        if (/(2부|11:30|오후)/.test(row.join('|'))) { curP = "유치2부"; lastC = ""; }
+                        const rowStr = row.join('|');
+                        if (rowStr.includes('2부') || rowStr.includes('11:30')) { curP = "유치2부"; lastC = ""; }
+                        
                         const n = row[nI] ? String(row[nI]).trim() : "";
                         let cRaw = row[cI] ? String(row[cI]).trim() : "";
                         let aRaw = row[aI] ? String(row[aI]).trim() : "";
+                        
                         if (cRaw && cRaw !== "반") {
                             lastC = cRaw.split('(')[0].trim();
                             if (aRaw) lastA = aRaw.replace(/[^0-9]/g, "") + "세";
                         }
+                        
                         let targetC = (cRaw && cRaw !== "반") ? cRaw.split('(')[0].trim() : lastC;
                         if (!n || !targetC || targetC === "반" || n === "이름") return;
+                        
                         let ak = targetC.includes('새친구') ? "새친구" : lastA;
                         if (!tempMap[curP][targetC]) tempMap[curP][targetC] = { age: ak, students: [] };
-                        if (!tempMap[curP][targetC].students.includes(n)) tempMap[curP][targetC].students.push(nameVal);
+                        if (!tempMap[curP][targetC].students.includes(n)) tempMap[curP][targetC].students.push(n);
                     });
 
                     const finalMap = { "유치1부": {}, "유치2부": {} };
