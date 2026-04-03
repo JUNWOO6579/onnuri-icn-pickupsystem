@@ -29,11 +29,10 @@
         .font-jua { font-family: 'Jua', sans-serif; }
         .font-gaegu { font-family: 'Gaegu', cursive; }
 
-        /* [iPad 9.7인치 가로 3 : 세로 4 최적화] */
+        /* [iPad 9.7인치 세로 최적화] */
         #app {
             width: 100%; 
-            /* iPad 세로 해상도(768px)에 맞춰 꽉 채움 */
-            max-width: 768px; 
+            max-width: 768px; /* iPad 세로 해상도 고정 */
             height: 100dvh;
             background: #fff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important;
             position: relative; 
@@ -44,8 +43,7 @@
             z-index: 10;
         }
 
-        /* iPad에서 헤더 여백을 넉넉하게 주어 세로로 길게 느껴지게 함 */
-        .app-header { padding: 50px 0 30px 0; text-align: center; }
+        .app-header { padding: 60px 0 40px 0; text-align: center; }
 
         .main-scroll-view {
             overflow: hidden;
@@ -57,17 +55,17 @@
         /* [스크롤 엔진 고정] 화이트 스테이지 */
         .glass-stage {
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 2.5rem;
-            margin: 0 25px 25px 25px;
-            padding: 40px; /* 내부 여백 확대 */
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border-radius: 3rem;
+            margin: 0 30px 30px 30px;
+            padding: 45px 40px; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.08);
             flex: 1;
             display: flex;
             flex-direction: column;
             overflow-y: auto; 
             overflow-x: hidden;
             border: 4px solid #fff;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             min-height: 0;
             -webkit-overflow-scrolling: touch;
         }
@@ -75,31 +73,26 @@
         .glass-stage::-webkit-scrollbar { width: 6px; }
         .glass-stage::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
-        /* 하단 네비바 */
         .bottom-nav {
-            height: 100px; /* 네비바 높이 소폭 확대 */
+            height: 110px;
             background: rgba(255, 255, 255, 0.98); border-top: 1px solid #e2e8f0;
             display: flex; justify-content: space-around; align-items: center;
-            padding-bottom: env(safe-area-inset-bottom); border-radius: 35px 35px 0 0;
+            padding-bottom: env(safe-area-inset-bottom); border-radius: 45px 45px 0 0;
             z-index: 1000;
         }
 
-        /* 버튼 디자인 - 태블릿에서 훨씬 커지도록 설정 */
         .class-btn {
             aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
-            font-size: 1.3rem; 
-            font-family: 'Jua', sans-serif; line-height: 1.1;
+            font-size: 1.4rem; font-family: 'Jua', sans-serif; line-height: 1.1;
             padding: 15px; text-align: center; word-break: keep-all; border-radius: 2.5rem;
-            background: white; border: 2px solid #f1f5f9; box-shadow: 0 6px 0 #e2e8f0;
+            background: white; border: 2px solid #f1f5f9; box-shadow: 0 8px 0 #e2e8f0;
             transition: all 0.1s ease; color: #334155; width: 100%;
         }
-        /* iPad 해상도(sm)에서 텍스트 크기 추가 확대 */
         @media (min-width: 640px) {
-            .class-btn { font-size: 2.1rem; border-radius: 3rem; }
+            .class-btn { font-size: 2.4rem; border-radius: 3.5rem; }
         }
-        .class-btn:active { transform: scale(0.94) translateY(2px); box-shadow: none; }
+        .class-btn:active { transform: scale(0.94) translateY(4px); box-shadow: none; }
 
-        /* 전광판 모드 */
         #view-display {
             position: fixed; inset: 0; z-index: 9000;
             background: #f0f9ff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important;
@@ -137,107 +130,98 @@
         }
 
         .copyright {
-            font-size: 0.85rem; color: #94a3b8; text-align: center; 
+            font-size: 0.9rem; color: #94a3b8; text-align: center; 
             padding: 50px 0 10px 0; font-weight: bold; opacity: 0.7;
             margin-top: 60px; border-top: 1px solid #f1f5f9;
         }
 
-        /* 팝업 모달 */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75);
             display: none !important; justify-content: center; align-items: center;
-            z-index: 200000; backdrop-filter: blur(15px); padding: 20px;
+            z-index: 200000; backdrop-filter: blur(20px); padding: 20px;
         }
         .notice-modal-content {
-            background: white; border-radius: 4rem; width: 95%; max-width: 600px;
-            padding: 70px 50px; text-align: center; position: relative;
-            box-shadow: 0 40px 90px rgba(0,0,0,0.3); border: 12px solid #f0f9ff;
+            background: white; border-radius: 5rem; width: 95%; max-width: 650px;
+            padding: 80px 60px; text-align: center; position: relative;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.3); border: 12px solid #f0f9ff;
         }
         .close-x-btn {
-            position: absolute; top: 35px; right: 40px; width: 60px; height: 60px;
+            position: absolute; top: 40px; right: 45px; width: 70px; height: 70px;
             background: #f1f5f9; border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; color: #64748b; font-size: 36px; cursor: pointer;
+            justify-content: center; color: #64748b; font-size: 40px; cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <!-- 로딩 화면 -->
     <div id="loading-overlay">
         <div class="flex flex-col items-center">
-            <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mb-6"></div>
-            <p class="font-jua text-3xl text-slate-400 text-center px-6">시스템 연결 중...</p>
+            <div class="animate-spin rounded-full h-20 w-20 border-b-4 border-blue-600 mb-8"></div>
+            <p class="font-jua text-4xl text-slate-400 text-center px-6">시스템 연결 중...</p>
         </div>
     </div>
 
     <div id="app" style="display: none; opacity: 0; transition: opacity 0.4s ease;">
-        
         <header class="app-header">
-            <h1 class="font-gaegu text-5xl sm:text-7xl text-blue-600 drop-shadow-sm mb-3 font-bold">유치부 아이들 대기 waiting</h1>
-            <p class="text-[12px] sm:text-[15px] font-bold text-slate-400 tracking-[0.4em] uppercase font-black">Onnuri ICN Youth</p>
+            <h1 class="font-gaegu text-6xl sm:text-8xl text-blue-600 drop-shadow-sm mb-4 font-bold">유치부 아이들 대기 waiting</h1>
+            <p class="text-[13px] sm:text-[17px] font-bold text-slate-400 tracking-[0.5em] uppercase font-black">Onnuri ICN Youth</p>
         </header>
 
         <div class="main-scroll-view">
             <div class="glass-stage" id="main-glass-stage">
-                
                 <div id="container-parent">
-                    <!-- 1단계: 예배 선택 (태블릿에서 버튼 대폭 확대) -->
                     <div class="step-container" id="section-worship">
-                        <h2 class="font-jua text-2xl sm:text-4xl text-slate-700 mb-8 flex items-center gap-4 font-bold text-left">
+                        <h2 class="font-jua text-3xl sm:text-5xl text-slate-700 mb-10 flex items-center gap-5 font-bold text-left">
                             <i class="fa-solid fa-heart text-pink-400"></i> 1. 예배 선택
                         </h2>
-                        <div class="grid grid-cols-2 gap-8 mb-16">
-                            <button onclick="selectPartAndRollUp('유치1부')" class="py-16 border-2 border-blue-50 text-blue-600 font-jua text-5xl sm:text-6xl rounded-[4rem] shadow-sm bg-blue-50/20 active:bg-blue-100 transition-all">유치1부</button>
-                            <button onclick="selectPartAndRollUp('유치2부')" class="py-16 border-2 border-orange-50 text-orange-600 font-jua text-5xl sm:text-6xl rounded-[4rem] shadow-sm bg-orange-50/30 active:bg-orange-100 transition-all">유치2부</button>
+                        <div class="grid grid-cols-2 gap-10 mb-20">
+                            <button onclick="selectPartAndRollUp('유치1부')" class="py-20 border-2 border-blue-50 text-blue-600 font-jua text-6xl sm:text-7xl rounded-[5rem] shadow-sm bg-blue-50/20 active:bg-blue-100 transition-all">유치1부</button>
+                            <button onclick="selectPartAndRollUp('유치2부')" class="py-20 border-2 border-orange-50 text-orange-600 font-jua text-6xl sm:text-7xl rounded-[5rem] shadow-sm bg-orange-50/30 active:bg-orange-100 transition-all">유치2부</button>
                         </div>
                     </div>
 
-                    <!-- 2단계: 반 선택 (iPad 최적화: 한 줄에 4개로 줄여서 버튼을 크게 만듦) -->
                     <div id="section-class" class="step-container hidden">
-                        <div class="flex justify-between items-center mb-8">
-                            <h2 class="font-jua text-2xl sm:text-4xl text-slate-700 flex items-center gap-4 font-bold text-left">
+                        <div class="flex justify-between items-center mb-10">
+                            <h2 class="font-jua text-3xl sm:text-5xl text-slate-700 flex items-center gap-5 font-bold text-left">
                                 <i class="fa-solid fa-school text-orange-400"></i> 2. 우리 반 선택
                             </h2>
-                            <button onclick="resetWorshipSelection()" class="text-lg text-slate-400 underline font-bold px-4">다시 선택</button>
+                            <button onclick="resetWorshipSelection()" class="text-xl text-slate-400 underline font-bold px-6">다시 선택</button>
                         </div>
-                        <div id="grid-classes" class="grid grid-cols-3 sm:grid-cols-4 gap-6 mb-16"></div>
+                        <div id="grid-classes" class="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-20"></div>
                     </div>
 
-                    <!-- 3단계: 이름 선택 (iPad 최적화: 한 줄에 3개로 구성하여 이름 강조) -->
                     <div id="section-name" class="step-container hidden">
-                        <div class="flex justify-between items-center mb-8">
-                            <h2 class="font-jua text-2xl sm:text-4xl text-slate-700 flex items-center gap-4 font-bold text-left">
+                        <div class="flex justify-between items-center mb-10">
+                            <h2 class="font-jua text-3xl sm:text-5xl text-slate-700 flex items-center gap-5 font-bold text-left">
                                 <i class="fa-solid fa-child-reaching text-green-400"></i> 3. 아이 이름 클릭
                             </h2>
-                            <button onclick="backToClassSelection()" class="text-lg text-slate-400 underline font-bold px-4">반 다시 선택</button>
+                            <button onclick="backToClassSelection()" class="text-xl text-slate-400 underline font-bold px-6">반 다시 선택</button>
                         </div>
-                        <div id="grid-names" class="grid grid-cols-2 sm:grid-cols-3 gap-6 mb-16"></div>
+                        <div id="grid-names" class="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-20"></div>
                     </div>
 
-                    <!-- 수동 호출 영역 -->
-                    <div id="section-manual" class="pt-12 border-t border-slate-100 mt-12 mb-6 text-left">
-                        <h2 class="font-gaegu text-4xl text-pink-500 mb-8 font-bold">방문/새친구 이름</h2>
-                        <div class="flex gap-5">
-                            <input type="text" id="manual-input" class="flex-1 p-8 bg-slate-50 rounded-[2.5rem] border-none font-bold text-3xl shadow-inner focus:ring-4 focus:ring-pink-100" placeholder="이름 입력">
-                            <button onclick="sendManualCall()" class="bg-pink-500 text-white font-jua px-12 rounded-[2.5rem] shadow-xl active:scale-95 text-3xl">호출</button>
+                    <div id="section-manual" class="pt-16 border-t border-slate-100 mt-16 mb-8 text-left">
+                        <h2 class="font-gaegu text-5xl text-pink-500 mb-10 font-bold">방문/새친구 이름</h2>
+                        <div class="flex gap-6">
+                            <input type="text" id="manual-input" class="flex-1 p-10 bg-slate-50 rounded-[3rem] border-none font-bold text-4xl shadow-inner focus:ring-6 focus:ring-pink-100" placeholder="이름 입력">
+                            <button onclick="sendManualCall()" class="bg-pink-500 text-white font-jua px-16 rounded-[3rem] shadow-2xl active:scale-95 text-4xl">호출</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 설정 화면 -->
                 <div id="container-settings" class="hidden text-left">
-                    <h2 class="font-jua text-4xl text-slate-800 mb-12 font-bold text-center">시스템 관리</h2>
-                    <div class="max-w-2xl mx-auto space-y-16">
+                    <h2 class="font-jua text-5xl text-slate-800 mb-16 font-bold text-center">시스템 관리</h2>
+                    <div class="max-w-3xl mx-auto space-y-20">
                         <div>
-                            <h3 class="font-bold text-slate-800 text-2xl flex items-center gap-4 mb-6"><i class="fa-solid fa-file-excel text-emerald-500"></i> 명단 업데이트</h3>
-                            <input type="file" id="excelInput" accept=".xlsx, .xls" class="block w-full text-base text-slate-500 file:mr-6 file:py-5 file:px-12 file:rounded-full file:border-0 file:font-bold file:bg-emerald-50 file:text-emerald-700 cursor-pointer"/>
-                            <button id="importBtn" class="w-full py-8 bg-emerald-600 text-white rounded-[3rem] font-jua text-3xl shadow-xl mt-10">데이터 서버 업데이트</button>
+                            <h3 class="font-bold text-slate-800 text-3xl flex items-center gap-5 mb-8"><i class="fa-solid fa-file-excel text-emerald-500"></i> 명단 업데이트</h3>
+                            <input type="file" id="excelInput" accept=".xlsx, .xls" class="block w-full text-lg text-slate-500 file:mr-10 file:py-6 file:px-16 file:rounded-full file:border-0 file:font-bold file:bg-emerald-50 file:text-emerald-700 cursor-pointer"/>
+                            <button id="importBtn" class="w-full py-10 bg-emerald-600 text-white rounded-[4rem] font-jua text-4xl shadow-2xl mt-12">데이터 서버 업데이트</button>
                         </div>
-                        <div class="pt-12 border-t border-red-50">
-                            <h3 class="font-bold text-red-500 text-2xl mb-8">기록 초기화</h3>
-                            <button onclick="clearAllServerCalls()" class="w-full py-8 bg-red-500 text-white rounded-[3rem] font-jua text-3xl shadow-xl">전광판 명단 비우기</button>
+                        <div class="pt-16 border-t border-red-50">
+                            <h3 class="font-bold text-red-500 text-3xl mb-10">기록 초기화</h3>
+                            <button onclick="clearAllServerCalls()" class="w-full py-10 bg-red-500 text-white rounded-[4rem] font-jua text-4xl shadow-2xl">전광판 명단 비우기</button>
                         </div>
-                        <div class="text-center pt-16"><button onclick="logoutAdmin()" class="text-lg text-slate-400 underline">로그아웃</button></div>
+                        <div class="text-center pt-20"><button onclick="logoutAdmin()" class="text-xl text-slate-400 underline">로그아웃</button></div>
                     </div>
                 </div>
 
@@ -248,9 +232,9 @@
         </div>
 
         <nav class="bottom-nav">
-            <button onclick="switchMode('parent')" id="nav-parent" class="flex flex-col items-center gap-3 text-blue-600 transition-all"><i class="fa-solid fa-tablet-screen-button text-4xl"></i><span class="text-sm font-bold uppercase tracking-widest">호출기</span></button>
-            <button onclick="switchMode('display')" id="nav-display" class="flex flex-col items-center gap-3 text-slate-400 transition-all"><i class="fa-solid fa-desktop text-4xl"></i><span class="text-sm font-bold uppercase tracking-widest">전광판</span></button>
-            <button onclick="requestAdminAccess()" id="nav-settings" class="flex flex-col items-center gap-3 text-slate-400 transition-all"><i class="fa-solid fa-user-lock text-4xl"></i><span class="text-sm font-bold uppercase tracking-widest">설정</span></button>
+            <button onclick="switchMode('parent')" id="nav-parent" class="flex flex-col items-center gap-4 text-blue-600 transition-all"><i class="fa-solid fa-tablet-screen-button text-5xl"></i><span class="text-base font-bold uppercase tracking-widest">호출기</span></button>
+            <button onclick="switchMode('display')" id="nav-display" class="flex flex-col items-center gap-4 text-slate-400 transition-all"><i class="fa-solid fa-desktop text-5xl"></i><span class="text-base font-bold uppercase tracking-widest">전광판</span></button>
+            <button onclick="requestAdminAccess()" id="nav-settings" class="flex flex-col items-center gap-4 text-slate-400 transition-all"><i class="fa-solid fa-user-lock text-5xl"></i><span class="text-base font-bold uppercase tracking-widest">설정</span></button>
         </nav>
     </div>
 
@@ -259,32 +243,32 @@
         <div class="display-overlay">
             <header class="flex justify-between items-start mb-1 px-2">
                 <div class="text-left text-blue-900">
-                    <h1 class="font-gaegu text-[5.5rem] leading-tight whitespace-nowrap drop-shadow-lg font-bold">친구들! 다음주에 만나요</h1>
-                    <p class="opacity-50 font-jua text-3xl uppercase tracking-[0.5em] ml-2 font-black">Happy Pickup Board</p>
+                    <h1 class="font-gaegu text-[6rem] leading-tight whitespace-nowrap drop-shadow-lg font-bold">친구들! 다음주에 만나요</h1>
+                    <p class="opacity-50 font-jua text-4xl uppercase tracking-[0.5em] ml-2 font-black">Happy Pickup Board</p>
                 </div>
                 <div class="flex flex-col items-end gap-2 pt-1">
-                    <div class="bg-white/90 backdrop-blur px-12 py-6 rounded-[2.5rem] shadow-xl border-4 border-white text-center">
-                        <span id="display-clock" class="font-jua text-7xl text-blue-500 tracking-tighter">00:00</span>
+                    <div class="bg-white/90 backdrop-blur px-12 py-8 rounded-[3rem] shadow-2xl border-4 border-white text-center">
+                        <span id="display-clock" class="font-jua text-8xl text-blue-500 tracking-tighter">00:00</span>
                     </div>
                 </div>
             </header>
-            <div style="flex:1; overflow:hidden; position:relative; margin-top:20px;">
+            <div style="flex:1; overflow:hidden; position:relative; margin-top:30px;">
                 <div id="display-grid" class="ticker-move" style="position:absolute; width:100%; top:0; left:0; will-change:transform;"></div>
             </div>
-            <button onclick="switchMode('parent')" class="absolute bottom-16 right-16 w-28 h-28 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-blue-600 transition-all shadow-2xl border-2 border-white"><i class="fa-solid fa-house-chimney text-5xl"></i></button>
+            <button onclick="switchMode('parent')" class="absolute bottom-20 right-20 w-32 h-32 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-blue-600 transition-all shadow-2xl border-2 border-white"><i class="fa-solid fa-house-chimney text-6xl"></i></button>
         </div>
     </div>
 
-    <!-- 모달: 안내 (태블릿 크기에 맞춰 초대형으로 조정) -->
+    <!-- 모달: 안내 -->
     <div id="notice-modal" class="modal-overlay" style="display: none !important;">
         <div class="notice-modal-content">
             <div class="close-x-btn" onclick="closeNoticeModal()"><i class="fa-solid fa-xmark"></i></div>
-            <div class="w-32 h-32 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-12"><i class="fa-solid fa-bell-concierge text-7xl"></i></div>
-            <h3 class="font-jua text-6xl text-slate-800 mb-10 font-bold text-center">호출 완료!</h3>
-            <p class="font-gaegu text-5xl text-slate-600 leading-relaxed font-bold text-center break-keep">
-                샬롬! 부모님들께서는 오신 순서대로,<br>줄을 서서 기다려주시면, 차례대로<br>아이들이 나올 수 있게 도와드리겠습니다.<br>감사합니다!
+            <div class="w-36 h-36 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-14"><i class="fa-solid fa-bell-concierge text-8xl"></i></div>
+            <h3 class="font-jua text-7xl text-slate-800 mb-12 font-bold text-center">호출 완료!</h3>
+            <p class="font-gaegu text-6xl text-slate-600 leading-relaxed font-bold text-center break-keep">
+                샬롬! 부모님들께서는 오신 순서대로,<br>줄을 서서 기다려주시면<br>아이들이 차례대로 나올 수 있게 도와드리겠습니다.<br>감사합니다!
             </p>
-            <button onclick="closeNoticeModal()" class="w-full mt-16 py-10 bg-blue-600 text-white rounded-[4rem] font-jua text-4xl shadow-lg active:scale-95 transition-transform">확인</button>
+            <button onclick="closeNoticeModal()" class="w-full mt-16 py-12 bg-blue-600 text-white rounded-[5rem] font-jua text-5xl shadow-2xl active:scale-95 transition-transform">확인</button>
         </div>
     </div>
 
@@ -292,24 +276,24 @@
     <div id="network-error-modal" class="modal-overlay" style="display: none !important;">
         <div class="notice-modal-content border-red-100">
             <div class="close-x-btn" onclick="location.reload()"><i class="fa-solid fa-rotate-right"></i></div>
-            <div class="w-24 h-24 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-8"><i class="fa-solid fa-triangle-exclamation text-5xl"></i></div>
-            <h3 class="font-jua text-4xl text-slate-800 mb-6 font-bold text-red-500 text-center">연결 오류</h3>
-            <p class="font-gaegu text-3xl text-slate-600 leading-relaxed font-bold break-keep text-center">네트워크 연결이 불안정합니다.<br><span class="text-red-500">전도사님께 문의해주세요!</span></p>
-            <button onclick="location.reload()" class="w-full mt-10 py-8 bg-slate-800 text-white rounded-[3rem] font-jua text-3xl shadow-lg active:scale-95 transition-transform text-center">다시 연결 시도</button>
+            <div class="w-28 h-28 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-10"><i class="fa-solid fa-triangle-exclamation text-6xl"></i></div>
+            <h3 class="font-jua text-5xl text-slate-800 mb-8 font-bold text-red-500 text-center">연결 오류</h3>
+            <p class="font-gaegu text-4xl text-slate-600 leading-relaxed font-bold break-keep text-center">네트워크 연결이 불안정합니다.<br><span class="text-red-500 font-black">전도사님께 말씀해주세요!</span></p>
+            <button onclick="location.reload()" class="w-full mt-12 py-10 bg-slate-800 text-white rounded-[3rem] font-jua text-3xl shadow-lg active:scale-95 transition-transform text-center">다시 연결 시도</button>
         </div>
     </div>
 
     <!-- 모달: 관리자 인증 -->
     <div id="auth-modal" class="modal-overlay" style="display: none !important;">
-        <div class="bg-white rounded-[5rem] w-full max-w-[500px] p-20 shadow-2xl text-center space-y-12">
-            <div class="w-28 h-28 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto"><i class="fa-solid fa-lock text-6xl"></i></div>
-            <h3 class="font-jua text-5xl text-slate-800 font-bold text-center">관리자 인증</h3>
-            <input type="password" id="authPwInput" class="w-full p-10 bg-slate-100 rounded-[3rem] text-center font-bold text-7xl border-none focus:ring-4 focus:ring-blue-200" placeholder="****">
-            <div class="flex gap-5"><button onclick="closeAuthModal()" class="flex-1 py-8 bg-slate-100 text-slate-500 rounded-[3rem] font-bold text-2xl text-center">취소</button><button onclick="confirmAdminAuth()" class="flex-1 py-8 bg-blue-600 text-white rounded-[3rem] font-bold shadow-lg text-2xl text-center">확인</button></div>
+        <div class="bg-white rounded-[6rem] w-full max-w-[550px] p-24 shadow-2xl text-center space-y-16">
+            <div class="w-32 h-32 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto"><i class="fa-solid fa-lock text-7xl"></i></div>
+            <h3 class="font-jua text-6xl text-slate-800 font-bold text-center">관리자 인증</h3>
+            <input type="password" id="authPwInput" class="w-full p-12 bg-slate-100 rounded-[4rem] text-center font-bold text-8xl border-none focus:ring-4 focus:ring-blue-200" placeholder="****">
+            <div class="flex gap-6"><button onclick="closeAuthModal()" class="flex-1 py-10 bg-slate-100 text-slate-500 rounded-[3rem] font-bold text-3xl text-center">취소</button><button onclick="confirmAdminAuth()" class="flex-1 py-10 bg-blue-600 text-white rounded-[3rem] font-bold shadow-lg text-3xl text-center">확인</button></div>
         </div>
     </div>
 
-    <div id="toast" class="fixed bottom-32 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white px-12 py-6 rounded-full font-jua text-2xl opacity-0 transition-all z-[999999] whitespace-nowrap">메시지</div>
+    <div id="toast" class="fixed bottom-32 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white px-14 py-8 rounded-full font-jua text-3xl opacity-0 transition-all z-[999999] whitespace-nowrap">메시지</div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -317,19 +301,19 @@
         import { getFirestore, doc, setDoc, onSnapshot, collection, deleteDoc, addDoc, serverTimestamp, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyAlp-PpxgxPBXj0Ek1H-b52GjwiU8KyD5A",
-            authDomain: "onnurichurch-icn-youth.firebaseapp.com",
-            projectId: "onnurichurch-icn-youth",
-            storageBucket: "onnurichurch-icn-youth.firebasestorage.app",
-            messagingSenderId: "89074216999",
-            appId: "1:89074216999:web:1798e414726b1e4af75e02",
-            measurementId: "G-L3VMY8M75B"
+            apiKey: "AIzaSyB0a28S4lqXIrEc8l0-ik6Z5FUX53kNbC4",
+            authDomain: "onnuri-icn-pickup.firebaseapp.com",
+            projectId: "onnuri-icn-pickup",
+            storageBucket: "onnuri-icn-pickup.firebasestorage.app",
+            messagingSenderId: "227891248834",
+            appId: "1:227891248834:web:e593f212fe7d049e39455b",
+            measurementId: "G-0P55H09XZY"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appIdStr = 'onnuri-pickup-vFinal-Seamless-V58-Fix-Reference';
+        const appIdStr = 'onnuri-pickup-final-v65';
 
         const nodes = {
             app: document.getElementById('app'),
@@ -352,16 +336,27 @@
         let allPickupCalls = [];
         const cardColors = ['bg-p-blue', 'bg-p-pink', 'bg-p-mint', 'bg-p-orange', 'bg-p-purple'];
 
+        // [추가] 네트워크 에러 모달 강제 노출 함수
+        window.showNetworkError = () => {
+            nodes.netErrorModal.style.setProperty('display', 'flex', 'important');
+        };
+
+        // [추가] 실시간 온라인/오프라인 상태 감지
+        window.addEventListener('offline', () => { window.showNetworkError(); });
+        window.addEventListener('online', () => { window.showToast("다시 연결되었습니다."); });
+
         window.showToast = (m) => {
             const t = document.getElementById('toast');
             if (t) { t.innerText = m; t.classList.add('opacity-100'); setTimeout(() => t.classList.remove('opacity-100'), 2000); }
         };
 
-        const safetyTimeout = setTimeout(() => { if (nodes.loading.style.display !== 'none') { nodes.loading.style.display = 'none'; nodes.netErrorModal.style.setProperty('display', 'flex', 'important'); } }, 8000);
+        const safetyTimeout = setTimeout(() => { if (nodes.loading.style.display !== 'none') { window.showNetworkError(); } }, 10000);
 
         async function init() {
-            try { await signInAnonymously(auth); onAuthStateChanged(auth, (user) => { if (user) fetchData(); }); }
-            catch (e) { nodes.netErrorModal.style.setProperty('display', 'flex', 'important'); }
+            try { 
+                await signInAnonymously(auth); 
+                onAuthStateChanged(auth, (user) => { if (user) fetchData(); }); 
+            } catch (e) { window.showNetworkError(); }
         }
 
         async function fetchData() {
@@ -370,7 +365,7 @@
                 if (snap.exists()) classStructure = snap.data().map;
                 else classStructure = { "유치1부": {}, "유치2부": {} };
                 clearTimeout(safetyTimeout); startClock(); subscribeCalls(); hideLoading();
-            } catch (e) { nodes.netErrorModal.style.setProperty('display', 'flex', 'important'); }
+            } catch (e) { window.showNetworkError(); }
         }
 
         function hideLoading() {
@@ -422,8 +417,7 @@
             if (cls.students) {
                 cls.students.forEach(name => {
                     const btn = document.createElement('button'); 
-                    // iPad에서 이름 버튼 크기 확대
-                    btn.className = "py-8 sm:py-12 bg-green-500 text-white font-jua rounded-[2.5rem] shadow-md active:translate-y-1 text-center text-4xl"; 
+                    btn.className = "py-8 sm:py-12 bg-green-500 text-white font-jua rounded-[2.5rem] shadow-md active:translate-y-1 text-center text-4xl sm:text-5xl"; 
                     btn.innerText = name; btn.onclick = () => sendCallToFirebase(cls.name, name); fragment.appendChild(btn);
                 });
             }
@@ -433,10 +427,29 @@
         window.backToClassSelection = () => { nodes.class.classList.remove('roll-up'); nodes.name.classList.add('hidden'); nodes.scrollArea.scrollTo({ top: 0, behavior: 'smooth' }); };
         window.resetWorshipSelection = () => { nodes.worship.classList.remove('roll-up'); nodes.class.classList.add('hidden'); nodes.class.classList.remove('roll-up'); nodes.name.classList.add('hidden'); nodes.scrollArea.scrollTo({ top: 0, behavior: 'smooth' }); };
 
-        async function sendCallToFirebase(cName, sName) { try { await addDoc(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'), { className: cName, studentName: sName, timestamp: serverTimestamp() }); openNoticeModal(); } catch (e) { window.showToast("전송 실패."); } }
+        async function sendCallToFirebase(cName, sName) { 
+            // 5초 타임아웃 적용하여 응답 없으면 네트워크 오류 모달 표시
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 5000));
+            try { 
+                await Promise.race([
+                    addDoc(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'), { className: cName, studentName: sName, timestamp: serverTimestamp() }),
+                    timeoutPromise
+                ]);
+                openNoticeModal(); 
+            } catch (e) { 
+                window.showNetworkError(); 
+            } 
+        }
+
         window.openNoticeModal = () => { nodes.noticeModal.style.setProperty('display', 'flex', 'important'); };
         window.closeNoticeModal = () => { nodes.noticeModal.style.setProperty('display', 'none', 'important'); resetWorshipSelection(); };
-        window.sendManualCall = async () => { const name = document.getElementById('manual-input').value.trim(); if (!name) return window.showToast("이름 입력"); await sendCallToFirebase("방문/새친구", name); document.getElementById('manual-input').value = ''; };
+        
+        window.sendManualCall = async () => { 
+            const name = document.getElementById('manual-input').value.trim(); 
+            if (!name) return window.showToast("이름 입력"); 
+            await sendCallToFirebase("방문/새친구", name); 
+            document.getElementById('manual-input').value = ''; 
+        };
 
         function subscribeCalls() {
             onSnapshot(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'), (snap) => {
@@ -444,7 +457,7 @@
                 const unique = new Map(); raw.forEach(call => { const key = `${call.className}-${call.studentName}`; if (!unique.has(key)) unique.set(key, call); });
                 allPickupCalls = Array.from(unique.values()).sort((a, b) => (a.timestamp?.seconds || 0) - (b.timestamp?.seconds || 0));
                 renderTicker();
-            }, (err) => console.error(err));
+            }, (err) => window.showNetworkError());
         }
 
         function renderTicker() {
@@ -477,24 +490,19 @@
                         if (!row || i <= hIdx) return;
                         const rowStr = row.join('|');
                         if (rowStr.includes('2부') || rowStr.includes('11:30')) { curP = "유치2부"; lastC = ""; }
-                        
                         const n = row[nI] ? String(row[nI]).trim() : "";
                         let cRaw = row[cI] ? String(row[cI]).trim() : "";
                         let aRaw = row[aI] ? String(row[aI]).trim() : "";
-                        
                         if (cRaw && cRaw !== "반") {
                             lastC = cRaw.split('(')[0].trim();
                             if (aRaw) lastA = aRaw.replace(/[^0-9]/g, "") + "세";
                         }
-                        
                         let targetC = (cRaw && cRaw !== "반") ? cRaw.split('(')[0].trim() : lastC;
                         if (!n || !targetC || targetC === "반" || n === "이름") return;
-                        
                         let ak = targetC.includes('새친구') ? "새친구" : lastA;
                         if (!tempMap[curP][targetC]) tempMap[curP][targetC] = { age: ak, students: [] };
                         if (!tempMap[curP][targetC].students.includes(n)) tempMap[curP][targetC].students.push(n);
                     });
-
                     const finalMap = { "유치1부": {}, "유치2부": {} };
                     ['유치1부', '유치2부'].forEach(p => { 
                         Object.keys(tempMap[p]).forEach(cn => { 
@@ -505,7 +513,7 @@
                     });
                     await setDoc(doc(db, 'artifacts', appIdStr, 'public', 'data', 'config', 'structure'), { map: finalMap });
                     classStructure = finalMap; window.showToast("업데이트 성공!"); switchMode('parent');
-                } catch (err) { window.showToast("오류 발생"); }
+                } catch (err) { window.showNetworkError(); }
                 nodes.loading.style.display = 'none';
             }; reader.readAsArrayBuffer(file);
         });
