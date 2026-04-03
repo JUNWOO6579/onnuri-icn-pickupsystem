@@ -33,7 +33,7 @@
         #app {
             width: 100%; 
             max-width: 768px; /* iPadPortrait 가로폭 고정 */
-            height: 100dvh;
+            height: 90dvh;
             background: #fff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important;
             position: relative; 
             display: grid;
@@ -44,7 +44,7 @@
         }
 
         /* 헤더 여백 슬림화 (메인 화면 확보용) */
-        .app-header { padding: 25px 0 15px 0; text-align: center; }
+        .app-header { padding: 10px 0 15px 0; text-align: center; }
 
         .main-scroll-view {
             overflow: hidden;
@@ -92,7 +92,7 @@
             transition: all 0.1s ease; color: #334155; width: 100%;
         }
         /* iPad에서는 더 큼직하게 */
-        @media (min-width: 640px) {
+        @media (min-width: 500px) {
             .class-btn { font-size: 2rem; border-radius: 2.5rem; box-shadow: 0 6px 0 #e2e8f0; }
         }
         .class-btn:active { transform: scale(0.94) translateY(3px); box-shadow: none; }
