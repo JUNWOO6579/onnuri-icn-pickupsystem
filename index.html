@@ -32,7 +32,7 @@
 
         /* [iPad 10.2인치 고정 프레임 - 절대 변동 없음] */
         #app {
-            position: fixed; /* 화면에 박아넣음 */
+            position: fixed; 
             inset: 0;
             max-width: 680px; 
             height: 100dvh;
@@ -103,11 +103,11 @@
         .class-btn:active { transform: scale(0.95) translateY(3px); box-shadow: none; }
 
         /* 전광판 컬러 시스템 */
-        .bg-p-blue { background-color: var(--p-blue) !important; }
-        .bg-p-pink { background-color: var(--p-pink) !important; }
-        .bg-p-mint { background-color: var(--p-mint) !important; }
-        .bg-p-orange { background-color: var(--p-orange) !important; }
-        .bg-p-purple { background-color: var(--p-purple) !important; }
+        .bg-p-blue { background-color: #60a5fa !important; }
+        .bg-p-pink { background-color: #f472b6 !important; }
+        .bg-p-mint { background-color: #4ade80 !important; }
+        .bg-p-orange { background-color: #fb923c !important; }
+        .bg-p-purple { background-color: #a78bfa !important; }
 
         /* 모달 시스템 */
         .modal-overlay {
@@ -119,7 +119,7 @@
         .notice-modal-content {
             background: white; border-radius: 4rem; width: 95%; max-width: 550px;
             padding: 40px 30px; text-align: center; position: relative;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.3); border: 8px solid #f0f9ff;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3); border: 8px solid #f0f9ff;
         }
         .close-x-btn {
             position: absolute; top: 25px; right: 30px; width: 50px; height: 50px;
@@ -130,17 +130,14 @@
         /* [꿈아이홀 16:9 전광판 전용 스타일] */
         #view-display { 
             position: fixed; inset: 0; z-index: 9000; 
-            background: #000; /* 배경을 검게 처리하여 시네마틱 효과 */
+            background: #000; 
             display: none; justify-content: center; align-items: center;
         }
         .display-container {
-            width: 100%;
-            height: 100%;
-            max-width: 177.78vh; /* 16:9 비율 유지 */
-            max-height: 56.25vw; /* 16:9 비율 유지 */
+            width: 100%; height: 100%;
+            max-width: 177.78vh; max-height: 56.25vw;
             background: #f0f9ff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important; 
-            display: flex; flex-direction: column; overflow: hidden;
-            position: relative;
+            display: flex; flex-direction: column; overflow: hidden; position: relative;
         }
         .display-overlay { 
             flex: 1; background: rgba(255, 255, 255, 0.15); 
@@ -151,14 +148,9 @@
         .ticker-container { flex: 1; position: relative; overflow: hidden; margin-top: 2vh; }
         .ticker-move { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5vw; width: 100%; position: absolute; top: 0; left: 0; }
         
-        .call-card {
-            border-radius: 1.5rem; border: 0.5vw solid #fff; box-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.15);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 1.5vh; height: 18vh; position: relative;
-        }
+        .call-card { border-radius: 1.5rem; border: 0.5vw solid #fff; box-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.15); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1.5vh; height: 18vh; position: relative; }
         .display-student-name { font-family: 'Jua', sans-serif; font-size: 5.5vh; white-space: nowrap; color: white; text-shadow: 2px 2px 5px rgba(0,0,0,0.2); }
         .display-class-label { font-family: 'Gaegu', cursive; font-size: 2.2vh; font-weight: 700; background: rgba(255,255,255,0.35); padding: 0.3vh 1.5vw; border-radius: 99px; color: white; margin-bottom: 0.5vh; }
-
         @keyframes tickerScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
 
         .step-container { transition: all 0.3s ease-in-out; will-change: max-height, opacity; overflow: hidden; }
@@ -182,12 +174,12 @@
     <div id="loading-overlay">
         <div class="flex flex-col items-center">
             <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mb-6"></div>
-            <p class="font-jua text-3xl text-slate-400 text-center px-6">시스템 연동 중...</p>
+            <p class="font-jua text-3xl text-slate-400 text-center px-6">시스템 로딩 중...</p>
         </div>
     </div>
 
-    <!-- 앱 전체 프레임 -->
-    <div id="app" style="display: none; opacity: 0; transition: opacity 0.4s ease;">
+    <!-- 앱 전체 -->
+    <div id="app" style="display: none; opacity: 0;">
         <header class="app-header">
             <h1 class="font-gaegu text-4xl sm:text-5xl text-blue-600 drop-shadow-sm font-bold">유치부 아이들 대기 waiting</h1>
             <p class="text-[11px] sm:text-[13px] font-bold text-slate-400 tracking-[0.4em] uppercase font-black">Onnuri ICN Youth</p>
@@ -202,8 +194,8 @@
                             <i class="fa-solid fa-heart text-pink-400 text-sm"></i> 1. 예배 선택
                         </h2>
                         <div class="grid grid-cols-2 gap-4 mb-6">
-                            <button onclick="window.selectPartAndRollUp('유치1부')" class="py-4 sm:py-5 border-2 border-blue-50 text-blue-600 font-jua text-3xl sm:text-4xl rounded-[2.5rem] shadow-sm bg-blue-50/20 active:bg-blue-100 transition-all">유치1부</button>
-                            <button onclick="window.selectPartAndRollUp('유치2부')" class="py-4 sm:py-5 border-2 border-orange-50 text-orange-600 font-jua text-3xl sm:text-4xl rounded-[2.5rem] shadow-sm bg-orange-50/30 active:bg-orange-100 transition-all">유치2부</button>
+                            <button id="btn-p1" class="py-4 sm:py-5 border-2 border-blue-50 text-blue-600 font-jua text-3xl sm:text-4xl rounded-[2.5rem] shadow-sm bg-blue-50/20 active:bg-blue-100">유치1부</button>
+                            <button id="btn-p2" class="py-4 sm:py-5 border-2 border-orange-50 text-orange-600 font-jua text-3xl sm:text-4xl rounded-[2.5rem] shadow-sm bg-orange-50/30 active:bg-orange-100">유치2부</button>
                         </div>
                     </div>
 
@@ -213,7 +205,7 @@
                             <h2 class="font-jua text-xl sm:text-2xl text-slate-700 flex items-center gap-3 font-bold text-left">
                                 <i class="fa-solid fa-school text-orange-400 text-sm"></i> 2. 우리 반 선택
                             </h2>
-                            <button onclick="window.resetWorshipSelection()" class="text-sm sm:text-base text-slate-400 underline font-bold px-4">다시 선택</button>
+                            <button id="btn-reset" class="text-sm sm:text-base text-slate-400 underline font-bold px-4">다시 선택</button>
                         </div>
                         <div id="grid-classes" class="grid grid-cols-3 sm:grid-cols-4 gap-4 mb-8"></div>
                     </div>
@@ -224,57 +216,56 @@
                             <h2 class="font-jua text-xl sm:text-2xl text-slate-700 flex items-center gap-3 font-bold text-left">
                                 <i class="fa-solid fa-child-reaching text-green-400 text-sm"></i> 3. 아이 이름 클릭
                             </h2>
-                            <button onclick="window.backToClassSelection()" class="text-sm sm:text-base text-slate-400 underline font-bold px-4">반 다시 선택</button>
+                            <button id="btn-back" class="text-sm sm:text-base text-slate-400 underline font-bold px-4">반 다시 선택</button>
                         </div>
                         <div id="grid-names" class="grid grid-cols-2 sm:grid-cols-3 gap-5 mb-8"></div>
                     </div>
 
-                    <!-- 수동 호출 영역 (그리드 레이아웃으로 버튼 잘림 방지) -->
+                    <!-- 수동 호출 영역 -->
                     <div id="section-manual" class="pt-6 border-t border-slate-100 mt-6 mb-2 text-left">
                         <h2 class="font-gaegu text-2xl sm:text-3xl text-pink-500 mb-4 font-bold">방문/새친구 이름</h2>
                         <div class="grid grid-cols-[1fr_auto] gap-3 w-full">
                             <input type="text" id="manual-input" class="min-w-0 p-4 sm:p-5 bg-slate-50 rounded-[2rem] border-none font-bold text-xl sm:text-2xl shadow-inner focus:ring-4 focus:ring-pink-100" placeholder="이름 입력">
-                            <button onclick="window.sendManualCall()" class="bg-pink-500 text-white font-jua px-6 sm:px-10 rounded-[2rem] shadow-xl active:scale-95 text-xl sm:text-2xl whitespace-nowrap">호출</button>
+                            <button id="btn-manual" class="shrink-0 bg-pink-500 text-white font-jua px-6 sm:px-10 rounded-[2rem] shadow-xl active:scale-95 text-xl sm:text-2xl whitespace-nowrap">호출</button>
                         </div>
                     </div>
                 </div>
 
-                <div id="container-settings" class="hidden text-left">
+                <!-- 설정 화면 -->
+                <div id="container-settings" class="hidden text-left py-4">
                     <h2 class="font-jua text-3xl sm:text-4xl text-slate-800 mb-8 font-bold text-center">시스템 관리</h2>
-                    <div class="max-w-2xl mx-auto space-y-10">
-                        <div>
-                            <h3 class="font-bold text-slate-800 text-xl flex items-center gap-4 mb-4"><i class="fa-solid fa-file-excel text-emerald-500"></i> 명단 업데이트</h3>
-                            <input type="file" id="excelInput" accept=".xlsx, .xls" class="block w-full text-base text-slate-500 file:mr-6 file:py-3 file:px-8 file:rounded-full file:border-0 file:font-bold file:bg-emerald-50 file:text-emerald-700 cursor-pointer"/>
-                            <button id="importBtn" class="w-full py-6 bg-emerald-600 text-white rounded-[2.5rem] font-jua text-2xl shadow-xl mt-6">데이터 서버 업데이트</button>
+                    <div class="max-w-2xl mx-auto space-y-12">
+                        <div class="bg-indigo-50/50 p-8 rounded-[2.5rem] border border-indigo-100">
+                            <h3 class="font-bold text-slate-800 text-xl mb-4 flex items-center gap-2"><i class="fa-solid fa-file-excel text-emerald-600"></i> 명단 업데이트</h3>
+                            <p class="text-xs text-slate-500 mb-6">엑셀 파일을 선택하고 '업데이트' 버튼을 누르세요.</p>
+                            <input type="file" id="excelInput" accept=".xlsx, .xls" class="block w-full text-base text-slate-500 file:mr-6 file:py-3 file:px-8 file:rounded-full file:border-0 file:font-bold file:bg-white file:text-indigo-700 cursor-pointer"/>
+                            <button id="importBtn" class="w-full py-6 bg-indigo-600 text-white rounded-[2rem] font-jua text-2xl shadow-xl mt-8">데이터 서버 업데이트</button>
                         </div>
-                        <div class="pt-10 border-t border-red-50 text-center">
-                            <h3 class="font-bold text-red-500 text-xl mb-6">기록 초기화</h3>
-                            <button onclick="window.clearAllServerCalls()" class="w-full py-6 bg-red-500 text-white rounded-[2.5rem] font-jua text-2xl shadow-xl">전광판 명단 비우기</button>
+                        <div class="bg-red-50/50 p-8 rounded-[2.5rem] border border-red-100 text-center">
+                            <h3 class="font-bold text-red-600 text-xl mb-4">기록 초기화</h3>
+                            <!-- [수정] 아이패드 confirm 차단 대응용 버튼 -->
+                            <button id="btn-clear" class="w-full py-6 bg-red-500 text-white rounded-[2rem] font-jua text-2xl shadow-xl transition-all">전광판 명단 비우기</button>
                         </div>
-                        <div class="text-center pt-10"><button onclick="window.logoutAdmin()" class="text-base text-slate-400 underline">로그아웃</button></div>
+                        <div class="text-center pt-6"><button id="btn-logout" class="text-sm text-slate-400 underline">로그아웃</button></div>
                     </div>
-                </div>
-
-                <div class="copyright">
-                    © 2026. 옥준우 All rights reserved.
                 </div>
             </div>
         </div>
 
         <nav class="bottom-nav">
-            <button onclick="window.switchMode('parent')" id="nav-parent" class="flex flex-col items-center gap-2 text-blue-600 transition-all"><i class="fa-solid fa-tablet-screen-button text-3xl sm:text-4xl"></i><span class="text-xs font-bold uppercase">호출기</span></button>
-            <button onclick="window.switchMode('display')" id="nav-display" class="flex flex-col items-center gap-2 text-slate-400 transition-all"><i class="fa-solid fa-desktop text-3xl sm:text-4xl"></i><span class="text-xs font-bold uppercase">전광판</span></button>
-            <button onclick="window.requestAdminAccess()" id="nav-settings" class="flex flex-col items-center gap-2 text-slate-400 transition-all"><i class="fa-solid fa-user-lock text-3xl sm:text-4xl"></i><span class="text-xs font-bold uppercase">설정</span></button>
+            <button id="nav-parent" class="flex flex-col items-center gap-2 text-blue-600"><i class="fa-solid fa-tablet-screen-button text-3xl sm:text-4xl"></i><span class="text-xs font-bold uppercase">호출기</span></button>
+            <button id="nav-display" class="flex flex-col items-center gap-2 text-slate-400"><i class="fa-solid fa-desktop text-3xl sm:text-4xl"></i><span class="text-xs font-bold uppercase">전광판</span></button>
+            <button id="nav-settings" class="flex flex-col items-center gap-2 text-slate-400"><i class="fa-solid fa-user-lock text-3xl sm:text-4xl"></i><span class="text-xs font-bold uppercase">설정</span></button>
         </nav>
     </div>
 
-    <!-- 전광판 레이어 (16:9 강제 유지 로직 적용) -->
+    <!-- 전광판 레이어 -->
     <div id="view-display">
         <div class="display-container">
             <div class="display-overlay">
                 <header class="display-header">
                     <div class="text-left text-blue-900">
-                        <h1 class="font-gaegu text-[8vh] leading-tight whitespace-nowrap drop-shadow-lg font-bold">친구들! 다음주에 만나요</h1>
+                        <h1 class="font-gaegu text-[8vh] leading-tight font-bold">친구들! 다음주에 만나요</h1>
                         <p class="opacity-50 font-jua text-[3vh] uppercase tracking-[0.5em] ml-2 font-black">Happy Pickup Board</p>
                     </div>
                     <div class="bg-white/90 backdrop-blur px-[3vw] py-[2vh] rounded-[2rem] shadow-xl border-4 border-white text-center">
@@ -284,7 +275,7 @@
                 <div class="ticker-container">
                     <div id="display-grid" class="ticker-move"></div>
                 </div>
-                <button onclick="window.switchMode('parent')" class="absolute bottom-[4vh] right-[4vw] w-[8vh] h-[8vh] bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-blue-600 transition-all shadow-2xl border-2 border-white"><i class="fa-solid fa-house-chimney text-[4vh]"></i></button>
+                <button id="btn-disp-home" class="absolute bottom-[4vh] right-[4vw] w-[9vh] h-[9vh] bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-blue-600 transition-all shadow-2xl border-2 border-white"><i class="fa-solid fa-house-chimney text-[4.5vh]"></i></button>
             </div>
         </div>
     </div>
@@ -294,7 +285,7 @@
         <div class="notice-modal-content border-red-100">
             <div class="w-24 h-24 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-8"><i class="fa-solid fa-triangle-exclamation text-5xl"></i></div>
             <h3 class="font-jua text-4xl text-slate-800 mb-6 font-bold text-red-500 text-center">연결 오류</h3>
-            <p class="font-gaegu text-2xl sm:text-3xl text-slate-600 leading-relaxed font-bold break-keep text-center">네트워크 연결이 불안정합니다.<br><span class="text-red-500 font-black">전도사님께 말씀해주세요!</span></p>
+            <p class="font-gaegu text-2xl sm:text-3xl text-slate-600 font-bold break-keep text-center">네트워크 연결이 불안정합니다.<br><span class="text-red-500 font-black">전도사님께 말씀해주세요!</span></p>
             <button onclick="location.reload()" class="w-full mt-10 py-8 bg-slate-800 text-white rounded-[3rem] font-jua text-2xl shadow-lg active:scale-95 transition-transform text-center">다시 연결 시도</button>
         </div>
     </div>
@@ -302,11 +293,11 @@
     <!-- 모달: 호출 완료 -->
     <div id="notice-modal" class="modal-overlay">
         <div class="notice-modal-content">
-            <div class="close-x-btn" onclick="window.closeNoticeModal()"><i class="fa-solid fa-xmark"></i></div>
+            <div class="close-x-btn" id="btn-close-notice-x"><i class="fa-solid fa-xmark"></i></div>
             <div class="w-28 h-28 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-8"><i class="fa-solid fa-bell-concierge text-7xl"></i></div>
-            <h3 class="font-jua text-3xl sm:text-4xl text-slate-800 mb-6 font-bold text-center">호출 완료!</h3>
+            <h3 class="font-jua text-4xl sm:text-5xl text-slate-800 mb-6 font-bold text-center">호출 완료!</h3>
             <p class="font-gaegu text-2xl sm:text-3xl text-slate-600 leading-relaxed font-bold break-keep text-center">샬롬! 부모님들께서는 오신 순서대로,<br>줄을 서서 기다려주시면, 차례대로<br>아이들이 나올 수 있게 도와드리겠습니다.<br>감사합니다!</p>
-            <button onclick="window.closeNoticeModal()" class="w-full mt-10 py-6 bg-blue-600 text-white rounded-[3rem] font-jua text-3xl sm:text-4xl shadow-xl active:scale-95 transition-transform">확인</button>
+            <button id="btn-close-notice" class="w-full mt-10 py-8 bg-blue-600 text-white rounded-[3rem] font-jua text-3xl sm:text-4xl shadow-xl active:scale-95 transition-transform">확인</button>
         </div>
     </div>
 
@@ -315,15 +306,15 @@
         <div class="bg-white rounded-[5rem] w-full max-w-[500px] p-16 shadow-2xl text-center space-y-10">
             <div class="w-24 h-24 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto"><i class="fa-solid fa-lock text-6xl"></i></div>
             <h3 class="font-jua text-4xl sm:text-5xl text-slate-800 font-bold text-center">관리자 인증</h3>
-            <input type="password" id="authPwInput" class="w-full p-8 bg-slate-100 rounded-[3rem] text-center font-bold text-7xl border-none focus:ring-4 focus:ring-blue-200" placeholder="****">
+            <input type="password" id="authPwInput" class="w-full p-8 bg-slate-100 rounded-[3rem] text-center font-bold text-6xl border-none focus:ring-4 focus:ring-blue-200" placeholder="****">
             <div class="flex gap-4">
-                <button onclick="window.closeAuthModal()" class="flex-1 py-8 bg-slate-100 text-slate-500 rounded-[3rem] font-bold text-xl text-center">취소</button>
-                <button onclick="window.confirmAdminAuth()" class="flex-1 py-8 bg-blue-600 text-white rounded-[3rem] font-bold shadow-lg text-xl text-center">확인</button>
+                <button id="btn-close-auth" class="flex-1 py-8 bg-slate-100 text-slate-500 rounded-[3rem] font-bold text-xl text-center">취소</button>
+                <button id="btn-confirm-auth" class="flex-1 py-8 bg-blue-600 text-white rounded-[3rem] font-bold shadow-lg text-xl text-center">확인</button>
             </div>
         </div>
     </div>
 
-    <div id="toast" class="fixed bottom-32 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white px-10 py-5 rounded-full font-jua text-xl opacity-0 transition-all z-[999999] whitespace-nowrap">메시지</div>
+    <div id="toast" class="fixed bottom-32 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white px-10 py-5 rounded-full font-jua text-2xl opacity-0 transition-all z-[999999] pointer-events-none">메시지</div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -366,27 +357,21 @@
         let allPickupCalls = [];
         const cardColors = ['bg-p-blue', 'bg-p-pink', 'bg-p-mint', 'bg-p-orange', 'bg-p-purple'];
 
-        window.showNetworkError = () => { nodes.netErrorModal.style.display = 'flex'; };
-        window.hideNetworkError = () => { nodes.netErrorModal.style.display = 'none'; };
-        window.openNoticeModal = () => { nodes.noticeModal.style.display = 'flex'; };
-        window.closeNoticeModal = () => { nodes.noticeModal.style.display = 'none'; window.resetWorshipSelection(); };
-        window.closeAuthModal = () => { nodes.authModal.style.display = 'none'; };
-
-        window.addEventListener('offline', () => { window.showNetworkError(); });
-        window.addEventListener('online', () => { window.hideNetworkError(); window.showToast("연결 복구됨"); });
+        // [수정] 삭제 확인 상태 변수
+        let deleteConfirmActive = false;
 
         window.showToast = (m) => {
             const t = document.getElementById('toast');
             if (t) { t.innerText = m; t.classList.add('opacity-100'); setTimeout(() => t.classList.remove('opacity-100'), 2000); }
         };
 
-        const safetyTimeout = setTimeout(() => { if (nodes.loading.style.display !== 'none') { window.showNetworkError(); } }, 15000);
+        const safetyTimeout = setTimeout(() => { if (nodes.loading.style.display !== 'none') { nodes.netErrorModal.style.display = 'flex'; } }, 15000);
 
         async function init() {
             try { 
                 await signInAnonymously(auth); 
                 onAuthStateChanged(auth, (user) => { if (user) fetchData(); }); 
-            } catch (e) { window.showNetworkError(); }
+            } catch (e) { nodes.netErrorModal.style.display = 'flex'; }
         }
 
         async function fetchData() {
@@ -395,7 +380,7 @@
                 if (snap.exists()) classStructure = snap.data().map;
                 else classStructure = { "유치1부": {}, "유치2부": {} };
                 clearTimeout(safetyTimeout); startClock(); subscribeCalls(); hideLoading();
-            } catch (e) { window.showNetworkError(); }
+            } catch (e) { nodes.netErrorModal.style.display = 'flex'; }
         }
 
         function hideLoading() {
@@ -413,6 +398,7 @@
             nodes.app.style.display = 'grid'; nodes.display.style.display = 'none';
             nodes.parentBox.style.display = (mode === 'parent') ? 'block' : 'none';
             nodes.settingsBox.style.display = (mode === 'settings') ? 'block' : 'none';
+
             ['parent', 'display', 'settings'].forEach(m => {
                 const n = document.getElementById(`nav-${m}`);
                 if(n) n.classList.replace('text-blue-600', 'text-slate-400');
@@ -423,7 +409,7 @@
         };
 
         window.requestAdminAccess = () => { if (isAdminAuthorized) window.switchMode('settings'); else nodes.authModal.style.display = 'flex'; };
-        window.confirmAdminAuth = () => { if (document.getElementById('authPwInput').value === '1234') { isAdminAuthorized = true; window.closeAuthModal(); window.switchMode('settings'); window.showToast("인증 성공!"); } else { window.showToast("비밀번호 오류"); } };
+        window.confirmAdminAuth = () => { if (document.getElementById('authPwInput').value === '1234') { isAdminAuthorized = true; nodes.authModal.style.display = 'none'; window.switchMode('settings'); window.showToast("인증 성공!"); } else { window.showToast("비밀번호 오류"); } };
         window.logoutAdmin = () => { isAdminAuthorized = false; window.switchMode('parent'); window.showToast("로그아웃 되었습니다."); };
 
         window.selectPartAndRollUp = (part) => {
@@ -464,8 +450,8 @@
                     addDoc(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'), { className: cName, studentName: sName, timestamp: serverTimestamp() }),
                     timeoutPromise
                 ]);
-                window.openNoticeModal(); 
-            } catch (e) { window.showNetworkError(); } 
+                nodes.noticeModal.style.display = 'flex'; 
+            } catch (e) { nodes.netErrorModal.style.display = 'flex'; } 
         }
 
         window.sendManualCall = async () => { const name = document.getElementById('manual-input').value.trim(); if (!name) return window.showToast("이름 입력"); await sendCallToFirebase("방문/새친구", name); document.getElementById('manual-input').value = ''; };
@@ -485,10 +471,8 @@
             const listToDraw = isShort ? allPickupCalls : [...allPickupCalls, ...allPickupCalls];
             const fragment = document.createDocumentFragment();
             listToDraw.forEach((call, index) => {
-                const card = document.createElement('div'); 
-                card.className = `call-card ${cardColors[index % cardColors.length]}`;
-                card.innerHTML = `<p class="display-class-label">${call.className}</p><p class="display-student-name">${call.studentName}</p>`; 
-                fragment.appendChild(card);
+                const card = document.createElement('div'); card.className = `call-card ${cardColors[index % cardColors.length]}`;
+                card.innerHTML = `<p class="display-class-label">${call.className}</p><p class="display-student-name">${call.studentName}</p>`; fragment.appendChild(card);
             });
             grid.appendChild(fragment);
             if (!isShort) {
@@ -497,7 +481,37 @@
             } else grid.style.animation = "none";
         }
 
-        document.getElementById('importBtn').addEventListener('click', async () => {
+        // [수정] 아이패드 대응 비우기 로직 (Click twice to delete)
+        document.getElementById('btn-clear').onclick = async () => {
+            const btn = document.getElementById('btn-clear');
+            if (!deleteConfirmActive) {
+                deleteConfirmActive = true;
+                btn.innerText = "진짜 삭제할까요? (한번 더 클릭)";
+                btn.classList.replace('bg-red-500', 'bg-red-700');
+                setTimeout(() => {
+                    deleteConfirmActive = false;
+                    btn.innerText = "전광판 명단 비우기";
+                    btn.classList.replace('bg-red-700', 'bg-red-500');
+                }, 4000); // 4초 동안 유지
+                return;
+            }
+
+            try {
+                window.showToast("삭제 중...");
+                const snap = await getDocs(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'));
+                await Promise.all(snap.docs.map(d => deleteDoc(d.ref)));
+                
+                deleteConfirmActive = false;
+                btn.innerText = "전광판 명단 비우기";
+                btn.classList.replace('bg-red-700', 'bg-red-500');
+                window.showToast("초기화 완료");
+            } catch (err) {
+                window.showToast("오류 발생");
+            }
+        };
+
+        // 엑셀 업데이트
+        document.getElementById('importBtn').onclick = async () => {
             const file = document.getElementById('excelInput').files[0]; if (!file) return window.showToast("파일 선택");
             nodes.loading.style.display = 'flex'; nodes.loading.style.opacity = '1';
             const reader = new FileReader();
@@ -508,35 +522,42 @@
                     const tempMap = { "유치1부": {}, "유치2부": {} };
                     let curP = "유치1부", hIdx = rows.findIndex(r => r && r.some(c => String(c).includes('이름')));
                     const hs = rows[hIdx], aI = hs.findIndex(h => h && (String(h).includes('나이')||String(h).includes('연령'))), cI = hs.findIndex(h => h && String(h).includes('반')), nI = hs.findIndex(h => h && (String(h).includes('이름')||String(h).includes('학생명')));
-                    let lastC = "", lastA = "공통"; 
                     rows.forEach((row, i) => {
                         if (!row || i <= hIdx) return;
-                        const rowStr = row.join('|');
-                        if (rowStr.includes('2부') || rowStr.includes('11:30')) { curP = "유치2부"; lastC = ""; }
+                        if (row.join('|').includes('2부') || row.join('|').includes('11:30')) { curP = "유치2부"; }
                         const n = row[nI] ? String(row[nI]).trim() : "";
                         let cRaw = row[cI] ? String(row[cI]).trim() : "";
                         let aRaw = row[aI] ? String(row[aI]).trim() : "";
-                        if (cRaw && cRaw !== "반") { lastC = cRaw.split('(')[0].trim(); if (aRaw) lastA = aRaw.replace(/[^0-9]/g, "") + "세"; }
-                        let targetC = (cRaw && cRaw !== "반") ? cRaw.split('(')[0].trim() : lastC;
-                        if (!n || !targetC || targetC === "반" || n === "이름") return;
-                        let ak = targetC.includes('새친구') ? "새친구" : lastA;
+                        if (!n || !cRaw || cRaw === "반") return;
+                        let ak = aRaw ? aRaw.replace(/[^0-9]/g, "") + "세" : "공통";
+                        let targetC = cRaw.split('(')[0].trim();
                         if (!tempMap[curP][targetC]) tempMap[curP][targetC] = { age: ak, students: [] };
                         if (!tempMap[curP][targetC].students.includes(n)) tempMap[curP][targetC].students.push(n);
                     });
                     const finalMap = { "유치1부": {}, "유치2부": {} };
-                    ['유치1부', '유치2부'].forEach(p => { 
-                        Object.keys(tempMap[p]).forEach(cn => { 
-                            const it = tempMap[p][cn]; 
-                            if (!finalMap[p][it.age]) finalMap[p][it.age] = []; 
-                            finalMap[p][it.age].push({ name: cn, students: it.students }); 
-                        }); 
-                    });
+                    ['유치1부', '유치2부'].forEach(p => { Object.keys(tempMap[p]).forEach(cn => { const it = tempMap[p][cn]; if (!finalMap[p][it.age]) finalMap[p][it.age] = []; finalMap[p][it.age].push({ name: cn, students: it.students }); }); });
                     await setDoc(doc(db, 'artifacts', appIdStr, 'public', 'data', 'config', 'structure'), { map: finalMap });
                     classStructure = finalMap; window.showToast("업데이트 성공!"); window.switchMode('parent');
-                } catch (err) { window.showNetworkError(); }
+                } catch (err) { window.showToast("오류 발생"); }
                 nodes.loading.style.display = 'none';
             }; reader.readAsArrayBuffer(file);
-        });
+        };
+
+        // 기타 바인딩
+        document.getElementById('btn-p1').onclick = () => window.selectPartAndRollUp('유치1부');
+        document.getElementById('btn-p2').onclick = () => window.selectPartAndRollUp('유치2부');
+        document.getElementById('btn-reset').onclick = () => window.resetWorshipSelection();
+        document.getElementById('btn-back').onclick = () => window.backToClassSelection();
+        document.getElementById('btn-manual').onclick = () => window.sendManualCall();
+        document.getElementById('nav-parent').onclick = () => window.switchMode('parent');
+        document.getElementById('nav-display').onclick = () => window.switchMode('display');
+        document.getElementById('nav-settings').onclick = () => window.requestAdminAccess();
+        document.getElementById('btn-disp-home').onclick = () => window.switchMode('parent');
+        document.getElementById('btn-close-notice').onclick = () => { nodes.noticeModal.style.display = 'none'; window.resetWorshipSelection(); };
+        document.getElementById('btn-close-notice-x').onclick = () => { nodes.noticeModal.style.display = 'none'; };
+        document.getElementById('btn-close-auth').onclick = () => { nodes.authModal.style.display = 'none'; };
+        document.getElementById('btn-confirm-auth').onclick = () => window.confirmAdminAuth();
+        document.getElementById('btn-logout').onclick = () => window.logoutAdmin();
 
         function startClock() { setInterval(() => { const now = new Date(); const clock = document.getElementById('display-clock'); if (clock) clock.innerText = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0'); }, 1000); }
         
