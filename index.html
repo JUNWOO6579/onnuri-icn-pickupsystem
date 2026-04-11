@@ -74,7 +74,7 @@
         @media (min-width: 640px) { .class-btn { font-size: 1.8rem; border-radius: 2.2rem; box-shadow: 0 6px 0 #e2e8f0; } }
         .class-btn:active { transform: scale(0.95) translateY(3px); box-shadow: none; }
 
-        /* 컬러 유틸리티 */
+        /* 컬러 클래스 (c-1 ~ c-24) */
         .c-1 { background-color: var(--p-1) !important; } .c-2 { background-color: var(--p-2) !important; }
         .c-3 { background-color: var(--p-3) !important; } .c-4 { background-color: var(--p-4) !important; }
         .c-5 { background-color: var(--p-5) !important; } .c-6 { background-color: var(--p-6) !important; }
@@ -100,37 +100,37 @@
         .display-overlay { flex: 1; background: rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; padding: 3vh 4vw; overflow: hidden; }
         .display-header { height: 18vh; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
         
-        /* [수정] 애니메이션을 완전히 배제한 15명 고정 그리드 */
+        /* [수정] 10명 노출을 위한 5열 2행 그리드 */
         .ticker-container { 
             flex: 1; margin-top: 2vh; 
             display: grid; 
             grid-template-columns: repeat(5, 1fr); 
-            grid-template-rows: repeat(3, 1fr); 
-            gap: 1.5vw; 
-            animation: none !important; /* 애니메이션 제거 강제 */
+            grid-template-rows: repeat(2, 1fr); 
+            gap: 2vw; 
+            overflow: hidden;
         }
         
         .call-card { 
-            border-radius: 1.5rem; border: 0.6vw solid #fff; box-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.2); 
+            border-radius: 2rem; border: 0.7vw solid #fff; box-shadow: 0 1.5vh 4vh rgba(0, 0, 0, 0.2); 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            padding: 1.5vh; height: 100%; position: relative; cursor: pointer; transition: transform 0.1s active;
+            padding: 2vh; height: 100%; position: relative; cursor: pointer; transition: transform 0.1s active;
         }
         .call-card:active { transform: scale(0.95); opacity: 0.8; }
         
         .display-sequence {
-            position: absolute; top: 1.2vh; left: 1.2vw; font-family: 'Jua', sans-serif; font-size: 2.5vh;
-            color: #fff; background: rgba(0,0,0,0.4); width: 4vh; height: 4vh; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,0.4); pointer-events: none;
+            position: absolute; top: 1.5vh; left: 1.5vw; font-family: 'Jua', sans-serif; font-size: 3.2vh;
+            color: #fff; background: rgba(0,0,0,0.45); width: 5.5vh; height: 5.5vh; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; border: 3px solid rgba(255,255,255,0.4); pointer-events: none;
         }
 
         .display-student-name { 
-            font-family: 'Jua', sans-serif; font-size: 5.5vh; white-space: nowrap; color: white; 
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.6); letter-spacing: -0.02em; pointer-events: none;
+            font-family: 'Jua', sans-serif; font-size: 7.5vh; white-space: nowrap; color: white; 
+            text-shadow: 4px 4px 10px rgba(0,0,0,0.6); letter-spacing: -0.02em; pointer-events: none;
         }
 
         .display-class-label { 
-            font-family: 'Gaegu', cursive; font-size: 2.5vh; font-weight: 800; background: rgba(255,255,255,0.95); 
-            padding: 0.1vh 1.5vw; border-radius: 99px; color: #000; margin-bottom: 0.8vh; pointer-events: none;
+            font-family: 'Gaegu', cursive; font-size: 3.2vh; font-weight: 800; background: rgba(255,255,255,0.95); 
+            padding: 0.2vh 2vw; border-radius: 99px; color: #000; margin-bottom: 1vh; pointer-events: none;
         }
 
         #loading-overlay {
@@ -160,7 +160,7 @@
     <div id="loading-overlay">
         <div class="flex flex-col items-center">
             <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mb-6"></div>
-            <p class="font-jua text-3xl text-slate-400">로딩 중...</p>
+            <p class="font-jua text-3xl text-slate-400">시스템 로딩 중...</p>
         </div>
     </div>
 
@@ -177,8 +177,8 @@
                     <div class="step-container" id="section-worship">
                         <h2 class="font-jua text-xl text-slate-700 mb-2 font-bold"><i class="fa-solid fa-heart text-pink-400"></i> 1. 예배 선택</h2>
                         <div class="grid grid-cols-2 gap-4 mb-6">
-                            <button id="btn-p1" class="py-5 border-2 border-blue-50 text-blue-600 font-jua text-3xl rounded-[2.5rem] bg-blue-50/20">유치1부</button>
-                            <button id="btn-p2" class="py-5 border-2 border-orange-50 text-orange-600 font-jua text-3xl rounded-[2.5rem] bg-orange-50/30">유치2부</button>
+                            <button id="btn-p1" class="py-5 border-2 border-blue-50 text-blue-600 font-jua text-3xl rounded-[2.5rem] bg-blue-50/20 active:bg-blue-100">유치1부</button>
+                            <button id="btn-p2" class="py-5 border-2 border-orange-50 text-orange-600 font-jua text-3xl rounded-[2.5rem] bg-orange-50/30 active:bg-orange-100">유치2부</button>
                         </div>
                     </div>
 
@@ -202,7 +202,7 @@
                         <h2 class="font-gaegu text-2xl text-pink-500 mb-4 font-bold">방문/새친구 이름</h2>
                         <div class="grid grid-cols-[1fr_auto] gap-3">
                             <input type="text" id="manual-input" class="p-5 bg-slate-50 rounded-[2rem] border-none font-bold text-xl shadow-inner" placeholder="이름 입력">
-                            <button id="btn-manual" class="shrink-0 bg-pink-500 text-white font-jua px-10 rounded-[2rem] shadow-xl text-xl">호출</button>
+                            <button id="btn-manual" class="shrink-0 bg-pink-500 text-white font-jua px-10 rounded-[2rem] shadow-xl text-xl active:scale-95">호출</button>
                         </div>
                     </div>
                 </div>
@@ -246,7 +246,7 @@
                     </div>
                 </header>
                 <div id="display-grid" class="ticker-container">
-                    <!-- 최대 15명 노출 영역 -->
+                    <!-- JS에서 최대 10명만 고정 렌더링 -->
                 </div>
                 <button id="btn-disp-home" class="absolute bottom-[4vh] right-[4vw] w-[9vh] h-[9vh] bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 shadow-2xl border-2 border-white"><i class="fa-solid fa-house-chimney text-[4.5vh]"></i></button>
             </div>
@@ -279,7 +279,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot, collection, deleteDoc, addDoc, serverTimestamp, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, onSnapshot, collection, deleteDoc, addDoc, serverTimestamp, getDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyB0a28S4lqXIrEc8l0-ik6Z5FUX53kNbC4",
@@ -376,7 +376,21 @@
 
         async function sendCallToFirebase(cName, sName) { 
             try { 
-                await addDoc(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'), { className: cName, studentName: sName, timestamp: serverTimestamp() });
+                const counterRef = doc(db, 'artifacts', appIdStr, 'public', 'data', 'config', 'counter');
+                const counterSnap = await getDoc(counterRef);
+                let nextNum = 1;
+                if(counterSnap.exists()) nextNum = (counterSnap.data().count || 0) + 1;
+                
+                await updateDoc(counterRef, { count: nextNum }).catch(async () => {
+                    await setDoc(counterRef, { count: nextNum });
+                });
+
+                await addDoc(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'), { 
+                    className: cName, 
+                    studentName: sName, 
+                    timestamp: serverTimestamp(),
+                    waitingNum: nextNum 
+                });
                 document.getElementById('notice-modal').style.display = 'flex'; 
             } catch (e) { window.showToast("연결 오류"); } 
         }
@@ -386,7 +400,11 @@
         function subscribeCalls() {
             onSnapshot(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'), (snap) => {
                 const raw = []; snap.forEach(d => raw.push({ id: d.id, ...d.data() }));
-                const unique = new Map(); raw.forEach(call => { const key = `${call.className}-${call.studentName}`; if (!unique.has(key)) unique.set(key, call); });
+                const unique = new Map(); 
+                raw.forEach(call => { 
+                    const key = `${call.className}-${call.studentName}`; 
+                    if (!unique.has(key)) unique.set(key, call); 
+                });
                 allPickupCalls = Array.from(unique.values()).sort((a, b) => (a.timestamp?.seconds || 0) - (b.timestamp?.seconds || 0));
                 renderTicker();
             });
@@ -394,47 +412,44 @@
 
         window.removeSingleCall = async (callId) => { if (!callId) return; try { await deleteDoc(doc(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls', callId)); } catch (err) { console.error(err); } };
 
-        /* 반별 1:1 고정 컬러 매핑 (고대비 24종) */
         const getColorByClassName = (className) => {
-            const cleanName = className.replace(/반|부/g, "").trim();
-            if (cleanName === "방문/새친구") return 'c-9'; 
+            if (!className) return 'c-20';
+            const cn = className.replace(/반|부/g, "").trim();
+            if (cn === "방문/새친구") return 'c-16'; 
             
             const fixedMap = {
                 "기드온": "c-1", "바나바": "c-2", "베드로": "c-3", "보아스": "c-4",
                 "사무엘": "c-5", "안드레": "c-6", "야고보": "c-7", "에스더": "c-8",
                 "노아": "c-10", "다윗": "c-11", "디도": "c-12", "바울": "c-13",
-                "빌립": "c-14", "야곱": "c-15", "에녹": "c-16", "요나": "c-17",
-                "요한": "c-18", "한나": "c-19", "요나단": "c-21", "기쁨": "c-22",
-                "사랑": "c-23", "소망": "c-24", "믿음": "c-18"
+                "빌립": "c-14", "야곱": "c-15", "에녹": "c-17", "요나": "c-18",
+                "요한": "c-19", "한나": "c-20", "요나단": "c-21", "기쁨": "c-22",
+                "사랑": "c-23", "소망": "c-24", "믿음": "c-9"
             };
             
-            if (fixedMap[cleanName]) return fixedMap[cleanName];
-            let hash = 0;
-            for (let i = 0; i < cleanName.length; i++) hash = (hash * 33) ^ cleanName.charCodeAt(i);
-            return `c-${Math.abs(hash % 24) + 1}`;
+            if (fixedMap[cn]) return fixedMap[cn];
+            let h = 0; for (let i = 0; i < cn.length; i++) h = (h * 31) ^ cn.charCodeAt(i);
+            return `c-${Math.abs(h % 24) + 1}`;
         };
 
-        /* [핵심 수정] 최대 15명 노출 및 애니메이션 제거 로직 */
+        /* [핵심 수정] 최대 10명 고정 렌더링 로직 */
         function renderTicker() {
             const grid = nodes.tickerGrid; if (!grid) return; 
             grid.innerHTML = '';
-            // 애니메이션 스타일 강제 제거
-            grid.style.animation = "none";
-            grid.style.transform = "none";
 
             if (allPickupCalls.length === 0) return;
             
-            // 상위 15명만 추출하여 고정 그리드에 표시
-            const listToShow = allPickupCalls.slice(0, 15);
+            // [수정] 상위 10명만 추출하여 5x2 그리드에 표시
+            const listToShow = allPickupCalls.slice(0, 10);
             const fragment = document.createDocumentFragment();
             
-            listToShow.forEach((call, index) => {
+            listToShow.forEach((call) => {
                 const card = document.createElement('div'); 
                 const assignedColor = getColorByClassName(call.className);
                 card.className = `call-card ${assignedColor}`;
                 card.onclick = () => window.removeSingleCall(call.id);
+                
                 card.innerHTML = `
-                    <div class="display-sequence">${index + 1}</div>
+                    <div class="display-sequence">${call.waitingNum || '?'}</div>
                     <p class="display-class-label">${call.className}</p>
                     <p class="display-student-name">${call.studentName}</p>
                 `; 
@@ -452,6 +467,7 @@
             }
             const snap = await getDocs(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'));
             await Promise.all(snap.docs.map(d => deleteDoc(d.ref)));
+            await setDoc(doc(db, 'artifacts', appIdStr, 'public', 'data', 'config', 'counter'), { count: 0 });
             window.showToast("초기화 완료");
         };
 
