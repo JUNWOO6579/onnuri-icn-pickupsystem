@@ -13,9 +13,12 @@
         @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Jua&family=Nanum+Gothic:wght@400;700;800&display=swap');
         
         :root {
+            /* 확장된 20개 컬러 팔레트 정의 */
             --p-blue: #3b82f6; --p-pink: #ec4899; --p-mint: #10b981; --p-orange: #f59e0b; 
             --p-purple: #8b5cf6; --p-yellow: #eab308; --p-indigo: #6366f1; --p-teal: #14b8a6;
-            --p-rose: #f43f5e; --p-cyan: #06b6d4;
+            --p-rose: #f43f5e; --p-cyan: #06b6d4; --p-lime: #84cc16; --p-amber: #d97706;
+            --p-sky: #0ea5e9; --p-violet: #7c3aed; --p-fuchsia: #d946ef; --p-red: #ef4444;
+            --p-emerald: #059669; --p-blue-deep: #1d4ed8; --p-pink-light: #f472b6; --p-slate: #475569;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
@@ -102,17 +105,27 @@
         }
         .class-btn:active { transform: scale(0.95) translateY(3px); box-shadow: none; }
 
-        /* 확장된 컬러 시스템 (10종) */
-        .bg-p-blue { background-color: #3b82f6 !important; }
-        .bg-p-pink { background-color: #ec4899 !important; }
-        .bg-p-mint { background-color: #10b981 !important; }
-        .bg-p-orange { background-color: #f59e0b !important; }
-        .bg-p-purple { background-color: #8b5cf6 !important; }
-        .bg-p-yellow { background-color: #eab308 !important; }
-        .bg-p-indigo { background-color: #6366f1 !important; }
-        .bg-p-teal { background-color: #14b8a6 !important; }
-        .bg-p-rose { background-color: #f43f5e !important; }
-        .bg-p-cyan { background-color: #06b6d4 !important; }
+        /* 확장된 컬러 유틸리티 클래스 */
+        .bg-p-blue { background-color: var(--p-blue) !important; }
+        .bg-p-pink { background-color: var(--p-pink) !important; }
+        .bg-p-mint { background-color: var(--p-mint) !important; }
+        .bg-p-orange { background-color: var(--p-orange) !important; }
+        .bg-p-purple { background-color: var(--p-purple) !important; }
+        .bg-p-yellow { background-color: var(--p-yellow) !important; }
+        .bg-p-indigo { background-color: var(--p-indigo) !important; }
+        .bg-p-teal { background-color: var(--p-teal) !important; }
+        .bg-p-rose { background-color: var(--p-rose) !important; }
+        .bg-p-cyan { background-color: var(--p-cyan) !important; }
+        .bg-p-lime { background-color: var(--p-lime) !important; }
+        .bg-p-amber { background-color: var(--p-amber) !important; }
+        .bg-p-sky { background-color: var(--p-sky) !important; }
+        .bg-p-violet { background-color: var(--p-violet) !important; }
+        .bg-p-fuchsia { background-color: var(--p-fuchsia) !important; }
+        .bg-p-red { background-color: var(--p-red) !important; }
+        .bg-p-emerald { background-color: var(--p-emerald) !important; }
+        .bg-p-blue-deep { background-color: var(--p-blue-deep) !important; }
+        .bg-p-pink-light { background-color: var(--p-pink-light) !important; }
+        .bg-p-slate { background-color: var(--p-slate) !important; }
 
         /* [전광판 전용 스타일] */
         #view-display { 
@@ -368,10 +381,12 @@
             scrollArea: document.getElementById('main-glass-stage')
         };
 
-        // 확장된 컬러 팔레트 (10종)
+        // 확장된 컬러 팔레트 (20종)
         const cardColors = [
             'bg-p-blue', 'bg-p-pink', 'bg-p-mint', 'bg-p-orange', 'bg-p-purple',
-            'bg-p-yellow', 'bg-p-indigo', 'bg-p-teal', 'bg-p-rose', 'bg-p-cyan'
+            'bg-p-yellow', 'bg-p-indigo', 'bg-p-teal', 'bg-p-rose', 'bg-p-cyan',
+            'bg-p-lime', 'bg-p-amber', 'bg-p-sky', 'bg-p-violet', 'bg-p-fuchsia',
+            'bg-p-red', 'bg-p-emerald', 'bg-p-blue-deep', 'bg-p-pink-light', 'bg-p-slate'
         ];
 
         let classStructure = {};
@@ -480,12 +495,12 @@
             }
         };
 
-        /* [수정] 반별 고유 컬러 지정 로직 강화 */
+        /* 반별 고유 컬러 지정 로직 (20개 팔레트로 확장) */
         const getColorByClassName = (className) => {
             if (!className) return cardColors[0];
             if (className === "방문/새친구") return 'bg-p-rose'; // 방문 친구는 로즈 핑크 고정
             
-            // 반 이름을 사용하여 해시값 생성 (더 명확한 구분을 위해 시프트 연산 강화)
+            // 반 이름을 사용하여 해시값 생성 (시프트 연산을 활용해 분포 최적화)
             let hash = 0;
             for (let i = 0; i < className.length; i++) {
                 hash = className.charCodeAt(i) + ((hash << 7) - hash);
@@ -505,7 +520,7 @@
                 const sequenceNum = (index % allPickupCalls.length) + 1;
                 const card = document.createElement('div'); 
                 
-                // [반영 확인] 반 이름에 따른 고유 컬러 가져오기
+                // 확장된 20개 컬러 중 고유 컬러 할당
                 const assignedColor = getColorByClassName(call.className);
                 card.className = `call-card ${assignedColor}`;
                 
