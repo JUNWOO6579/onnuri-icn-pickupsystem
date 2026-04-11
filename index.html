@@ -100,7 +100,6 @@
         .display-overlay { flex: 1; background: rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; padding: 3vh 4vw; overflow: hidden; }
         .display-header { height: 18vh; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
         
-        /* [수정] 10명 노출을 위한 5열 2행 그리드 */
         .ticker-container { 
             flex: 1; margin-top: 2vh; 
             display: grid; 
@@ -153,6 +152,9 @@
             background: #f1f5f9; border-radius: 50%; display: flex; align-items: center;
             justify-content: center; color: #64748b; font-size: 30px; cursor: pointer; z-index: 10;
         }
+
+        /* 단계 전환 애니메이션 제거를 위한 스타일 */
+        .step-container { overflow: hidden; }
     </style>
 </head>
 <body>
@@ -350,8 +352,12 @@
         window.requestAdminAccess = () => { if (isAdminAuthorized) window.switchMode('settings'); else document.getElementById('auth-modal').style.display = 'flex'; };
         window.confirmAdminAuth = () => { if (document.getElementById('authPwInput').value === '1234') { isAdminAuthorized = true; document.getElementById('auth-modal').style.display = 'none'; window.switchMode('settings'); } else { window.showToast("오류"); } };
 
+        /* [수정] 호출기 단계 전환 즉시 처리 (애니메이션 제거) */
         window.selectPartAndRollUp = (part) => {
-            document.getElementById('section-worship').classList.add('roll-up'); document.getElementById('section-class').classList.remove('hidden'); document.getElementById('section-class').classList.remove('roll-up'); document.getElementById('section-name').classList.add('hidden');
+            document.getElementById('section-worship').classList.add('hidden'); // hidden 사용으로 즉시 숨김
+            document.getElementById('section-class').classList.remove('hidden');
+            document.getElementById('section-name').classList.add('hidden');
+            
             const grid = document.getElementById('grid-classes'); grid.innerHTML = '';
             const data = classStructure[part] || {};
             Object.keys(data).forEach(age => {
@@ -360,10 +366,13 @@
                     const btn = document.createElement('button'); btn.className = "class-btn shadow-sm"; btn.innerText = cls.name; btn.onclick = () => renderStudentList(cls); grid.appendChild(btn);
                 });
             });
+            nodes.scrollArea.scrollTo(0, 0);
         };
 
         function renderStudentList(cls) {
-            document.getElementById('section-class').classList.add('roll-up'); document.getElementById('section-name').classList.remove('hidden'); document.getElementById('section-name').classList.remove('roll-up');
+            document.getElementById('section-class').classList.add('hidden'); // hidden 사용으로 즉시 숨김
+            document.getElementById('section-name').classList.remove('hidden');
+            
             const grid = document.getElementById('grid-names'); grid.innerHTML = '';
             if (cls.students) {
                 cls.students.forEach(name => {
@@ -372,6 +381,7 @@
                     btn.innerText = name; btn.onclick = () => sendCallToFirebase(cls.name, name); grid.appendChild(btn);
                 });
             }
+            nodes.scrollArea.scrollTo(0, 0);
         }
 
         async function sendCallToFirebase(cName, sName) { 
@@ -431,14 +441,12 @@
             return `c-${Math.abs(h % 24) + 1}`;
         };
 
-        /* [핵심 수정] 최대 10명 고정 렌더링 로직 */
         function renderTicker() {
             const grid = nodes.tickerGrid; if (!grid) return; 
             grid.innerHTML = '';
 
             if (allPickupCalls.length === 0) return;
             
-            // [수정] 상위 10명만 추출하여 5x2 그리드에 표시
             const listToShow = allPickupCalls.slice(0, 10);
             const fragment = document.createDocumentFragment();
             
@@ -499,8 +507,14 @@
 
         document.getElementById('btn-p1').onclick = () => window.selectPartAndRollUp('유치1부');
         document.getElementById('btn-p2').onclick = () => window.selectPartAndRollUp('유치2부');
-        document.getElementById('btn-reset').onclick = () => { document.getElementById('section-worship').classList.remove('roll-up'); document.getElementById('section-class').classList.add('hidden'); };
-        document.getElementById('btn-back').onclick = () => { document.getElementById('section-class').classList.remove('roll-up'); document.getElementById('section-name').classList.add('hidden'); };
+        document.getElementById('btn-reset').onclick = () => { 
+            document.getElementById('section-worship').classList.remove('hidden'); 
+            document.getElementById('section-class').classList.add('hidden'); 
+        };
+        document.getElementById('btn-back').onclick = () => { 
+            document.getElementById('section-class').classList.remove('hidden'); 
+            document.getElementById('section-name').classList.add('hidden'); 
+        };
         document.getElementById('btn-manual').onclick = () => window.sendManualCall();
         document.getElementById('nav-parent').onclick = () => window.switchMode('parent');
         document.getElementById('nav-display').onclick = () => window.switchMode('display');
