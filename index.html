@@ -14,30 +14,12 @@
         
         :root {
             /* 구분이 확실한 24가지 고대비 컬러 팔레트 */
-            --p-1: #1e40af; /* Navy Blue */
-            --p-2: #be185d; /* Dark Pink */
-            --p-3: #065f46; /* Deep Emerald */
-            --p-4: #9a3412; /* Rust Orange */
-            --p-5: #5b21b6; /* Deep Purple */
-            --p-6: #854d0e; /* Dark Yellow/Olive */
-            --p-7: #3730a3; /* Indigo */
-            --p-8: #155e75; /* Dark Cyan */
-            --p-9: #991b1b; /* Dark Red */
-            --p-10: #0f766e; /* Dark Teal */
-            --p-11: #3f6212; /* Forest Green */
-            --p-12: #78350f; /* Amber/Brown */
-            --p-13: #0369a1; /* Sky Blue */
-            --p-14: #6b21a8; /* Violet */
-            --p-15: #86198f; /* Fuchsia */
-            --p-16: #dc2626; /* Bright Red */
-            --p-17: #16a34a; /* Green */
-            --p-18: #2563eb; /* Blue */
-            --p-19: #db2777; /* Pink */
-            --p-20: #475569; /* Slate Gray */
-            --p-21: #f97316; /* Orange */
-            --p-22: #0d9488; /* Teal */
-            --p-23: #8b5cf6; /* Light Purple */
-            --p-24: #ca8a04; /* Gold */
+            --p-1: #1e40af; --p-2: #be185d; --p-3: #065f46; --p-4: #9a3412; 
+            --p-5: #5b21b6; --p-6: #854d0e; --p-7: #3730a3; --p-8: #155e75;
+            --p-9: #991b1b; --p-10: #0f766e; --p-11: #3f6212; --p-12: #78350f;
+            --p-13: #0369a1; --p-14: #6b21a8; --p-15: #86198f; --p-16: #dc2626;
+            --p-17: #16a34a; --p-18: #2563eb; --p-19: #db2777; --p-20: #475569;
+            --p-21: #fb923c; --p-22: #2dd4bf; --p-23: #a855f7; --p-24: #65a30d;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
@@ -118,8 +100,15 @@
         .display-overlay { flex: 1; background: rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; padding: 3vh 4vw; overflow: hidden; }
         .display-header { height: 18vh; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
         
-        /* 15명 고정 배치를 위한 그리드 */
-        .ticker-container { flex: 1; margin-top: 2vh; display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(3, 1fr); gap: 1.5vw; }
+        /* [수정] 애니메이션을 완전히 배제한 15명 고정 그리드 */
+        .ticker-container { 
+            flex: 1; margin-top: 2vh; 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); 
+            grid-template-rows: repeat(3, 1fr); 
+            gap: 1.5vw; 
+            animation: none !important; /* 애니메이션 제거 강제 */
+        }
         
         .call-card { 
             border-radius: 1.5rem; border: 0.6vw solid #fff; box-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.2); 
@@ -152,6 +141,17 @@
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); display: none; justify-content: center; align-items: center;
             z-index: 999999; backdrop-filter: blur(15px); padding: 20px;
+        }
+        
+        .notice-modal-content {
+            background: white; border-radius: 4rem; width: 95%; max-width: 580px;
+            padding: 40px 30px; text-align: center; position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3); border: 8px solid #f0f9ff;
+        }
+        .close-x-btn {
+            position: absolute; top: 25px; right: 30px; width: 50px; height: 50px;
+            background: #f1f5f9; border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; color: #64748b; font-size: 30px; cursor: pointer; z-index: 10;
         }
     </style>
 </head>
@@ -394,12 +394,11 @@
 
         window.removeSingleCall = async (callId) => { if (!callId) return; try { await deleteDoc(doc(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls', callId)); } catch (err) { console.error(err); } };
 
-        /* [수정 사항] 명확한 고대비 컬러 매핑 로직 */
+        /* 반별 1:1 고정 컬러 매핑 (고대비 24종) */
         const getColorByClassName = (className) => {
             const cleanName = className.replace(/반|부/g, "").trim();
-            if (cleanName === "방문/새친구") return 'c-9'; // 강렬한 레드 계열
+            if (cleanName === "방문/새친구") return 'c-9'; 
             
-            // 19개 반 이름 고정 매핑 (고대비 순서)
             const fixedMap = {
                 "기드온": "c-1", "바나바": "c-2", "베드로": "c-3", "보아스": "c-4",
                 "사무엘": "c-5", "안드레": "c-6", "야고보": "c-7", "에스더": "c-8",
@@ -415,12 +414,17 @@
             return `c-${Math.abs(hash % 24) + 1}`;
         };
 
-        /* [핵심 수정] 최대 15명 노출 로직 */
+        /* [핵심 수정] 최대 15명 노출 및 애니메이션 제거 로직 */
         function renderTicker() {
-            const grid = nodes.tickerGrid; if (!grid) return; grid.innerHTML = '';
+            const grid = nodes.tickerGrid; if (!grid) return; 
+            grid.innerHTML = '';
+            // 애니메이션 스타일 강제 제거
+            grid.style.animation = "none";
+            grid.style.transform = "none";
+
             if (allPickupCalls.length === 0) return;
             
-            // [수정] 상위 15명만 추출
+            // 상위 15명만 추출하여 고정 그리드에 표시
             const listToShow = allPickupCalls.slice(0, 15);
             const fragment = document.createDocumentFragment();
             
