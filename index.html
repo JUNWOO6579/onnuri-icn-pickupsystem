@@ -26,7 +26,7 @@
             box-sizing: border-box; 
             -webkit-tap-highlight-color: transparent; 
             outline: none; 
-            scroll-behavior: auto !important; /* 부드러운 스크롤 강제 비활성화 */
+            scroll-behavior: auto !important; 
         }
 
         body {
@@ -105,7 +105,6 @@
         .display-overlay { flex: 1; background: rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; padding: 3vh 4vw; overflow: hidden; }
         .display-header { height: 18vh; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
         
-        /* 10명 고정 그리드 */
         .ticker-container { 
             flex: 1; margin-top: 2vh; 
             display: grid; 
@@ -159,10 +158,9 @@
             justify-content: center; color: #64748b; font-size: 30px; cursor: pointer; z-index: 10;
         }
 
-        /* [핵심 수정] 모든 애니메이션 및 트랜지션 완전 제거 */
         .step-container { 
             overflow: hidden; 
-            transition: none !important; /* 애니메이션 강제 비활성화 */
+            transition: none !important; 
         }
     </style>
 </head>
@@ -359,7 +357,14 @@
         window.requestAdminAccess = () => { if (isAdminAuthorized) window.switchMode('settings'); else document.getElementById('auth-modal').style.display = 'flex'; };
         window.confirmAdminAuth = () => { if (document.getElementById('authPwInput').value === '1234') { isAdminAuthorized = true; document.getElementById('auth-modal').style.display = 'none'; window.switchMode('settings'); } else { window.showToast("오류"); } };
 
-        /* 즉각적인 화면 전환을 위해 hidden 사용 및 스크롤 위치 초기화 */
+        /* 초기 상태로 돌아가는 로직 */
+        window.resetUIState = () => {
+            document.getElementById('section-worship').classList.remove('hidden'); 
+            document.getElementById('section-class').classList.add('hidden');
+            document.getElementById('section-name').classList.add('hidden');
+            nodes.scrollArea.scrollTop = 0;
+        };
+
         window.selectPartAndRollUp = (part) => {
             document.getElementById('section-worship').classList.add('hidden'); 
             document.getElementById('section-class').classList.remove('hidden');
@@ -373,7 +378,7 @@
                     const btn = document.createElement('button'); btn.className = "class-btn shadow-sm"; btn.innerText = cls.name; btn.onclick = () => renderStudentList(cls); grid.appendChild(btn);
                 });
             });
-            nodes.scrollArea.scrollTop = 0; // 즉시 스크롤 상단 이동
+            nodes.scrollArea.scrollTop = 0;
         };
 
         function renderStudentList(cls) {
@@ -388,7 +393,7 @@
                     btn.innerText = name; btn.onclick = () => sendCallToFirebase(cls.name, name); grid.appendChild(btn);
                 });
             }
-            nodes.scrollArea.scrollTop = 0; // 즉시 스크롤 상단 이동
+            nodes.scrollArea.scrollTop = 0;
         }
 
         async function sendCallToFirebase(cName, sName) { 
@@ -506,11 +511,7 @@
 
         document.getElementById('btn-p1').onclick = () => window.selectPartAndRollUp('유치1부');
         document.getElementById('btn-p2').onclick = () => window.selectPartAndRollUp('유치2부');
-        document.getElementById('btn-reset').onclick = () => { 
-            document.getElementById('section-worship').classList.remove('hidden'); 
-            document.getElementById('section-class').classList.add('hidden'); 
-            nodes.scrollArea.scrollTop = 0;
-        };
+        document.getElementById('btn-reset').onclick = () => window.resetUIState();
         document.getElementById('btn-back').onclick = () => { 
             document.getElementById('section-class').classList.remove('hidden'); 
             document.getElementById('section-name').classList.add('hidden'); 
@@ -521,8 +522,17 @@
         document.getElementById('nav-display').onclick = () => window.switchMode('display');
         document.getElementById('nav-settings').onclick = () => window.requestAdminAccess();
         document.getElementById('btn-disp-home').onclick = () => window.switchMode('parent');
-        document.getElementById('btn-close-notice').onclick = () => { document.getElementById('notice-modal').style.display = 'none'; };
-        document.getElementById('btn-close-notice-x').onclick = () => { document.getElementById('notice-modal').style.display = 'none'; };
+        
+        /* [수정] 확인 버튼 클릭 시 초기 화면으로 복구 로직 추가 */
+        document.getElementById('btn-close-notice').onclick = () => { 
+            document.getElementById('notice-modal').style.display = 'none'; 
+            window.resetUIState(); 
+        };
+        document.getElementById('btn-close-notice-x').onclick = () => { 
+            document.getElementById('notice-modal').style.display = 'none'; 
+            window.resetUIState(); 
+        };
+        
         document.getElementById('btn-confirm-auth').onclick = () => window.confirmAdminAuth();
         document.getElementById('btn-close-auth').onclick = () => { document.getElementById('auth-modal').style.display = 'none'; };
 
