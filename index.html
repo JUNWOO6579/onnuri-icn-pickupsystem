@@ -13,13 +13,31 @@
         @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Jua&family=Nanum+Gothic:wght@400;700;800&display=swap');
         
         :root {
-            /* 24가지 고유 컬러 정의 */
-            --p-1: #3b82f6; --p-2: #ec4899; --p-3: #10b981; --p-4: #f59e0b; 
-            --p-5: #8b5cf6; --p-6: #eab308; --p-7: #6366f1; --p-8: #14b8a6;
-            --p-9: #f43f5e; --p-10: #06b6d4; --p-11: #84cc16; --p-12: #d97706;
-            --p-13: #0ea5e9; --p-14: #7c3aed; --p-15: #d946ef; --p-16: #ef4444;
-            --p-17: #059669; --p-18: #1d4ed8; --p-19: #f472b6; --p-20: #475569;
-            --p-21: #fb923c; --p-22: #2dd4bf; --p-23: #a855f7; --p-24: #65a30d;
+            /* 구분이 확실한 24가지 고대비 컬러 팔레트 */
+            --p-1: #1e40af; /* Navy Blue */
+            --p-2: #be185d; /* Dark Pink */
+            --p-3: #065f46; /* Deep Emerald */
+            --p-4: #9a3412; /* Rust Orange */
+            --p-5: #5b21b6; /* Deep Purple */
+            --p-6: #854d0e; /* Dark Yellow/Olive */
+            --p-7: #3730a3; /* Indigo */
+            --p-8: #155e75; /* Dark Cyan */
+            --p-9: #991b1b; /* Dark Red */
+            --p-10: #0f766e; /* Dark Teal */
+            --p-11: #3f6212; /* Forest Green */
+            --p-12: #78350f; /* Amber/Brown */
+            --p-13: #0369a1; /* Sky Blue */
+            --p-14: #6b21a8; /* Violet */
+            --p-15: #86198f; /* Fuchsia */
+            --p-16: #dc2626; /* Bright Red */
+            --p-17: #16a34a; /* Green */
+            --p-18: #2563eb; /* Blue */
+            --p-19: #db2777; /* Pink */
+            --p-20: #475569; /* Slate Gray */
+            --p-21: #f97316; /* Orange */
+            --p-22: #0d9488; /* Teal */
+            --p-23: #8b5cf6; /* Light Purple */
+            --p-24: #ca8a04; /* Gold */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
@@ -37,58 +55,31 @@
         .font-gaegu { font-family: 'Gaegu', cursive; }
 
         #app {
-            position: fixed; 
-            inset: 0;
-            width: 100%;
-            height: 100dvh;
+            position: fixed; inset: 0; width: 100%; height: 100dvh;
             background: #fff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important;
-            display: grid;
-            grid-template-rows: 90px 1fr 85px;
-            box-shadow: 0 0 60px rgba(0,0,0,0.15);
-            margin: 0 auto; 
-            z-index: 10;
+            display: grid; grid-template-rows: 90px 1fr 85px;
+            box-shadow: 0 0 60px rgba(0,0,0,0.15); margin: 0 auto; z-index: 10;
         }
 
         .app-header { 
-            height: 90px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(5px);
+            height: 90px; display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            background: rgba(255,255,255,0.05); backdrop-filter: blur(5px);
         }
 
-        .main-scroll-view {
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
+        .main-scroll-view { overflow: hidden; display: flex; flex-direction: column; height: 100%; }
 
         .glass-stage {
-            background: rgba(255, 255, 255, 0.96);
-            border-radius: 2.5rem;
-            margin: 5px 20px 15px 20px;
-            padding: 20px 25px; 
-            box-shadow: 0 15px 30px rgba(0,0,0,0.06);
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto !important; 
-            overflow-x: hidden;
-            border: 4px solid #fff;
-            backdrop-filter: blur(10px);
-            -webkit-overflow-scrolling: touch;
-            min-height: 0;
+            background: rgba(255, 255, 255, 0.96); border-radius: 2.5rem;
+            margin: 5px 20px 15px 20px; padding: 20px 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.06);
+            flex: 1; display: flex; flex-direction: column; overflow-y: auto !important; 
+            overflow-x: hidden; border: 4px solid #fff; backdrop-filter: blur(10px);
+            -webkit-overflow-scrolling: touch; min-height: 0;
         }
 
         .bottom-nav {
-            height: 90px;
-            background: rgba(255, 255, 255, 0.98); border-top: 1px solid #e2e8f0;
+            height: 90px; background: rgba(255, 255, 255, 0.98); border-top: 1px solid #e2e8f0;
             display: flex; justify-content: space-around; align-items: center;
-            padding-bottom: env(safe-area-inset-bottom); border-radius: 35px 35px 0 0;
-            z-index: 1000;
+            padding-bottom: env(safe-area-inset-bottom); border-radius: 35px 35px 0 0; z-index: 1000;
         }
 
         .class-btn {
@@ -96,15 +87,12 @@
             font-size: 1.1rem; font-family: 'Jua', sans-serif; line-height: 1.1;
             padding: 8px; text-align: center; word-break: keep-all; border-radius: 1.8rem;
             background: white; border: 2px solid #f1f5f9; box-shadow: 0 4px 0 #e2e8f0;
-            transition: all 0.1s ease; color: #334155; width: 100%;
-            font-weight: 800;
+            transition: all 0.1s ease; color: #334155; width: 100%; font-weight: 800;
         }
-        @media (min-width: 640px) {
-            .class-btn { font-size: 1.8rem; border-radius: 2.2rem; box-shadow: 0 6px 0 #e2e8f0; }
-        }
+        @media (min-width: 640px) { .class-btn { font-size: 1.8rem; border-radius: 2.2rem; box-shadow: 0 6px 0 #e2e8f0; } }
         .class-btn:active { transform: scale(0.95) translateY(3px); box-shadow: none; }
 
-        /* 컬러 유틸리티 클래스 */
+        /* 컬러 유틸리티 */
         .c-1 { background-color: var(--p-1) !important; } .c-2 { background-color: var(--p-2) !important; }
         .c-3 { background-color: var(--p-3) !important; } .c-4 { background-color: var(--p-4) !important; }
         .c-5 { background-color: var(--p-5) !important; } .c-6 { background-color: var(--p-6) !important; }
@@ -119,92 +107,51 @@
         .c-23 { background-color: var(--p-23) !important; } .c-24 { background-color: var(--p-24) !important; }
 
         #view-display { 
-            position: fixed; inset: 0; z-index: 9000; 
-            background: #000; 
+            position: fixed; inset: 0; z-index: 9000; background: #000; 
             display: none; justify-content: center; align-items: center;
         }
         .display-container {
-            width: 100%; height: 100%;
-            max-width: 180vh; max-height: 60vw;
+            width: 100%; height: 100%; max-width: 180vh; max-height: 60vw;
             background: #f0f9ff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important; 
             display: flex; flex-direction: column; overflow: hidden; position: relative;
         }
-        .display-overlay { 
-            flex: 1; background: rgba(255, 255, 255, 0.15); 
-            display: flex; flex-direction: column; padding: 3vh 4vw; 
-            overflow: hidden;
-        }
+        .display-overlay { flex: 1; background: rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; padding: 3vh 4vw; overflow: hidden; }
         .display-header { height: 18vh; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-        .ticker-container { flex: 1; position: relative; overflow: hidden; margin-top: 2vh; }
-        .ticker-move { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5vw; width: 100%; position: absolute; top: 0; left: 0; }
+        
+        /* 15명 고정 배치를 위한 그리드 */
+        .ticker-container { flex: 1; margin-top: 2vh; display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(3, 1fr); gap: 1.5vw; }
         
         .call-card { 
             border-radius: 1.5rem; border: 0.6vw solid #fff; box-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.2); 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            padding: 1.5vh; height: 18vh; position: relative;
-            cursor: pointer; transition: transform 0.1s active;
+            padding: 1.5vh; height: 100%; position: relative; cursor: pointer; transition: transform 0.1s active;
         }
         .call-card:active { transform: scale(0.95); opacity: 0.8; }
         
         .display-sequence {
-            position: absolute; top: 1.2vh; left: 1.2vw;
-            font-family: 'Jua', sans-serif; font-size: 2.8vh;
-            color: #fff; background: rgba(0,0,0,0.35);
-            width: 4.5vh; height: 4.5vh; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            border: 2px solid rgba(255,255,255,0.4);
-            pointer-events: none;
+            position: absolute; top: 1.2vh; left: 1.2vw; font-family: 'Jua', sans-serif; font-size: 2.5vh;
+            color: #fff; background: rgba(0,0,0,0.4); width: 4vh; height: 4vh; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,0.4); pointer-events: none;
         }
 
         .display-student-name { 
-            font-family: 'Jua', sans-serif; 
-            font-size: 6.2vh; 
-            white-space: nowrap; 
-            color: white; 
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.5), -1px -1px 0 rgba(0,0,0,0.2); 
-            letter-spacing: -0.02em;
-            pointer-events: none;
+            font-family: 'Jua', sans-serif; font-size: 5.5vh; white-space: nowrap; color: white; 
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.6); letter-spacing: -0.02em; pointer-events: none;
         }
 
         .display-class-label { 
-            font-family: 'Gaegu', cursive; 
-            font-size: 2.8vh; 
-            font-weight: 800; 
-            background: rgba(255,255,255,0.9); 
-            padding: 0.2vh 1.8vw; 
-            border-radius: 99px; 
-            color: #1e293b; 
-            margin-bottom: 0.8vh; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            pointer-events: none;
+            font-family: 'Gaegu', cursive; font-size: 2.5vh; font-weight: 800; background: rgba(255,255,255,0.95); 
+            padding: 0.1vh 1.5vw; border-radius: 99px; color: #000; margin-bottom: 0.8vh; pointer-events: none;
         }
 
-        @keyframes tickerScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
-
-        .step-container { transition: all 0.3s ease-in-out; will-change: max-height, opacity; overflow: hidden; }
-        .roll-up { max-height: 0 !important; opacity: 0 !important; margin: 0 !important; padding: 0 !important; border: 0 !important; pointer-events: none; }
-
         #loading-overlay {
-            position: fixed; inset: 0; background: white;
-            display: flex; justify-content: center; align-items: center;
+            position: fixed; inset: 0; background: white; display: flex; justify-content: center; align-items: center;
             z-index: 1000000; transition: opacity 0.5s ease;
         }
 
         .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75);
-            display: none; justify-content: center; align-items: center;
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); display: none; justify-content: center; align-items: center;
             z-index: 999999; backdrop-filter: blur(15px); padding: 20px;
-        }
-
-        .notice-modal-content {
-            background: white; border-radius: 4rem; width: 95%; max-width: 580px;
-            padding: 40px 30px; text-align: center; position: relative;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3); border: 8px solid #f0f9ff;
-        }
-        .close-x-btn {
-            position: absolute; top: 25px; right: 30px; width: 50px; height: 50px;
-            background: #f1f5f9; border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; color: #64748b; font-size: 30px; cursor: pointer; z-index: 10;
         }
     </style>
 </head>
@@ -213,81 +160,75 @@
     <div id="loading-overlay">
         <div class="flex flex-col items-center">
             <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mb-6"></div>
-            <p class="font-jua text-3xl text-slate-400 text-center px-6">시스템 로딩 중...</p>
+            <p class="font-jua text-3xl text-slate-400">로딩 중...</p>
         </div>
     </div>
 
     <!-- 앱 전체 -->
     <div id="app" style="display: none; opacity: 0;">
         <header class="app-header">
-            <h1 class="font-gaegu text-4xl sm:text-5xl text-blue-600 drop-shadow-sm font-bold">유치부 아이들 대기 waiting</h1>
-            <p class="text-[11px] sm:text-[13px] font-bold text-slate-400 tracking-[0.4em] uppercase font-black">Onnuri ICN Youth</p>
+            <h1 class="font-gaegu text-4xl sm:text-5xl text-blue-600 font-bold">유치부 아이들 대기 waiting</h1>
+            <p class="text-[11px] font-bold text-slate-400 tracking-[0.4em] uppercase">Onnuri ICN Youth</p>
         </header>
 
         <div class="main-scroll-view">
             <div class="glass-stage" id="main-glass-stage">
                 <div id="container-parent">
                     <div class="step-container" id="section-worship">
-                        <h2 class="font-jua text-xl sm:text-2xl text-slate-700 mb-2 flex items-center gap-3 font-bold text-left">
-                            <i class="fa-solid fa-heart text-pink-400 text-sm"></i> 1. 예배 선택
-                        </h2>
+                        <h2 class="font-jua text-xl text-slate-700 mb-2 font-bold"><i class="fa-solid fa-heart text-pink-400"></i> 1. 예배 선택</h2>
                         <div class="grid grid-cols-2 gap-4 mb-6">
-                            <button id="btn-p1" class="py-4 sm:py-5 border-2 border-blue-50 text-blue-600 font-jua text-3xl sm:text-4xl rounded-[2.5rem] shadow-sm bg-blue-50/20 active:bg-blue-100">유치1부</button>
-                            <button id="btn-p2" class="py-4 sm:py-5 border-2 border-orange-50 text-orange-600 font-jua text-3xl sm:text-4xl rounded-[2.5rem] shadow-sm bg-orange-50/30 active:bg-orange-100">유치2부</button>
+                            <button id="btn-p1" class="py-5 border-2 border-blue-50 text-blue-600 font-jua text-3xl rounded-[2.5rem] bg-blue-50/20">유치1부</button>
+                            <button id="btn-p2" class="py-5 border-2 border-orange-50 text-orange-600 font-jua text-3xl rounded-[2.5rem] bg-orange-50/30">유치2부</button>
                         </div>
                     </div>
 
                     <div id="section-class" class="step-container hidden">
                         <div class="flex justify-between items-center mb-4">
-                            <h2 class="font-jua text-xl sm:text-2xl text-slate-700 flex items-center gap-3 font-bold text-left">
-                                <i class="fa-solid fa-school text-orange-400 text-sm"></i> 2. 우리 반 선택
-                            </h2>
-                            <button id="btn-reset" class="text-sm sm:text-base text-slate-400 underline font-bold px-4">다시 선택</button>
+                            <h2 class="font-jua text-xl text-slate-700 font-bold"><i class="fa-solid fa-school text-orange-400"></i> 2. 우리 반 선택</h2>
+                            <button id="btn-reset" class="text-sm text-slate-400 underline font-bold px-4">다시 선택</button>
                         </div>
                         <div id="grid-classes" class="grid grid-cols-3 sm:grid-cols-4 gap-4 mb-8"></div>
                     </div>
 
                     <div id="section-name" class="step-container hidden">
                         <div class="flex justify-between items-center mb-4">
-                            <h2 class="font-jua text-xl sm:text-2xl text-slate-700 flex items-center gap-3 font-bold text-left">
-                                <i class="fa-solid fa-child-reaching text-green-400 text-sm"></i> 3. 아이 이름 클릭
-                            </h2>
-                            <button id="btn-back" class="text-sm sm:text-base text-slate-400 underline font-bold px-4">반 다시 선택</button>
+                            <h2 class="font-jua text-xl text-slate-700 font-bold"><i class="fa-solid fa-child-reaching text-green-400"></i> 3. 아이 이름 클릭</h2>
+                            <button id="btn-back" class="text-sm text-slate-400 underline font-bold px-4">반 다시 선택</button>
                         </div>
                         <div id="grid-names" class="grid grid-cols-2 sm:grid-cols-3 gap-5 mb-8"></div>
                     </div>
 
-                    <div id="section-manual" class="pt-6 border-t border-slate-100 mt-6 mb-2 text-left">
-                        <h2 class="font-gaegu text-2xl sm:text-3xl text-pink-500 mb-4 font-bold">방문/새친구 이름</h2>
-                        <div class="grid grid-cols-[1fr_auto] gap-3 w-full">
-                            <input type="text" id="manual-input" class="min-w-0 p-4 sm:p-5 bg-slate-50 rounded-[2rem] border-none font-bold text-xl sm:text-2xl shadow-inner focus:ring-4 focus:ring-pink-100" placeholder="이름 입력">
-                            <button id="btn-manual" class="shrink-0 bg-pink-500 text-white font-jua px-6 sm:px-10 rounded-[2rem] shadow-xl active:scale-95 text-xl sm:text-2xl whitespace-nowrap">호출</button>
+                    <div id="section-manual" class="pt-6 border-t border-slate-100 mt-6 mb-2">
+                        <h2 class="font-gaegu text-2xl text-pink-500 mb-4 font-bold">방문/새친구 이름</h2>
+                        <div class="grid grid-cols-[1fr_auto] gap-3">
+                            <input type="text" id="manual-input" class="p-5 bg-slate-50 rounded-[2rem] border-none font-bold text-xl shadow-inner" placeholder="이름 입력">
+                            <button id="btn-manual" class="shrink-0 bg-pink-500 text-white font-jua px-10 rounded-[2rem] shadow-xl text-xl">호출</button>
                         </div>
                     </div>
                 </div>
 
-                <div id="container-settings" class="hidden text-left py-4">
-                    <h2 class="font-jua text-3xl sm:text-4xl text-slate-800 mb-8 font-bold text-center">시스템 관리</h2>
+                <div id="container-settings" class="hidden py-4">
+                    <h2 class="font-jua text-3xl text-slate-800 mb-8 font-bold text-center">시스템 관리</h2>
                     <div class="max-w-2xl mx-auto space-y-12">
                         <div class="bg-indigo-50/50 p-8 rounded-[2.5rem] border border-indigo-100">
-                            <h3 class="font-bold text-slate-800 text-xl mb-4 flex items-center gap-2"><i class="fa-solid fa-file-excel text-emerald-600"></i> 명단 업데이트</h3>
-                            <input type="file" id="excelInput" accept=".xlsx, .xls" class="block w-full text-base text-slate-500 file:mr-6 file:py-3 file:px-8 file:rounded-full file:border-0 file:font-bold file:bg-white file:text-indigo-700 cursor-pointer"/>
+                            <h3 class="font-bold text-slate-800 text-xl mb-4"><i class="fa-solid fa-file-excel text-emerald-600"></i> 명단 업데이트</h3>
+                            <input type="file" id="excelInput" accept=".xlsx, .xls" class="block w-full text-base file:mr-6 file:py-3 file:px-8 file:rounded-full file:border-0 file:font-bold file:bg-white file:text-indigo-700 cursor-pointer"/>
                             <button id="importBtn" class="w-full py-6 bg-indigo-600 text-white rounded-[2rem] font-jua text-2xl shadow-xl mt-8">엑셀 파일 업데이트</button>
                         </div>
                         <div class="bg-red-50/50 p-8 rounded-[2.5rem] border border-red-100 text-center">
                             <h3 class="font-bold text-red-600 text-xl mb-4">기록 초기화</h3>
-                            <button id="btn-clear" class="w-full py-6 bg-red-500 text-white rounded-[2rem] font-jua text-2xl shadow-xl transition-all">스크린 명단 비우기</button>
+                            <button id="btn-clear" class="w-full py-6 bg-red-500 text-white rounded-[2rem] font-jua text-2xl shadow-xl">스크린 명단 비우기</button>
                         </div>
-                        <div class="text-center pt-6"><button id="btn-logout" class="text-sm text-slate-400 underline">로그아웃</button></div>
+                        <div class="text-center"><button id="btn-logout" class="text-sm text-slate-400 underline">로그아웃</button></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <nav class="bottom-nav">
-            <button id="nav-parent" class="flex flex-col items-center gap-2 text-blue-600"><i class="fa-solid fa-tablet-screen-button text-3xl sm:text-4xl"></i><span class="text-xs font-bold uppercase">호출기</span></button>
-            <button id="nav-display" class="flex flex-col items-center gap-2 text-slate-400"><i class="fa-solid fa-desktop text-3xl sm:text-4xl"></i><span class="text-xs font-bold uppercase">전광판</span></button>
-            <button id="nav-settings" class="flex flex-col items-center gap-2 text-slate-400"><i class="fa-solid fa-user-lock text-3xl sm:text-4xl"></i><span class="text-xs font-bold uppercase">설정</span></button>
+            <button id="nav-parent" class="flex flex-col items-center gap-2 text-blue-600"><i class="fa-solid fa-tablet-screen-button text-3xl"></i><span class="text-xs font-bold uppercase">호출기</span></button>
+            <button id="nav-display" class="flex flex-col items-center gap-2 text-slate-400"><i class="fa-solid fa-desktop text-3xl"></i><span class="text-xs font-bold uppercase">전광판</span></button>
+            <button id="nav-settings" class="flex flex-col items-center gap-2 text-slate-400"><i class="fa-solid fa-user-lock text-3xl"></i><span class="text-xs font-bold uppercase">설정</span></button>
         </nav>
     </div>
 
@@ -304,10 +245,10 @@
                         <span id="display-clock" class="font-jua text-[8vh] text-blue-500 tracking-tighter">00:00</span>
                     </div>
                 </header>
-                <div class="ticker-container">
-                    <div id="display-grid" class="ticker-move"></div>
+                <div id="display-grid" class="ticker-container">
+                    <!-- 최대 15명 노출 영역 -->
                 </div>
-                <button id="btn-disp-home" class="absolute bottom-[4vh] right-[4vw] w-[9vh] h-[9vh] bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 hover:text-blue-600 transition-all shadow-2xl border-2 border-white"><i class="fa-solid fa-house-chimney text-[4.5vh]"></i></button>
+                <button id="btn-disp-home" class="absolute bottom-[4vh] right-[4vw] w-[9vh] h-[9vh] bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 shadow-2xl border-2 border-white"><i class="fa-solid fa-house-chimney text-[4.5vh]"></i></button>
             </div>
         </div>
     </div>
@@ -324,11 +265,11 @@
 
     <div id="auth-modal" class="modal-overlay">
         <div class="bg-white rounded-[5rem] w-full max-w-[500px] p-16 shadow-2xl text-center space-y-10">
-            <h3 class="font-jua text-4xl sm:text-5xl text-slate-800 font-bold text-center">관리자 인증</h3>
+            <h3 class="font-jua text-4xl text-slate-800 font-bold">관리자 인증</h3>
             <input type="password" id="authPwInput" class="w-full p-8 bg-slate-100 rounded-[3rem] text-center font-bold text-6xl border-none focus:ring-4 focus:ring-blue-200" placeholder="****">
             <div class="flex gap-4">
-                <button id="btn-close-auth" class="flex-1 py-8 bg-slate-100 text-slate-500 rounded-[3rem] font-bold text-xl text-center">취소</button>
-                <button id="btn-confirm-auth" class="flex-1 py-8 bg-blue-600 text-white rounded-[3rem] font-bold shadow-lg text-xl text-center">확인</button>
+                <button id="btn-close-auth" class="flex-1 py-8 bg-slate-100 text-slate-500 rounded-[3rem] font-bold text-xl">취소</button>
+                <button id="btn-confirm-auth" class="flex-1 py-8 bg-blue-600 text-white rounded-[3rem] font-bold shadow-lg text-xl">확인</button>
             </div>
         </div>
     </div>
@@ -358,15 +299,7 @@
         const nodes = {
             app: document.getElementById('app'),
             loading: document.getElementById('loading-overlay'),
-            parentBox: document.getElementById('container-parent'),
-            settingsBox: document.getElementById('container-settings'),
-            display: document.getElementById('view-display'),
-            worship: document.getElementById('section-worship'),
-            class: document.getElementById('section-class'),
-            name: document.getElementById('section-name'),
             tickerGrid: document.getElementById('display-grid'),
-            authModal: document.getElementById('auth-modal'),
-            noticeModal: document.getElementById('notice-modal'),
             scrollArea: document.getElementById('main-glass-stage')
         };
 
@@ -381,17 +314,13 @@
         };
 
         async function init() {
-            try { 
-                await signInAnonymously(auth); 
-                onAuthStateChanged(auth, (user) => { if (user) fetchData(); }); 
-            } catch (e) { console.error(e); }
+            try { await signInAnonymously(auth); onAuthStateChanged(auth, (user) => { if (user) fetchData(); }); } catch (e) { console.error(e); }
         }
 
         async function fetchData() {
             try {
                 const snap = await getDoc(doc(db, 'artifacts', appIdStr, 'public', 'data', 'config', 'structure'));
-                if (snap.exists()) classStructure = snap.data().map;
-                else classStructure = { "유치1부": {}, "유치2부": {} };
+                classStructure = snap.exists() ? snap.data().map : { "유치1부": {}, "유치2부": {} };
                 startClock(); subscribeCalls(); hideLoading();
             } catch (e) { console.error(e); }
         }
@@ -399,18 +328,17 @@
         function hideLoading() {
             nodes.loading.style.opacity = '0';
             setTimeout(() => {
-                nodes.loading.style.display = 'none'; 
-                nodes.app.style.display = 'grid';
+                nodes.loading.style.display = 'none'; nodes.app.style.display = 'grid';
                 setTimeout(() => { nodes.app.style.opacity = '1'; window.switchMode('parent'); }, 30);
             }, 400);
         }
 
         window.switchMode = (mode) => {
             if (mode === 'settings' && !isAdminAuthorized) return;
-            if (mode === 'display') { nodes.app.style.display = 'none'; nodes.display.style.display = 'flex'; renderTicker(); return; }
-            nodes.app.style.display = 'grid'; nodes.display.style.display = 'none';
-            nodes.parentBox.style.display = (mode === 'parent') ? 'block' : 'none';
-            nodes.settingsBox.style.display = (mode === 'settings') ? 'block' : 'none';
+            if (mode === 'display') { nodes.app.style.display = 'none'; document.getElementById('view-display').style.display = 'flex'; renderTicker(); return; }
+            nodes.app.style.display = 'grid'; document.getElementById('view-display').style.display = 'none';
+            document.getElementById('container-parent').style.display = (mode === 'parent') ? 'block' : 'none';
+            document.getElementById('container-settings').style.display = (mode === 'settings') ? 'block' : 'none';
             ['nav-parent', 'nav-display', 'nav-settings'].forEach(id => {
                 const el = document.getElementById(id);
                 if(el) el.classList.replace('text-blue-600', 'text-slate-400');
@@ -419,11 +347,11 @@
             if(activeNav) activeNav.classList.replace('text-slate-400', 'text-blue-600');
         };
 
-        window.requestAdminAccess = () => { if (isAdminAuthorized) window.switchMode('settings'); else nodes.authModal.style.display = 'flex'; };
-        window.confirmAdminAuth = () => { if (document.getElementById('authPwInput').value === '1234') { isAdminAuthorized = true; nodes.authModal.style.display = 'none'; window.switchMode('settings'); } else { window.showToast("오류"); } };
+        window.requestAdminAccess = () => { if (isAdminAuthorized) window.switchMode('settings'); else document.getElementById('auth-modal').style.display = 'flex'; };
+        window.confirmAdminAuth = () => { if (document.getElementById('authPwInput').value === '1234') { isAdminAuthorized = true; document.getElementById('auth-modal').style.display = 'none'; window.switchMode('settings'); } else { window.showToast("오류"); } };
 
         window.selectPartAndRollUp = (part) => {
-            nodes.worship.classList.add('roll-up'); nodes.class.classList.remove('hidden'); nodes.class.classList.remove('roll-up'); nodes.name.classList.add('hidden');
+            document.getElementById('section-worship').classList.add('roll-up'); document.getElementById('section-class').classList.remove('hidden'); document.getElementById('section-class').classList.remove('roll-up'); document.getElementById('section-name').classList.add('hidden');
             const grid = document.getElementById('grid-classes'); grid.innerHTML = '';
             const data = classStructure[part] || {};
             Object.keys(data).forEach(age => {
@@ -435,24 +363,21 @@
         };
 
         function renderStudentList(cls) {
-            nodes.class.classList.add('roll-up'); nodes.name.classList.remove('hidden'); nodes.name.classList.remove('roll-up');
+            document.getElementById('section-class').classList.add('roll-up'); document.getElementById('section-name').classList.remove('hidden'); document.getElementById('section-name').classList.remove('roll-up');
             const grid = document.getElementById('grid-names'); grid.innerHTML = '';
             if (cls.students) {
                 cls.students.forEach(name => {
                     const btn = document.createElement('button'); 
-                    btn.className = "py-8 sm:py-12 bg-green-500 text-white font-jua rounded-[2.2rem] shadow-md active:translate-y-1 text-center text-4xl sm:text-5xl font-extrabold"; 
+                    btn.className = "py-8 bg-green-500 text-white font-jua rounded-[2.2rem] shadow-md active:translate-y-1 text-center text-4xl font-extrabold"; 
                     btn.innerText = name; btn.onclick = () => sendCallToFirebase(cls.name, name); grid.appendChild(btn);
                 });
             }
         }
 
-        window.resetWorshipSelection = () => { nodes.worship.classList.remove('roll-up'); nodes.class.classList.add('hidden'); nodes.name.classList.add('hidden'); };
-        window.backToClassSelection = () => { nodes.class.classList.remove('roll-up'); nodes.name.classList.add('hidden'); };
-
         async function sendCallToFirebase(cName, sName) { 
             try { 
                 await addDoc(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'), { className: cName, studentName: sName, timestamp: serverTimestamp() });
-                nodes.noticeModal.style.display = 'flex'; 
+                document.getElementById('notice-modal').style.display = 'flex'; 
             } catch (e) { window.showToast("연결 오류"); } 
         }
 
@@ -467,107 +392,63 @@
             });
         }
 
-        window.removeSingleCall = async (callId) => {
-            if (!callId) return;
-            try {
-                await deleteDoc(doc(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls', callId));
-            } catch (err) { console.error(err); }
-        };
+        window.removeSingleCall = async (callId) => { if (!callId) return; try { await deleteDoc(doc(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls', callId)); } catch (err) { console.error(err); } };
 
-        /* [핵심 기능] 반별 1:1 고정 컬러 매핑 (순수 이름 매칭 강화) */
+        /* [수정 사항] 명확한 고대비 컬러 매핑 로직 */
         const getColorByClassName = (className) => {
-            if (!className) return 'c-20';
-            
-            // "반"이라는 글자가 있든 없든 순수 이름만 추출하여 비교
             const cleanName = className.replace(/반|부/g, "").trim();
+            if (cleanName === "방문/새친구") return 'c-9'; // 강렬한 레드 계열
             
-            if (cleanName === "방문/새친구") return 'c-9'; // 특수 색상 (로즈/핑크)
-            
-            // 19개 반 이름과 24개 컬러 팔레트 고정 매핑 테이블
+            // 19개 반 이름 고정 매핑 (고대비 순서)
             const fixedMap = {
-                "기드온": "c-1", 
-                "바나바": "c-2", 
-                "베드로": "c-3", 
-                "보아스": "c-4",
-                "사무엘": "c-5", 
-                "안드레": "c-6", 
-                "야고보": "c-7", 
-                "에스더": "c-8",
-                "노아": "c-10", 
-                "다윗": "c-11", 
-                "디도": "c-12", 
-                "바울": "c-13",
-                "빌립": "c-14", 
-                "야곱": "c-15", 
-                "에녹": "c-16", 
-                "요나": "c-17",
-                "요한": "c-18", 
-                "한나": "c-19",
-                "요나단": "c-21",
-                "기쁨": "c-22",
-                "사랑": "c-23",
-                "소망": "c-24"
+                "기드온": "c-1", "바나바": "c-2", "베드로": "c-3", "보아스": "c-4",
+                "사무엘": "c-5", "안드레": "c-6", "야고보": "c-7", "에스더": "c-8",
+                "노아": "c-10", "다윗": "c-11", "디도": "c-12", "바울": "c-13",
+                "빌립": "c-14", "야곱": "c-15", "에녹": "c-16", "요나": "c-17",
+                "요한": "c-18", "한나": "c-19", "요나단": "c-21", "기쁨": "c-22",
+                "사랑": "c-23", "소망": "c-24", "믿음": "c-18"
             };
             
             if (fixedMap[cleanName]) return fixedMap[cleanName];
-            
-            // 매핑에 없는 경우 대비한 해시 백업 로직
             let hash = 0;
-            for (let i = 0; i < cleanName.length; i++) {
-                hash = (hash * 33) ^ cleanName.charCodeAt(i);
-            }
-            const index = Math.abs(hash % 24) + 1;
-            return `c-${index}`;
+            for (let i = 0; i < cleanName.length; i++) hash = (hash * 33) ^ cleanName.charCodeAt(i);
+            return `c-${Math.abs(hash % 24) + 1}`;
         };
 
+        /* [핵심 수정] 최대 15명 노출 로직 */
         function renderTicker() {
-            const grid = nodes.tickerGrid; if (!grid) return; grid.innerHTML = ''; if (allPickupCalls.length === 0) return;
-            const isShort = allPickupCalls.length <= 15;
-            const listToDraw = isShort ? allPickupCalls : [...allPickupCalls, ...allPickupCalls];
+            const grid = nodes.tickerGrid; if (!grid) return; grid.innerHTML = '';
+            if (allPickupCalls.length === 0) return;
+            
+            // [수정] 상위 15명만 추출
+            const listToShow = allPickupCalls.slice(0, 15);
             const fragment = document.createDocumentFragment();
             
-            listToDraw.forEach((call, index) => {
-                const sequenceNum = (index % allPickupCalls.length) + 1;
+            listToShow.forEach((call, index) => {
                 const card = document.createElement('div'); 
-                
-                // [수정 사항 적용]
                 const assignedColor = getColorByClassName(call.className);
                 card.className = `call-card ${assignedColor}`;
-                
                 card.onclick = () => window.removeSingleCall(call.id);
                 card.innerHTML = `
-                    <div class="display-sequence">${sequenceNum}</div>
+                    <div class="display-sequence">${index + 1}</div>
                     <p class="display-class-label">${call.className}</p>
                     <p class="display-student-name">${call.studentName}</p>
                 `; 
                 fragment.appendChild(card);
             });
             grid.appendChild(fragment);
-            if (!isShort) {
-                const duration = Math.max(25, Math.ceil(allPickupCalls.length / 5) * 12); 
-                grid.style.animation = `tickerScroll ${duration}s linear infinite`; 
-            } else grid.style.animation = "none";
         }
 
         document.getElementById('btn-clear').onclick = async () => {
             const btn = document.getElementById('btn-clear');
             if (!deleteConfirmActive) {
-                deleteConfirmActive = true;
-                btn.innerText = "진짜 삭제할까요? (한번 더 클릭)";
-                btn.classList.replace('bg-red-500', 'bg-red-700');
-                setTimeout(() => {
-                    deleteConfirmActive = false;
-                    btn.innerText = "스크린 명단 비우기";
-                    btn.classList.replace('bg-red-700', 'bg-red-500');
-                }, 4000);
+                deleteConfirmActive = true; btn.innerText = "진짜 삭제할까요? (한번 더 클릭)"; btn.classList.replace('bg-red-500', 'bg-red-700');
+                setTimeout(() => { deleteConfirmActive = false; btn.innerText = "스크린 명단 비우기"; btn.classList.replace('bg-red-700', 'bg-red-500'); }, 4000);
                 return;
             }
-            try {
-                const snap = await getDocs(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'));
-                await Promise.all(snap.docs.map(d => deleteDoc(d.ref)));
-                window.showToast("초기화 완료");
-                window.switchMode('parent');
-            } catch (err) { window.showToast("오류"); }
+            const snap = await getDocs(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'));
+            await Promise.all(snap.docs.map(d => deleteDoc(d.ref)));
+            window.showToast("초기화 완료");
         };
 
         document.getElementById('importBtn').onclick = async () => {
@@ -577,55 +458,40 @@
                 const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
                 const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 });
                 const tempMap = { "유치1부": {}, "유치2부": {} };
-                let curP = "유치1부";
-                let hIdx = rows.findIndex(r => r && r.some(c => String(c).includes('이름')));
-                const hs = rows[hIdx];
-                const aI = hs.findIndex(h => h && (String(h).includes('나이')||String(h).includes('연령')));
-                const cI = hs.findIndex(h => h && String(h).includes('반'));
-                const nI = hs.findIndex(h => h && (String(h).includes('이름')||String(h).includes('학생명')));
-                
+                let curP = "유치1부", hIdx = rows.findIndex(r => r && r.some(c => String(c).includes('이름')));
+                const hs = rows[hIdx], aI = hs.findIndex(h => h && (String(h).includes('나이')||String(h).includes('연령'))), cI = hs.findIndex(h => h && String(h).includes('반')), nI = hs.findIndex(h => h && (String(h).includes('이름')||String(h).includes('학생명')));
                 rows.forEach((row, i) => {
                     if (!row || i <= hIdx) return;
                     if (row.join('|').includes('2부')) curP = "유치2부";
                     const n = row[nI] ? String(row[nI]).trim() : "";
-                    let cRaw = row[cI] ? String(row[cI]).trim() : "";
-                    let aRaw = row[aI] ? String(row[aI]).trim() : "";
+                    let cRaw = row[cI] ? String(row[cI]).trim() : "", aRaw = row[aI] ? String(row[aI]).trim() : "";
                     if (!n || !cRaw || cRaw === "반") return;
-                    let ak = aRaw ? aRaw.replace(/[^0-9]/g, "") + "세" : "공통";
-                    let targetC = cRaw.split('(')[0].trim();
+                    let ak = aRaw ? aRaw.replace(/[^0-9]/g, "") + "세" : "공통", targetC = cRaw.split('(')[0].trim();
                     if (!tempMap[curP][targetC]) tempMap[curP][targetC] = { age: ak, students: [] };
                     if (!tempMap[curP][targetC].students.includes(n)) tempMap[curP][targetC].students.push(n);
                 });
-
                 const finalMap = { "유치1부": {}, "유치2부": {} };
-                ['유치1부', '유치2부'].forEach(p => { 
-                    Object.keys(tempMap[p]).forEach(cn => { 
-                        const it = tempMap[p][cn]; 
-                        if (!finalMap[p][it.age]) finalMap[p][it.age] = []; 
-                        finalMap[p][it.age].push({ name: cn, students: it.students }); 
-                    }); 
-                });
+                ['유치1부', '유치2부'].forEach(p => { Object.keys(tempMap[p]).forEach(cn => { const it = tempMap[p][cn]; if (!finalMap[p][it.age]) finalMap[p][it.age] = []; finalMap[p][it.age].push({ name: cn, students: it.students }); }); });
                 await setDoc(doc(db, 'artifacts', appIdStr, 'public', 'data', 'config', 'structure'), { map: finalMap });
                 classStructure = finalMap; window.showToast("성공!"); window.switchMode('parent');
             }; reader.readAsArrayBuffer(file);
         };
 
-        // 이벤트 바인딩
         document.getElementById('btn-p1').onclick = () => window.selectPartAndRollUp('유치1부');
         document.getElementById('btn-p2').onclick = () => window.selectPartAndRollUp('유치2부');
-        document.getElementById('btn-reset').onclick = () => window.resetWorshipSelection();
-        document.getElementById('btn-back').onclick = () => window.backToClassSelection();
+        document.getElementById('btn-reset').onclick = () => { document.getElementById('section-worship').classList.remove('roll-up'); document.getElementById('section-class').classList.add('hidden'); };
+        document.getElementById('btn-back').onclick = () => { document.getElementById('section-class').classList.remove('roll-up'); document.getElementById('section-name').classList.add('hidden'); };
         document.getElementById('btn-manual').onclick = () => window.sendManualCall();
         document.getElementById('nav-parent').onclick = () => window.switchMode('parent');
         document.getElementById('nav-display').onclick = () => window.switchMode('display');
         document.getElementById('nav-settings').onclick = () => window.requestAdminAccess();
         document.getElementById('btn-disp-home').onclick = () => window.switchMode('parent');
-        document.getElementById('btn-close-notice').onclick = () => { nodes.noticeModal.style.display = 'none'; window.resetWorshipSelection(); };
-        document.getElementById('btn-close-notice-x').onclick = () => { nodes.noticeModal.style.display = 'none'; };
+        document.getElementById('btn-close-notice').onclick = () => { document.getElementById('notice-modal').style.display = 'none'; };
+        document.getElementById('btn-close-notice-x').onclick = () => { document.getElementById('notice-modal').style.display = 'none'; };
         document.getElementById('btn-confirm-auth').onclick = () => window.confirmAdminAuth();
-        document.getElementById('btn-close-auth').onclick = () => { nodes.authModal.style.display = 'none'; };
+        document.getElementById('btn-close-auth').onclick = () => { document.getElementById('auth-modal').style.display = 'none'; };
 
-        function startClock() { setInterval(() => { const now = new Date(); const clock = document.getElementById('display-clock'); if (clock) clock.innerText = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0'); }, 1000); }
+        function startClock() { setInterval(() => { const clock = document.getElementById('display-clock'); if (clock) { const now = new Date(); clock.innerText = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0'); } }, 1000); }
         init();
     </script>
 </body>
