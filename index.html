@@ -357,8 +357,9 @@
         window.requestAdminAccess = () => { if (isAdminAuthorized) window.switchMode('settings'); else document.getElementById('auth-modal').style.display = 'flex'; };
         window.confirmAdminAuth = () => { if (document.getElementById('authPwInput').value === '1234') { isAdminAuthorized = true; document.getElementById('auth-modal').style.display = 'none'; window.switchMode('settings'); } else { window.showToast("오류"); } };
 
-        /* 초기 상태로 돌아가는 로직 */
+        /* [핵심] 예배 선택(첫 페이지)으로 돌아가는 로직 정의 */
         window.resetUIState = () => {
+            // 모든 섹션을 숨기고 예배 선택만 표시
             document.getElementById('section-worship').classList.remove('hidden'); 
             document.getElementById('section-class').classList.add('hidden');
             document.getElementById('section-name').classList.add('hidden');
@@ -523,7 +524,7 @@
         document.getElementById('nav-settings').onclick = () => window.requestAdminAccess();
         document.getElementById('btn-disp-home').onclick = () => window.switchMode('parent');
         
-        /* [수정] 확인 버튼 클릭 시 초기 화면으로 복구 로직 추가 */
+        /* [수정] 버튼 이벤트 바인딩 확인 및 강화 */
         document.getElementById('btn-close-notice').onclick = () => { 
             document.getElementById('notice-modal').style.display = 'none'; 
             window.resetUIState(); 
