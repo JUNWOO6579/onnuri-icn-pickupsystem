@@ -105,7 +105,7 @@
         }
         .class-btn:active { transform: scale(0.95) translateY(3px); box-shadow: none; }
 
-        /* 확장된 컬러 유틸리티 클래스 */
+        /* 컬러 유틸리티 클래스 */
         .bg-p-blue { background-color: var(--p-blue) !important; }
         .bg-p-pink { background-color: var(--p-pink) !important; }
         .bg-p-mint { background-color: var(--p-mint) !important; }
@@ -495,17 +495,50 @@
             }
         };
 
-        /* 반별 고유 컬러 지정 로직 (20개 팔레트로 확장) */
+        /* 모든 반에 대해 고유한 색상을 수동으로 지정 (20종 팔레트 활용) */
         const getColorByClassName = (className) => {
             if (!className) return cardColors[0];
-            if (className === "방문/새친구") return 'bg-p-rose'; // 방문 친구는 로즈 핑크 고정
+            if (className === "방문/새친구") return 'bg-p-rose'; 
             
-            // 반 이름을 사용하여 해시값 생성 (시프트 연산을 활용해 분포 최적화)
-            let hash = 0;
-            for (let i = 0; i < className.length; i++) {
-                hash = className.charCodeAt(i) + ((hash << 7) - hash);
+            // 모든 성경 인물/반 이름에 대해 최대한 겹치지 않게 고정 배정
+            const manualColorMap = {
+                // 1그룹
+                "기드온반": "bg-p-blue-deep",
+                "빌립반": "bg-p-emerald",
+                "다윗반": "bg-p-indigo",
+                "요셉반": "bg-p-orange",
+                "모세반": "bg-p-purple",
+                // 2그룹
+                "사무엘반": "bg-p-pink",
+                "솔로몬반": "bg-p-yellow",
+                "에스더반": "bg-p-teal",
+                "여호수아반": "bg-p-blue",
+                "다니엘반": "bg-p-mint",
+                // 3그룹
+                "한나반": "bg-p-lime",
+                "루디아반": "bg-p-amber",
+                "베드로반": "bg-p-sky",
+                "요한반": "bg-p-violet",
+                "바울반": "bg-p-fuchsia",
+                // 4그룹
+                "야곱반": "bg-p-red",
+                "이삭반": "bg-p-cyan",
+                "아브라함반": "bg-p-slate",
+                "디모데반": "bg-p-pink-light",
+                "기쁨반": "bg-p-blue"
+            };
+            
+            // 매핑 테이블에 있으면 해당 색상 반환
+            if (manualColorMap[className]) {
+                return manualColorMap[className];
             }
             
+            // 예외적으로 반 이름이 테이블에 없으면 해시 알고리즘으로 배정
+            let hash = 0;
+            for (let i = 0; i < className.length; i++) {
+                hash = (hash * 31) + className.charCodeAt(i);
+                hash |= 0; 
+            }
             const index = Math.abs(hash) % cardColors.length;
             return cardColors[index];
         };
@@ -520,7 +553,7 @@
                 const sequenceNum = (index % allPickupCalls.length) + 1;
                 const card = document.createElement('div'); 
                 
-                // 확장된 20개 컬러 중 고유 컬러 할당
+                // 반 이름에 따라 수동 지정된 고유 컬러 가져오기
                 const assignedColor = getColorByClassName(call.className);
                 card.className = `call-card ${assignedColor}`;
                 
