@@ -100,7 +100,7 @@
         }
         .class-btn:active { transform: scale(0.95) translateY(3px); box-shadow: none; }
 
-        /* 컬러 시스템 */
+        /* 컬러 시스템 (채도 상향) */
         .bg-p-blue { background-color: #3b82f6 !important; }
         .bg-p-pink { background-color: #ec4899 !important; }
         .bg-p-mint { background-color: #10b981 !important; }
@@ -463,7 +463,6 @@
             });
         }
 
-        /* [핵심 기능] 개별 명단 삭제 함수 */
         window.removeSingleCall = async (callId) => {
             if (!callId) return;
             try {
@@ -471,6 +470,18 @@
             } catch (err) {
                 console.error("Delete Error:", err);
             }
+        };
+
+        /* [핵심 기능] 반별 고유 컬러 지정 로직 */
+        const getColorByClassName = (className) => {
+            if (!className || className === "방문/새친구") return cardColors[1]; // 방문 친구는 고정 핑크
+            // 반 이름을 해시값으로 변환하여 항상 같은 색상이 나오도록 함
+            let hash = 0;
+            for (let i = 0; i < className.length; i++) {
+                hash = className.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const index = Math.abs(hash) % cardColors.length;
+            return cardColors[index];
         };
 
         function renderTicker() {
@@ -482,9 +493,11 @@
             listToDraw.forEach((call, index) => {
                 const sequenceNum = (index % allPickupCalls.length) + 1;
                 const card = document.createElement('div'); 
-                card.className = `call-card ${cardColors[index % cardColors.length]}`;
                 
-                /* 카드 클릭 시 삭제 함수 호출 */
+                /* [수정] index 기반이 아닌 반 이름(className) 기반으로 컬러 할당 */
+                const assignedColor = getColorByClassName(call.className);
+                card.className = `call-card ${assignedColor}`;
+                
                 card.onclick = () => window.removeSingleCall(call.id);
                 
                 card.innerHTML = `
