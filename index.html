@@ -13,7 +13,9 @@
         @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Jua&family=Nanum+Gothic:wght@400;700;800&display=swap');
         
         :root {
-            --p-blue: #60a5fa; --p-pink: #f472b6; --p-mint: #4ade80; --p-orange: #fb923c; --p-purple: #a78bfa;
+            --p-blue: #3b82f6; --p-pink: #ec4899; --p-mint: #10b981; --p-orange: #f59e0b; 
+            --p-purple: #8b5cf6; --p-yellow: #eab308; --p-indigo: #6366f1; --p-teal: #14b8a6;
+            --p-rose: #f43f5e; --p-cyan: #06b6d4;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
@@ -100,30 +102,17 @@
         }
         .class-btn:active { transform: scale(0.95) translateY(3px); box-shadow: none; }
 
-        /* 컬러 시스템 (채도 상향) */
+        /* 확장된 컬러 시스템 (10종) */
         .bg-p-blue { background-color: #3b82f6 !important; }
         .bg-p-pink { background-color: #ec4899 !important; }
         .bg-p-mint { background-color: #10b981 !important; }
         .bg-p-orange { background-color: #f59e0b !important; }
         .bg-p-purple { background-color: #8b5cf6 !important; }
-
-        /* 모달 */
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75);
-            display: none; justify-content: center; align-items: center;
-            z-index: 999999; backdrop-filter: blur(15px); padding: 20px;
-        }
-
-        .notice-modal-content {
-            background: white; border-radius: 4rem; width: 95%; max-width: 580px;
-            padding: 40px 30px; text-align: center; position: relative;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3); border: 8px solid #f0f9ff;
-        }
-        .close-x-btn {
-            position: absolute; top: 25px; right: 30px; width: 50px; height: 50px;
-            background: #f1f5f9; border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; color: #64748b; font-size: 30px; cursor: pointer; z-index: 10;
-        }
+        .bg-p-yellow { background-color: #eab308 !important; }
+        .bg-p-indigo { background-color: #6366f1 !important; }
+        .bg-p-teal { background-color: #14b8a6 !important; }
+        .bg-p-rose { background-color: #f43f5e !important; }
+        .bg-p-cyan { background-color: #06b6d4 !important; }
 
         /* [전광판 전용 스타일] */
         #view-display { 
@@ -154,7 +143,6 @@
         }
         .call-card:active { transform: scale(0.95); opacity: 0.8; }
         
-        /* 순번 표시용 스타일 */
         .display-sequence {
             position: absolute; top: 1.2vh; left: 1.2vw;
             font-family: 'Jua', sans-serif; font-size: 2.8vh;
@@ -165,7 +153,6 @@
             pointer-events: none;
         }
 
-        /* 이름 폰트 가독성 */
         .display-student-name { 
             font-family: 'Jua', sans-serif; 
             font-size: 6.2vh; 
@@ -176,7 +163,6 @@
             pointer-events: none;
         }
 
-        /* 반 레이블 가독성 */
         .display-class-label { 
             font-family: 'Gaegu', cursive; 
             font-size: 2.8vh; 
@@ -199,6 +185,23 @@
             position: fixed; inset: 0; background: white;
             display: flex; justify-content: center; align-items: center;
             z-index: 1000000; transition: opacity 0.5s ease;
+        }
+
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75);
+            display: none; justify-content: center; align-items: center;
+            z-index: 999999; backdrop-filter: blur(15px); padding: 20px;
+        }
+
+        .notice-modal-content {
+            background: white; border-radius: 4rem; width: 95%; max-width: 580px;
+            padding: 40px 30px; text-align: center; position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3); border: 8px solid #f0f9ff;
+        }
+        .close-x-btn {
+            position: absolute; top: 25px; right: 30px; width: 50px; height: 50px;
+            background: #f1f5f9; border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; color: #64748b; font-size: 30px; cursor: pointer; z-index: 10;
         }
     </style>
 </head>
@@ -365,10 +368,15 @@
             scrollArea: document.getElementById('main-glass-stage')
         };
 
+        // 확장된 컬러 팔레트 (10종)
+        const cardColors = [
+            'bg-p-blue', 'bg-p-pink', 'bg-p-mint', 'bg-p-orange', 'bg-p-purple',
+            'bg-p-yellow', 'bg-p-indigo', 'bg-p-teal', 'bg-p-rose', 'bg-p-cyan'
+        ];
+
         let classStructure = {};
         let isAdminAuthorized = false;
         let allPickupCalls = [];
-        const cardColors = ['bg-p-blue', 'bg-p-pink', 'bg-p-mint', 'bg-p-orange', 'bg-p-purple'];
         let deleteConfirmActive = false;
 
         window.showToast = (m) => {
@@ -472,14 +480,17 @@
             }
         };
 
-        /* [핵심 기능] 반별 고유 컬러 지정 로직 */
+        /* [수정] 반별 고유 컬러 지정 로직 강화 */
         const getColorByClassName = (className) => {
-            if (!className || className === "방문/새친구") return cardColors[1]; // 방문 친구는 고정 핑크
-            // 반 이름을 해시값으로 변환하여 항상 같은 색상이 나오도록 함
+            if (!className) return cardColors[0];
+            if (className === "방문/새친구") return 'bg-p-rose'; // 방문 친구는 로즈 핑크 고정
+            
+            // 반 이름을 사용하여 해시값 생성 (더 명확한 구분을 위해 시프트 연산 강화)
             let hash = 0;
             for (let i = 0; i < className.length; i++) {
-                hash = className.charCodeAt(i) + ((hash << 5) - hash);
+                hash = className.charCodeAt(i) + ((hash << 7) - hash);
             }
+            
             const index = Math.abs(hash) % cardColors.length;
             return cardColors[index];
         };
@@ -494,7 +505,7 @@
                 const sequenceNum = (index % allPickupCalls.length) + 1;
                 const card = document.createElement('div'); 
                 
-                /* [수정] index 기반이 아닌 반 이름(className) 기반으로 컬러 할당 */
+                // [반영 확인] 반 이름에 따른 고유 컬러 가져오기
                 const assignedColor = getColorByClassName(call.className);
                 card.className = `call-card ${assignedColor}`;
                 
