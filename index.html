@@ -36,12 +36,10 @@
         .font-jua { font-family: 'Jua', sans-serif; }
         .font-gaegu { font-family: 'Gaegu', cursive; }
 
-        /* [iPad 10.2인치 고정 프레임] */
         #app {
             position: fixed; 
             inset: 0;
             width: 100%;
-            max-width: none; 
             height: 100dvh;
             background: #fff url('final_artwork_latest_8k.jpg') no-repeat center center / cover !important;
             display: grid;
@@ -120,7 +118,6 @@
         .c-21 { background-color: var(--p-21) !important; } .c-22 { background-color: var(--p-22) !important; }
         .c-23 { background-color: var(--p-23) !important; } .c-24 { background-color: var(--p-24) !important; }
 
-        /* [전광판 전용 스타일] */
         #view-display { 
             position: fixed; inset: 0; z-index: 9000; 
             background: #000; 
@@ -477,13 +474,17 @@
             } catch (err) { console.error(err); }
         };
 
-        /* [수정] 모든 반에 대해 1:1 고정 컬러 매핑 (24종 팔레트 활용) */
+        /* [핵심 기능] 반별 1:1 고정 컬러 매핑 (순수 이름 매칭 강화) */
         const getColorByClassName = (className) => {
-            const cleanName = className.replace("반", "").trim();
-            if (cleanName === "방문/새친구") return 'c-9'; 
+            if (!className) return 'c-20';
             
-            // 유치부 19개 반 + 주요 이름 1:1 매핑
-            const map = {
+            // "반"이라는 글자가 있든 없든 순수 이름만 추출하여 비교
+            const cleanName = className.replace(/반|부/g, "").trim();
+            
+            if (cleanName === "방문/새친구") return 'c-9'; // 특수 색상 (로즈/핑크)
+            
+            // 19개 반 이름과 24개 컬러 팔레트 고정 매핑 테이블
+            const fixedMap = {
                 "기드온": "c-1", 
                 "바나바": "c-2", 
                 "베드로": "c-3", 
@@ -492,30 +493,28 @@
                 "안드레": "c-6", 
                 "야고보": "c-7", 
                 "에스더": "c-8",
-                "요나단": "c-10", 
-                "노아": "c-11", 
-                "다윗": "c-12", 
-                "디도": "c-13",
-                "바울": "c-14", 
-                "빌립": "c-15", 
-                "야곱": "c-16", 
-                "에녹": "c-17",
-                "요나": "c-18", 
-                "요한": "c-19", 
-                "한나": "c-20",
-                "기쁨": "c-21",
-                "사랑": "c-22",
-                "소망": "c-23",
-                "믿음": "c-24"
+                "노아": "c-10", 
+                "다윗": "c-11", 
+                "디도": "c-12", 
+                "바울": "c-13",
+                "빌립": "c-14", 
+                "야곱": "c-15", 
+                "에녹": "c-16", 
+                "요나": "c-17",
+                "요한": "c-18", 
+                "한나": "c-19",
+                "요나단": "c-21",
+                "기쁨": "c-22",
+                "사랑": "c-23",
+                "소망": "c-24"
             };
             
-            if (map[cleanName]) return map[cleanName];
+            if (fixedMap[cleanName]) return fixedMap[cleanName];
             
-            // 목록에 없는 경우를 위한 안전한 해시 로직 (24개 순환)
+            // 매핑에 없는 경우 대비한 해시 백업 로직
             let hash = 0;
             for (let i = 0; i < cleanName.length; i++) {
-                hash = (hash * 31) + cleanName.charCodeAt(i);
-                hash |= 0;
+                hash = (hash * 33) ^ cleanName.charCodeAt(i);
             }
             const index = Math.abs(hash % 24) + 1;
             return `c-${index}`;
@@ -530,8 +529,11 @@
             listToDraw.forEach((call, index) => {
                 const sequenceNum = (index % allPickupCalls.length) + 1;
                 const card = document.createElement('div'); 
+                
+                // [수정 사항 적용]
                 const assignedColor = getColorByClassName(call.className);
                 card.className = `call-card ${assignedColor}`;
+                
                 card.onclick = () => window.removeSingleCall(call.id);
                 card.innerHTML = `
                     <div class="display-sequence">${sequenceNum}</div>
