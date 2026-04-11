@@ -22,7 +22,12 @@
             --p-21: #fb923c; --p-22: #2dd4bf; --p-23: #a855f7; --p-24: #65a30d;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            outline: none; 
+            scroll-behavior: auto !important; /* 부드러운 스크롤 강제 비활성화 */
+        }
 
         body {
             font-family: 'Nanum Gothic', sans-serif;
@@ -74,7 +79,7 @@
         @media (min-width: 640px) { .class-btn { font-size: 1.8rem; border-radius: 2.2rem; box-shadow: 0 6px 0 #e2e8f0; } }
         .class-btn:active { transform: scale(0.95) translateY(3px); box-shadow: none; }
 
-        /* 컬러 클래스 (c-1 ~ c-24) */
+        /* 고대비 컬러 유틸리티 */
         .c-1 { background-color: var(--p-1) !important; } .c-2 { background-color: var(--p-2) !important; }
         .c-3 { background-color: var(--p-3) !important; } .c-4 { background-color: var(--p-4) !important; }
         .c-5 { background-color: var(--p-5) !important; } .c-6 { background-color: var(--p-6) !important; }
@@ -100,6 +105,7 @@
         .display-overlay { flex: 1; background: rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; padding: 3vh 4vw; overflow: hidden; }
         .display-header { height: 18vh; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
         
+        /* 10명 고정 그리드 */
         .ticker-container { 
             flex: 1; margin-top: 2vh; 
             display: grid; 
@@ -153,8 +159,11 @@
             justify-content: center; color: #64748b; font-size: 30px; cursor: pointer; z-index: 10;
         }
 
-        /* 단계 전환 애니메이션 제거를 위한 스타일 */
-        .step-container { overflow: hidden; }
+        /* [핵심 수정] 모든 애니메이션 및 트랜지션 완전 제거 */
+        .step-container { 
+            overflow: hidden; 
+            transition: none !important; /* 애니메이션 강제 비활성화 */
+        }
     </style>
 </head>
 <body>
@@ -247,9 +256,7 @@
                         <span id="display-clock" class="font-jua text-[8vh] text-blue-500 tracking-tighter">00:00</span>
                     </div>
                 </header>
-                <div id="display-grid" class="ticker-container">
-                    <!-- JS에서 최대 10명만 고정 렌더링 -->
-                </div>
+                <div id="display-grid" class="ticker-container"></div>
                 <button id="btn-disp-home" class="absolute bottom-[4vh] right-[4vw] w-[9vh] h-[9vh] bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-slate-600 shadow-2xl border-2 border-white"><i class="fa-solid fa-house-chimney text-[4.5vh]"></i></button>
             </div>
         </div>
@@ -352,9 +359,9 @@
         window.requestAdminAccess = () => { if (isAdminAuthorized) window.switchMode('settings'); else document.getElementById('auth-modal').style.display = 'flex'; };
         window.confirmAdminAuth = () => { if (document.getElementById('authPwInput').value === '1234') { isAdminAuthorized = true; document.getElementById('auth-modal').style.display = 'none'; window.switchMode('settings'); } else { window.showToast("오류"); } };
 
-        /* [수정] 호출기 단계 전환 즉시 처리 (애니메이션 제거) */
+        /* 즉각적인 화면 전환을 위해 hidden 사용 및 스크롤 위치 초기화 */
         window.selectPartAndRollUp = (part) => {
-            document.getElementById('section-worship').classList.add('hidden'); // hidden 사용으로 즉시 숨김
+            document.getElementById('section-worship').classList.add('hidden'); 
             document.getElementById('section-class').classList.remove('hidden');
             document.getElementById('section-name').classList.add('hidden');
             
@@ -366,11 +373,11 @@
                     const btn = document.createElement('button'); btn.className = "class-btn shadow-sm"; btn.innerText = cls.name; btn.onclick = () => renderStudentList(cls); grid.appendChild(btn);
                 });
             });
-            nodes.scrollArea.scrollTo(0, 0);
+            nodes.scrollArea.scrollTop = 0; // 즉시 스크롤 상단 이동
         };
 
         function renderStudentList(cls) {
-            document.getElementById('section-class').classList.add('hidden'); // hidden 사용으로 즉시 숨김
+            document.getElementById('section-class').classList.add('hidden'); 
             document.getElementById('section-name').classList.remove('hidden');
             
             const grid = document.getElementById('grid-names'); grid.innerHTML = '';
@@ -381,7 +388,7 @@
                     btn.innerText = name; btn.onclick = () => sendCallToFirebase(cls.name, name); grid.appendChild(btn);
                 });
             }
-            nodes.scrollArea.scrollTo(0, 0);
+            nodes.scrollArea.scrollTop = 0; // 즉시 스크롤 상단 이동
         }
 
         async function sendCallToFirebase(cName, sName) { 
@@ -396,10 +403,7 @@
                 });
 
                 await addDoc(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'), { 
-                    className: cName, 
-                    studentName: sName, 
-                    timestamp: serverTimestamp(),
-                    waitingNum: nextNum 
+                    className: cName, studentName: sName, timestamp: serverTimestamp(), waitingNum: nextNum 
                 });
                 document.getElementById('notice-modal').style.display = 'flex'; 
             } catch (e) { window.showToast("연결 오류"); } 
@@ -411,10 +415,7 @@
             onSnapshot(collection(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls'), (snap) => {
                 const raw = []; snap.forEach(d => raw.push({ id: d.id, ...d.data() }));
                 const unique = new Map(); 
-                raw.forEach(call => { 
-                    const key = `${call.className}-${call.studentName}`; 
-                    if (!unique.has(key)) unique.set(key, call); 
-                });
+                raw.forEach(call => { const key = `${call.className}-${call.studentName}`; if (!unique.has(key)) unique.set(key, call); });
                 allPickupCalls = Array.from(unique.values()).sort((a, b) => (a.timestamp?.seconds || 0) - (b.timestamp?.seconds || 0));
                 renderTicker();
             });
@@ -452,10 +453,8 @@
             
             listToShow.forEach((call) => {
                 const card = document.createElement('div'); 
-                const assignedColor = getColorByClassName(call.className);
-                card.className = `call-card ${assignedColor}`;
+                card.className = `call-card ${getColorByClassName(call.className)}`;
                 card.onclick = () => window.removeSingleCall(call.id);
-                
                 card.innerHTML = `
                     <div class="display-sequence">${call.waitingNum || '?'}</div>
                     <p class="display-class-label">${call.className}</p>
@@ -510,10 +509,12 @@
         document.getElementById('btn-reset').onclick = () => { 
             document.getElementById('section-worship').classList.remove('hidden'); 
             document.getElementById('section-class').classList.add('hidden'); 
+            nodes.scrollArea.scrollTop = 0;
         };
         document.getElementById('btn-back').onclick = () => { 
             document.getElementById('section-class').classList.remove('hidden'); 
             document.getElementById('section-name').classList.add('hidden'); 
+            nodes.scrollArea.scrollTop = 0;
         };
         document.getElementById('btn-manual').onclick = () => window.sendManualCall();
         document.getElementById('nav-parent').onclick = () => window.switchMode('parent');
