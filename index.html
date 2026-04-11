@@ -13,12 +13,13 @@
         @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Jua&family=Nanum+Gothic:wght@400;700;800&display=swap');
         
         :root {
-            /* 확장된 20개 컬러 팔레트 정의 */
-            --p-blue: #3b82f6; --p-pink: #ec4899; --p-mint: #10b981; --p-orange: #f59e0b; 
-            --p-purple: #8b5cf6; --p-yellow: #eab308; --p-indigo: #6366f1; --p-teal: #14b8a6;
-            --p-rose: #f43f5e; --p-cyan: #06b6d4; --p-lime: #84cc16; --p-amber: #d97706;
-            --p-sky: #0ea5e9; --p-violet: #7c3aed; --p-fuchsia: #d946ef; --p-red: #ef4444;
-            --p-emerald: #059669; --p-blue-deep: #1d4ed8; --p-pink-light: #f472b6; --p-slate: #475569;
+            /* 24가지 고유 컬러 정의 */
+            --p-1: #3b82f6; --p-2: #ec4899; --p-3: #10b981; --p-4: #f59e0b; 
+            --p-5: #8b5cf6; --p-6: #eab308; --p-7: #6366f1; --p-8: #14b8a6;
+            --p-9: #f43f5e; --p-10: #06b6d4; --p-11: #84cc16; --p-12: #d97706;
+            --p-13: #0ea5e9; --p-14: #7c3aed; --p-15: #d946ef; --p-16: #ef4444;
+            --p-17: #059669; --p-18: #1d4ed8; --p-19: #f472b6; --p-20: #475569;
+            --p-21: #fb923c; --p-22: #2dd4bf; --p-23: #a855f7; --p-24: #65a30d;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
@@ -29,7 +30,7 @@
             margin: 0; padding: 0;
             height: 100%; width: 100vw;
             overflow: hidden; 
-            position: fixed; /* iOS 바운스 방지 */
+            position: fixed;
         }
 
         .font-jua { font-family: 'Jua', sans-serif; }
@@ -106,26 +107,18 @@
         .class-btn:active { transform: scale(0.95) translateY(3px); box-shadow: none; }
 
         /* 컬러 유틸리티 클래스 */
-        .bg-p-blue { background-color: var(--p-blue) !important; }
-        .bg-p-pink { background-color: var(--p-pink) !important; }
-        .bg-p-mint { background-color: var(--p-mint) !important; }
-        .bg-p-orange { background-color: var(--p-orange) !important; }
-        .bg-p-purple { background-color: var(--p-purple) !important; }
-        .bg-p-yellow { background-color: var(--p-yellow) !important; }
-        .bg-p-indigo { background-color: var(--p-indigo) !important; }
-        .bg-p-teal { background-color: var(--p-teal) !important; }
-        .bg-p-rose { background-color: var(--p-rose) !important; }
-        .bg-p-cyan { background-color: var(--p-cyan) !important; }
-        .bg-p-lime { background-color: var(--p-lime) !important; }
-        .bg-p-amber { background-color: var(--p-amber) !important; }
-        .bg-p-sky { background-color: var(--p-sky) !important; }
-        .bg-p-violet { background-color: var(--p-violet) !important; }
-        .bg-p-fuchsia { background-color: var(--p-fuchsia) !important; }
-        .bg-p-red { background-color: var(--p-red) !important; }
-        .bg-p-emerald { background-color: var(--p-emerald) !important; }
-        .bg-p-blue-deep { background-color: var(--p-blue-deep) !important; }
-        .bg-p-pink-light { background-color: var(--p-pink-light) !important; }
-        .bg-p-slate { background-color: var(--p-slate) !important; }
+        .c-1 { background-color: var(--p-1) !important; } .c-2 { background-color: var(--p-2) !important; }
+        .c-3 { background-color: var(--p-3) !important; } .c-4 { background-color: var(--p-4) !important; }
+        .c-5 { background-color: var(--p-5) !important; } .c-6 { background-color: var(--p-6) !important; }
+        .c-7 { background-color: var(--p-7) !important; } .c-8 { background-color: var(--p-8) !important; }
+        .c-9 { background-color: var(--p-9) !important; } .c-10 { background-color: var(--p-10) !important; }
+        .c-11 { background-color: var(--p-11) !important; } .c-12 { background-color: var(--p-12) !important; }
+        .c-13 { background-color: var(--p-13) !important; } .c-14 { background-color: var(--p-14) !important; }
+        .c-15 { background-color: var(--p-15) !important; } .c-16 { background-color: var(--p-16) !important; }
+        .c-17 { background-color: var(--p-17) !important; } .c-18 { background-color: var(--p-18) !important; }
+        .c-19 { background-color: var(--p-19) !important; } .c-20 { background-color: var(--p-20) !important; }
+        .c-21 { background-color: var(--p-21) !important; } .c-22 { background-color: var(--p-22) !important; }
+        .c-23 { background-color: var(--p-23) !important; } .c-24 { background-color: var(--p-24) !important; }
 
         /* [전광판 전용 스타일] */
         #view-display { 
@@ -322,7 +315,6 @@
         </div>
     </div>
 
-    <!-- 모달: 호출 완료 -->
     <div id="notice-modal" class="modal-overlay">
         <div class="notice-modal-content">
             <div class="close-x-btn" id="btn-close-notice-x"><i class="fa-solid fa-xmark"></i></div>
@@ -380,14 +372,6 @@
             noticeModal: document.getElementById('notice-modal'),
             scrollArea: document.getElementById('main-glass-stage')
         };
-
-        // 확장된 컬러 팔레트 (20종)
-        const cardColors = [
-            'bg-p-blue', 'bg-p-pink', 'bg-p-mint', 'bg-p-orange', 'bg-p-purple',
-            'bg-p-yellow', 'bg-p-indigo', 'bg-p-teal', 'bg-p-rose', 'bg-p-cyan',
-            'bg-p-lime', 'bg-p-amber', 'bg-p-sky', 'bg-p-violet', 'bg-p-fuchsia',
-            'bg-p-red', 'bg-p-emerald', 'bg-p-blue-deep', 'bg-p-pink-light', 'bg-p-slate'
-        ];
 
         let classStructure = {};
         let isAdminAuthorized = false;
@@ -490,57 +474,51 @@
             if (!callId) return;
             try {
                 await deleteDoc(doc(db, 'artifacts', appIdStr, 'public', 'data', 'pickup_calls', callId));
-            } catch (err) {
-                console.error("Delete Error:", err);
-            }
+            } catch (err) { console.error(err); }
         };
 
-        /* 모든 반에 대해 고유한 색상을 수동으로 지정 (20종 팔레트 활용) */
+        /* [수정] 모든 반에 대해 1:1 고정 컬러 매핑 (24종 팔레트 활용) */
         const getColorByClassName = (className) => {
-            if (!className) return cardColors[0];
-            if (className === "방문/새친구") return 'bg-p-rose'; 
+            const cleanName = className.replace("반", "").trim();
+            if (cleanName === "방문/새친구") return 'c-9'; 
             
-            // 모든 성경 인물/반 이름에 대해 최대한 겹치지 않게 고정 배정
-            const manualColorMap = {
-                // 1그룹
-                "기드온반": "bg-p-blue-deep",
-                "빌립반": "bg-p-emerald",
-                "다윗반": "bg-p-indigo",
-                "요셉반": "bg-p-orange",
-                "모세반": "bg-p-purple",
-                // 2그룹
-                "사무엘반": "bg-p-pink",
-                "솔로몬반": "bg-p-yellow",
-                "에스더반": "bg-p-teal",
-                "여호수아반": "bg-p-blue",
-                "다니엘반": "bg-p-mint",
-                // 3그룹
-                "한나반": "bg-p-lime",
-                "루디아반": "bg-p-amber",
-                "베드로반": "bg-p-sky",
-                "요한반": "bg-p-violet",
-                "바울반": "bg-p-fuchsia",
-                // 4그룹
-                "야곱반": "bg-p-red",
-                "이삭반": "bg-p-cyan",
-                "아브라함반": "bg-p-slate",
-                "디모데반": "bg-p-pink-light",
-                "기쁨반": "bg-p-blue"
+            // 유치부 19개 반 + 주요 이름 1:1 매핑
+            const map = {
+                "기드온": "c-1", 
+                "바나바": "c-2", 
+                "베드로": "c-3", 
+                "보아스": "c-4",
+                "사무엘": "c-5", 
+                "안드레": "c-6", 
+                "야고보": "c-7", 
+                "에스더": "c-8",
+                "요나단": "c-10", 
+                "노아": "c-11", 
+                "다윗": "c-12", 
+                "디도": "c-13",
+                "바울": "c-14", 
+                "빌립": "c-15", 
+                "야곱": "c-16", 
+                "에녹": "c-17",
+                "요나": "c-18", 
+                "요한": "c-19", 
+                "한나": "c-20",
+                "기쁨": "c-21",
+                "사랑": "c-22",
+                "소망": "c-23",
+                "믿음": "c-24"
             };
             
-            // 매핑 테이블에 있으면 해당 색상 반환
-            if (manualColorMap[className]) {
-                return manualColorMap[className];
-            }
+            if (map[cleanName]) return map[cleanName];
             
-            // 예외적으로 반 이름이 테이블에 없으면 해시 알고리즘으로 배정
+            // 목록에 없는 경우를 위한 안전한 해시 로직 (24개 순환)
             let hash = 0;
-            for (let i = 0; i < className.length; i++) {
-                hash = (hash * 31) + className.charCodeAt(i);
-                hash |= 0; 
+            for (let i = 0; i < cleanName.length; i++) {
+                hash = (hash * 31) + cleanName.charCodeAt(i);
+                hash |= 0;
             }
-            const index = Math.abs(hash) % cardColors.length;
-            return cardColors[index];
+            const index = Math.abs(hash % 24) + 1;
+            return `c-${index}`;
         };
 
         function renderTicker() {
@@ -552,13 +530,9 @@
             listToDraw.forEach((call, index) => {
                 const sequenceNum = (index % allPickupCalls.length) + 1;
                 const card = document.createElement('div'); 
-                
-                // 반 이름에 따라 수동 지정된 고유 컬러 가져오기
                 const assignedColor = getColorByClassName(call.className);
                 card.className = `call-card ${assignedColor}`;
-                
                 card.onclick = () => window.removeSingleCall(call.id);
-                
                 card.innerHTML = `
                     <div class="display-sequence">${sequenceNum}</div>
                     <p class="display-class-label">${call.className}</p>
